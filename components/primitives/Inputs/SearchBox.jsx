@@ -8,21 +8,11 @@ import XIcon from '../Icons/XIcon'
 
 const InputStyle  = styled.input`
 
-    /* font-size: 1.2em; */
-    /* text-align: center; */
     border-radius:25px;
     max-height: 38px;
-    /* width:300px; */
-    /* width:38px; */
-    /* height: 100%; */
+
     width:34.04px;
     height:34.04px;
-    /* width: 1000; */
-    /* animation: Expand .2s ease-in-out forwards;
-   */
-    
-    /* font-family: QuickSand;  */
-                           
 
     @keyframes Compress{
         to{

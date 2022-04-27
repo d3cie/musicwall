@@ -17,6 +17,6 @@ module.exports = {
   },
   nextConfig,
   env: {
-    mongodburl: "mongodb+srv://femzy:precious1979@cluster0.bx43m.mongodb.net/node-tuts?retryWrites=true&w=majority",
+    mongodburl: "mongodb+srv://decefemz:precious1979@cluster0.s5iun.mongodb.net/Musicwall?retryWrites=true&w=majority",
   },
 }

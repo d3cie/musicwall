@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router'
-import * as vars from '../../vars'
+import * as vars from '../../../vars'
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import React from 'react'
-import ProfileBar from '../../components/layouts/ProfileBar'
-import Music from '../../components/primitives/Icons/Music'
-import Album from '../../components/primitives/Icons/Album'
-import Artist from '../../components/primitives/Icons/Artist'
+import ProfileBar from '../../../components/layouts/ProfileBar'
+import Music from '../../../components/primitives/Icons/Music'
+import Album from '../../../components/primitives/Icons/Album'
+import Artist from '../../../components/primitives/Icons/Artist'
 import Link from 'next/link'
-import Song from '../../components/compounds/Song'
-import SongMobile from '../../components/compounds/Song/SongMobile'
+import Song from '../../../components/compounds/Song'
+import SongMobile from '../../../components/compounds/Song/SongMobile'
 
 const Cont = styled.main`
   /* background-color:${vars.GREY}; */
