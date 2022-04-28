@@ -51,7 +51,7 @@ export default function Image(props) {
                     setIsLoading(false)
                 }
             )}
-            ,[])
+            ,[props.imagesrc])
       
         if (isLoading) return <div style = {{display: 'flex',alignItems: 'center',width: props.width, height: props.height, background:vars.MAIN_WHITE, justifyContent: 'center'}}><Elipsis color = {vars.GREY} /></div>
         
@@ -62,6 +62,7 @@ export default function Image(props) {
         <NextImage
             {...props}
             src = {data}
+            style = {{transition:'all .2s'}}
             alt = {props.alt}
             // layout = "responsive"
             width = {props.width}

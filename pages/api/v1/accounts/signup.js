@@ -1,7 +1,7 @@
 import connectDB from '../../../../middleware/mongodb';
 import bcrypt from 'bcryptjs'
 import User from '../../../../models/user';
-
+import login from '../accounts/login'
 
 const userNameValidator = (userName) => {
 
@@ -100,9 +100,16 @@ const handler = async (req, res) => {
   if (req.method === 'POST') {
     const { username, email, password } = req.body;
     if (username && email && password) {
-        res.send(await createUser(username, password, email))
-        // .then((msg)=>{res.send(msg)})
-        res.status(200)
+        const newUser = await createUser(username, password, email)
+
+        if (newUser.status == 'error'){
+            res.send(newUser)
+        }   
+        else if(newUser.status == 'success'){
+            login(req,res).then(res.status(200).send({status:"success", message:"Signed in and logged in successfully"}))
+
+        }
+        
       } 
       else {
         res.status(422).send({status:'error', error:'Data incomplete'});

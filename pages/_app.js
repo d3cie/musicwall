@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import {useRouter} from 'next/router'
 import styled from 'styled-components'
 import * as vars from '../vars'
+import EditImage from '../components/compounds/EditImage'
 
 const Cont = styled.div`
     width: 100%;
@@ -34,10 +35,11 @@ const FormCont = styled.main`
     /* animation: fadein 0.2s ease-in-out forwards; */
     background-color: ${vars.GREY};
     padding:20px;
-    padding-bottom: 0px;
+    padding-bottom: 20px;
     padding-top:40px;
     @media (max-width: 350px) {
       transform:scale(.8);
+
     }
     border-radius: 4px;
     /* transition: all 0.2s; */
@@ -49,6 +51,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter()
     
   if (router.pathname == '/accounts/login' ||
+  router.pathname == '/accounts/edit' ||
       router.pathname ==  '/accounts/signup'){
 
     return <Cont>

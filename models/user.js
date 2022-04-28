@@ -1,6 +1,14 @@
 import mongoose from 'mongoose';
 var Schema = mongoose.Schema;
 
+var profileinfo = new Schema({
+  displayname:{type: String},
+  birthday:{type:Date},
+  bio:{type: String},
+  sex:{type: String},
+  profileimagepath:{type: String}
+})
+
 var user = new Schema({
   username: {
     type: String,
@@ -15,6 +23,8 @@ var user = new Schema({
     type: String,
     required: true
   },
+  profileinfo:profileinfo,
+
   since: {
     type: Date,
     default: Date.now
@@ -26,4 +36,6 @@ mongoose.models = {};
 var User = mongoose.model('User', user);
 
 export default User;
+
+
 
