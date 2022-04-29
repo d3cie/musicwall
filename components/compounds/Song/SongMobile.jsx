@@ -13,9 +13,19 @@ const Wrapper = styled.div`
     padding:10px;
     /* padding-right:40px; */
     min-width: 350px;
+    @media (max-width: 450px) {
+        min-width: 330px;
+
+    }
     position:relative;
+
     background: ${vars.GREY};
+    outline:solid 1px ${vars.GREY};
+    @media (prefers-color-scheme: dark) {
+        background: ${vars.GREY};
+}
     display:flex;
+   
     & div{
         overflow:hidden;
         border-radius:4px;

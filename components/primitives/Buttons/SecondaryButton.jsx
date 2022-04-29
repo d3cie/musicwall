@@ -11,25 +11,33 @@ const ButtonStyle  = styled.button`
     align-items:center;
     justify-content: center;
     width:fit-content;
-    height: 40px;
-    font-weight: 300;
-    background-color:${vars.DARK_BLUE};
+    height: 30px;
+    font-weight: 500;
+    background-color:${vars.MAIN_BLUE};
     border:none;
     cursor: pointer;
     transition: all 0.2s;
     &:active{
         filter:brightness(95%);
     }
-    &.active{
+    &.working{
         cursor: not-allowed;
         color:white;
         &:active{
             filter:brightness(100%);}
     }
 
+    &.active{
+        cursor: not-allowed;
+        color:${vars.MAIN_WHITE};
+        border:solid 2px ${vars.MAIN_BLUE};
+        background-color:${vars.LIGHT_GREY};
+        &:active{
+            filter:brightness(100%);}
+    }
+
     color:${vars.MAIN_WHITE};
-    padding: 6px 20px;
-    position:absolute;
+    padding: 4px 20px;
 
     &:hover{
         filter:brightness(105%);
@@ -42,19 +50,15 @@ const ButtonStyle  = styled.button`
    font-weight: 500px;
     `
 
-export default function PrimaryButton(props) {
+export default function SecondaryButton(props) {
     
   return (
     <ButtonStyle 
         {...props}
-        className = {props.isWorking ? 'active' : 'normal'} 
+        className = {props.state} 
         
         >
-        {(props.isWorking) ? <BouncyDots
-        color = {vars.MAIN_WHITE}
-        
-        
-        /> : props.buttonTitle}
+       {props.buttonTitle}
 
     </ButtonStyle>
   )

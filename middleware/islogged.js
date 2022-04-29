@@ -8,25 +8,21 @@ const authorization = handler => (req, res) => {
     const token = cookies.get('logintoken')
 
     if (!token) {
-        
-      return res.status(403).send({message:'No Cookie Attached'});
+      req.isLoggedIn = false 
+      return handler(req,res);
     }
+
       jwt.verify(token, JWT_SECRET,(err, verifiedJwt) => {
         if(err){
-          res.status(403).send({message: err.message})
+            req.isLoggedIn = false 
+            return handler(req,res);
         
         }else{
-            console.log(verifiedJwt)
+          req.isLoggedIn = true
             req.username = verifiedJwt.username;
             req.id = verifiedJwt.id;
-            // res.status(200).send({message:'Authorization Successful'})
             return handler(req,res);
         }
       })
-   
-     
-    // } catch {
-    //   return res.status(403).send({message:'Invalid Cookie'});
-    // }
   };
   export default authorization

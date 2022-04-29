@@ -10,13 +10,18 @@ import Artist from '../../../components/primitives/Icons/Artist'
 import Link from 'next/link'
 import Song from '../../../components/compounds/Song'
 import SongMobile from '../../../components/compounds/Song/SongMobile'
+import Ellipsis from '../../../components/primitives/Animations/Elipsis'
+import DualRing from '../../../components/primitives/Animations/DualRing'
+import getuser from '../../../services/getuser'
+import Error from 'next/error'
+import Head from 'next/head'
 
 const Cont = styled.main`
   /* background-color:${vars.GREY}; */
   background-color: ${vars.LIGHT_GREY};
 
   width:100%;
-  min-height:100%;`
+  height:100vh;`
 
 const CategoryCont = styled.nav`
     background: ${vars.GREY};
@@ -103,6 +108,10 @@ const GridContOutter = styled.section`
     position:relative;
     height: fit-content;
     padding-inline:20px;
+    @media (max-width: 450px) {
+      padding-inline:10px;
+
+    } 
     align-items:center;
     justify-content:center;
     `
@@ -129,156 +138,146 @@ const GridCont = styled.div`
 export default function UserProfile() {
   const router = useRouter()
   const pathname = router.asPath
-
+  const [data, setData] = useState(null)
   const [username, setUsername] = useState(null)
 
   useEffect(() => {
-    if (pathname.substring(pathname.indexOf('/') + 1, pathname.lastIndexOf('/')) === '/') {
-      setUsername(pathname.substring(1))
-      return
+    setUsername(window.location.pathname.substring(3))
+    async function fetchData() {
+      const response = getuser(window.location.pathname.substring(3))
+      setData(await response)
+      console.log(await response)
     }
-    setUsername(pathname.substring(pathname.indexOf('/') + 1, pathname.lastIndexOf('/')))
+    fetchData()
 
+  }, [])
 
-  }, [router.asPath])
-
-  if (pathname == `/${username}` && username != '[...username]') {
-    router.push(`/${username}/songs`)
-
-  }
 
   function SongLayout() {
 
     return <GridContOutter>
       <GridContInner>
-      <TimeLine />
+        <TimeLine />
 
         <div>
-        <TimeStampCont>
-          <TimeStamp><Point/>Added These on - 03.12.12</TimeStamp>
-        </TimeStampCont>
-        <GridCont>
-          <SongMobile
+          <TimeStampCont>
+            <TimeStamp><Point />Added These on - 03.12.12</TimeStamp>
+          </TimeStampCont>
+          <GridCont>
+            <SongMobile
 
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-          <SongMobile
+              SongName='Money Longer'
+              AlbumName='LUV. vs the World'
+              SongArtist='Lil Uzi Vert'
+              SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
+              AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
+            />
+  <SongMobile
 
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-          <SongMobile
+SongName='Money Longer'
+AlbumName='LUV. vs the World'
+SongArtist='Lil Uzi Vert'
+SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
+AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
+/>
 
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-          <SongMobile
-
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-          <SongMobile
-
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-
-        </GridCont>
-        </div>
-        <div>
-        <TimeStampCont>
-          <TimeStamp><Point/>Added These on - 03.12.12</TimeStamp>
-        </TimeStampCont>
-        <GridCont>
-          <SongMobile
-
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-          <SongMobile
-
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-          <SongMobile
-
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-          <SongMobile
-
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-          <SongMobile
-
-            SongName='Money Longer'
-            AlbumName='LUV. vs the World'
-            SongArtist='Lil Uzi Vert'
-            SongPreview='https://p.scdn.co/mp3-preview/42f7a2733d854fd5bbddb3d62e7df6a78cfac313?cid=774b29d4f13844c495f206cafdad9c86'
-            AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          />
-
-        </GridCont>
+          </GridCont>
         </div>
       </GridContInner>
     </GridContOutter>
   }
 
+  if (!data) return <Cont
+
+    style={{
+      position: 'absolute',
+      top: 0,
+      zIndex: 10,
+      display: 'flex',
+      flexDirection: 'column-reverse',
+      color: vars.MAIN_WHITE,
+      fontWeight: '200',
+      alignItems: 'center',
+      justifyContent: 'center',
+      transition: 'all 0.2s'
+    }}
+
+  ><Ellipsis color={vars.MAIN_WHITE} /></Cont>
+
+    if (data.status != "success"){
+      return <Error statusCode = {404}/>
+    }
+
   return (
+    <> 
+       <Head>
+        <title>Music Wall page for @{username}</title>
+        <meta name="description" content="Generated by create next app" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="color-scheme" content="light dark"></meta>
+        <meta name="theme-color" content= {vars.DARK_GREY} />
+      </Head>
 
-    <Cont>
+       <Cont>
+      <ProfileBar
+      bio = {data.profile.profileinfo.bio}
+        DisplayName = {data.profile.profileinfo.displayname}
+      />
+    
+      <SongLayout />
+    </Cont>
+    </>
 
-      <ProfileBar />
-      <CategoryCont>
-        <Link href={`/${username}/songs`}>
+  )
+}
 
-          <Category className={(pathname == `/${username}/songs`) ? 'active' : 'normal'}>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {/* <CategoryCont>
+        <Link href={`/u/${username}/songs`}>
+
+          <Category className={(pathname == `/u/${username}/songs`) ? 'active' : 'normal'}>
             <Music />Songs
           </Category>
         </Link>
 
-        <Link href={`/${username}/albums`} >
-          <Category className={(pathname == `/${username}/albums`) ? 'active' : 'normal'}>
+        <Link href={`/u/${username}/albums`} >
+          <Category className={(pathname == `/u/${username}/albums`) ? 'active' : 'normal'}>
             <Album />Albums
           </Category>
         </Link>
 
-        <Link href={`/${username}/artists`}>
-          <Category className={(pathname == `/${username}/artists`) ? 'active' : 'normal'}>
+        <Link href={`/u/${username}/artists`}>
+          <Category className={(pathname == `/u/${username}/artists`) ? 'active' : 'normal'}>
             <Artist /> Artists
           </Category>
         </Link>
-      </CategoryCont>
-      <SongLayout />
-    </Cont>
-  )
-}
+      </CategoryCont> */}

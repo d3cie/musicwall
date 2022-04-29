@@ -71,12 +71,18 @@ const createUser = async (username, password, email) =>{
 
     try {
         let passwordhash = await bcrypt.hash(password, 10)
-    
-        
+     
         const response = await User.create({
             username,
             email,
-            passwordhash
+            passwordhash,
+            profileinfo:{
+                displayname:null,
+                birthday:null,
+                bio:null,
+                sex:null,
+                profileimagepath:null
+            }
         })
 
         return ({status:'success'})
