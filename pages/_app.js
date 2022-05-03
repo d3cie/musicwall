@@ -71,6 +71,10 @@ function MyApp({ Component, pageProps }) {
     ,[])
  
 
+//this is a note to anyone reading this code base in the future 
+//i decided to use inline styles cause for some reason styled-components
+//was taking a second to load.
+
 if(loading)return<div style = {{background:vars.GREY,
   width: '100%',
   height: '100vh',

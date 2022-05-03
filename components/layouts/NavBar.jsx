@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import * as vars from '../../vars'
 import styled from 'styled-components'
 import Logo from '../primitives/Logo/Icon'
@@ -6,6 +6,10 @@ import Compass from '../primitives/Icons/Compass'
 import Profile from '../compounds/Profile'
 import SearchBox from '../primitives/Inputs/SearchBox'
 import {useRouter} from 'next/router'
+import {LoginContext} from '../../pages/_app'
+import SecondaryButton from '../primitives/Buttons/SecondaryButton'
+import TertiaryButton from '../primitives/Buttons/TertiaryButton'
+import MagnifyingGlass from '../primitives/Icons/MagnifyingGlass'
 
 const Wrapper = styled.div`
     width:100%; 
@@ -41,9 +45,17 @@ const Navigation = styled.nav`
     justify-content: flex-end;
     `
 const NavBut = styled.button`
-    height:100%;
-    background-color:#00000000;
+    height:36px;
+    background-color:${vars.MAIN_WHITE};
+    /* width:34.04px; */
+    /* aspect-ratio: 1/1; */
+    padding:0;
+    width: 36px;
+    border-radius:50%;
     border:none;
+    overflow: hidden;
+    cursor: pointer;
+
 
     @keyframes fadeOut {
         from { opacity:1; transform: translateX(0);}
@@ -54,7 +66,7 @@ const NavBut = styled.button`
         from { opacity:0; transform: translateX(20px);}
     }
 
-    margin-inline:8px;
+    margin-inline:4px;
 `
 const SearchBarCont = styled.div`
     height:60px;
@@ -86,6 +98,7 @@ const ProfileCont = styled.div`
     display:flex;
     align-items: center;
     /* aspect-ratio: 1/1; */
+    margin-left: 4px;
     height: 100%;
     justify-content: center;
    
@@ -103,6 +116,9 @@ const ProfileCont = styled.div`
 export default function NavBar() {
     const [isSearching, setIsSearching] = useState(null)
     const [timeOut, setTimeOut] = useState(true)
+    const isLogged = useContext(LoginContext)
+
+    const router = useRouter()
     // useEffect(()=>{
     //     window.addEventListener('searched', ()=>{setIsSearching(true)})
     // }
@@ -121,35 +137,17 @@ export default function NavBar() {
                     <Logo/>
 
                 </LogoCont>
-
+                {(isLogged != null)?
                 <Navigation>
-                    <SearchBarCont
-                    style = {{ animation: (isSearching != null)?(isSearching)?'fadeO .2s ease-in-out forwards': 'fadeI .2s ease-in-out forwards':'' }}
-
-                    >
-                    <SearchBox
-                    searchButtonOnClick = {()=>{
-                        if(!isSearching){
-                            setIsSearching(true)}
-                        if(isSearching){
-                          
-                            setIsSearching(false)
-                        }
-                    }}
-                    isExpanded = {isSearching}/>
-                </SearchBarCont
-                
-                >
-         
-                {/* setTimeout(()=>{return ''}, 200 ) */}
-                    {/* {(isSearching)? '' :  */}
-                    <NavBut 
                    
-                    style = {{ animation: (isSearching != null)?(isSearching)?'fadeOut .2s ease-in-out forwards': 'fadeIn .2s ease-in-out forwards':'' }}>
-
+                    <NavBut>
                         <Compass/>
-
                     </NavBut>
+                    <NavBut 
+                   onClick = {()=>{router.push('/search')}}
+                   style = {{padding:'9px', background:vars.MAIN_WHITE}}>
+                       <MagnifyingGlass/>
+                   </NavBut>
                     {/* } */}
 
                     {/* {(isSearching)? '':  */}
@@ -160,11 +158,17 @@ export default function NavBar() {
                                             >
                         <Profile
                         padding = "2px"
+
                         height = "32.5px"
                         width = '32.5px'/>
                         </ProfileCont>
                         {/* } */}
                 </Navigation>
+                : <Navigation>
+                    
+                    <SecondaryButton onClick = {()=>{router.push(`/accounts/login?next=${router.asPath}`)}} style = {{padding: '18px 20px'}}buttonTitle = {'Log In'}/>
+                    <TertiaryButton buttonTitle = {'Sign up'}/>
+                </Navigation>}
                 
             </Cont>
       </Wrapper>

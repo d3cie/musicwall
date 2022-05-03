@@ -13,7 +13,7 @@ const ButtonStyle  = styled.button`
     width:fit-content;
     height: 30px;
     font-weight: 500;
-    background-color:${vars.MAIN_BLUE};
+    background-color:${vars.LIGHT_GREY};
     border:none;
     cursor: pointer;
     transition: all 0.2s;
@@ -36,11 +36,11 @@ const ButtonStyle  = styled.button`
             filter:brightness(100%);}
     }
 
-    color:${vars.MAIN_WHITE};
-    padding: 8px 15px;
+    color:${vars.MAIN_BLUE};
+    padding: 18px 20px;
 
     &:hover{
-        filter:brightness(105%);
+        filter:brightness(110%);
     }
     &:disabled{
       cursor: not-allowed;
@@ -50,7 +50,7 @@ const ButtonStyle  = styled.button`
    font-weight: 500px;
     `
 
-export default function SecondaryButton(props) {
+export default function TertiaryButton(props) {
     
   return (
     <ButtonStyle 

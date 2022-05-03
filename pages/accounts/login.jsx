@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import * as vars from '../../vars'
 import PrimaryBox from '../../components/primitives/Inputs/PrimaryBox'
 import PrimaryButton from '../../components/primitives/Buttons/PrimaryButton'
-
-
+import { useRouter } from 'next/router'
+import loginservice from '../../services/login'
 
 
 const ButtonContOut = styled.div`
@@ -47,29 +47,52 @@ const RegisterText = styled.h6`
 
 
 export default function Login() {
+    const router = useRouter()
+    const {next} = router.query
 
-
-    return (
-
+    const [isWorking, setIsWorking] = useState(false)
+    const [errorMsg, setErrorMsg] = useState()
     
-           
-             
+    async function formSubmit() {
+            setErrorMsg()
+            const username = document.getElementById('username').value
+            const password = document.getElementById('password').value
+            if(username && password &&!isWorking){
+                setIsWorking(true)
+                const response = await loginservice(username, password)
+                const result = await response.json()
+
+                if(result.status == 'error'){
+                    setErrorMsg(result.message)
+                    setIsWorking(false)
+                    return
+                }
+
+                if(result.status == 'success'){
+                    window.location.href =next
+                }
+                return
+            }
+            setErrorMsg('All fields are required.')
+    }
+
+    return (       
 <React.Fragment>
                 <InputCont>
-                    <PrimaryBox placeholderText='Username' />
+                    <PrimaryBox id = 'username' type = 'username' placeholderText='Username' />
                 </InputCont>
                 <InputCont>
-                    <PrimaryBox placeholderText='Password' />
+                    <PrimaryBox id = 'password' type = 'password' placeholderText='Password' />
                 </InputCont>
 
                 <LinkStyle href='' >
                     forgot password?
                 </LinkStyle>
-                <ErrorMsg></ErrorMsg>
+                <ErrorMsg>{errorMsg}</ErrorMsg>
 
                 <ButtonContOut>
 
-                    <PrimaryButton  buttonTitle={"Login"} />
+                    <PrimaryButton onClick={formSubmit} isWorking={isWorking} buttonTitle={"Login"} />
 
                 </ButtonContOut>
 

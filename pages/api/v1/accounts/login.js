@@ -47,10 +47,11 @@ const handler = async (req, res) => {
             }
             
             const logintoken = createLoginToken(userDocument, username).token
-            
-            // res.setHeader('Set-Cookie', [`logintoken=${logintoken};HttpOnly`])
+     
+           
                 cookies.set('logintoken', logintoken, {
-                    httpOnly: true // true by default
+                    httpOnly: true,
+                    maxAge: 86400*60
                 })
 
               res.status(200)

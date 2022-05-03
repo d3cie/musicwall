@@ -221,6 +221,7 @@ AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=r
        <Cont>
       <ProfileBar
       bio = {data.profile.profileinfo.bio}
+      username = {data.profile.username}
         DisplayName = {data.profile.profileinfo.displayname}
       />
     

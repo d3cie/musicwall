@@ -45,12 +45,13 @@ const Name = styled.h1`
 
     display: flex;
     margin-top:0px;
+    margin-bottom:-5px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     `
 const Bio = styled.div`
-        font-weight: 100;
+        font-weight: 400;
     font-size: 1.1rem;
     color:${vars.MAIN_WHITE};
     margin: 20px 0;
@@ -123,6 +124,12 @@ const DetailsCont = styled.section`
         font-size:14px}
     padding-top:0px;
     padding-right:0;
+
+    & #username{
+        color: ${vars.MAIN_WHITE};
+        font-size: 1.2em;
+        margin-bottom:15px;
+    }
     `
 const ProfileCont = styled.div`
     max-width:130px;
@@ -163,8 +170,10 @@ export default function ProfileBar(props) {
                         }}
                         title="US"
                     />
-                
+
                     <SecondaryButton style={{ marginLeft: '30px' }} state={'activei'} buttonTitle={'pin'} /></Name>
+                    <div id = 'username'>@{props.username}</div>
+
                     <div style={{ display: 'flex' ,flexDirection:'column'}}>
                         <PinsCont>
                             <Fire /> <b>436</b>

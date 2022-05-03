@@ -21,7 +21,7 @@ const GetToken = async function(){
 export default function handler(req, res) {
     if (req.method === 'GET') {
         GetToken()
-        .then((TOKEN)=>{res.send(TOKEN); res.status(200)})
+        .then((TOKEN)=>{res.send({TOKEN}); res.status(200)})
      
         
     } 
