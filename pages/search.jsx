@@ -180,7 +180,7 @@ const dummySongs = [<SongSearchDummy key={1} />, <SongSearchDummy key={2} />, <S
 const dummyArtists = [<ArtistSearchDummy key={1} />, <ArtistSearchDummy key={2} />, <ArtistSearchDummy key={3} />, <ArtistSearchDummy key={4} />, <ArtistSearchDummy key={5} />]
 const dummyAlbums = [<AlbumSearchDummy key={1} />, <AlbumSearchDummy key={2} />, <AlbumSearchDummy key={3} />, <AlbumSearchDummy key={4} />, <AlbumSearchDummy key={5} />]
 
-export default function search() {
+export default function Search() {
   const router = useRouter()
 
   const [showMain, setShowMain] = useState(false)

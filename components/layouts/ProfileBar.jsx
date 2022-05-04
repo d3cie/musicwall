@@ -171,16 +171,17 @@ export default function ProfileBar(props) {
                         title="US"
                     />
 
-                    <SecondaryButton style={{ marginLeft: '30px' }} state={'activei'} buttonTitle={'pin'} /></Name>
+                    {/* <SecondaryButton style={{ marginLeft: '30px' }} state={'active'} buttonTitle={'pin'} /> */}
+                    </Name>
                     <div id = 'username'>@{props.username}</div>
 
                     <div style={{ display: 'flex' ,flexDirection:'column'}}>
-                        <PinsCont>
+                        {/* <PinsCont>
                             <Fire /> <b>436</b>
-                        </PinsCont>
-                        <PinsCont style={{ fill: vars.MAIN_RED }}>
+                        </PinsCont> */}
+                        {/* <PinsCont style={{ fill: vars.MAIN_RED }}>
                             <Thumbtack /> <b/>Pinned By<a><b>40</b>Pinned</a><b>40</b> 
-                        </PinsCont>
+                        </PinsCont> */}
                     </div>
                     <Bio>
                         {props.bio}
