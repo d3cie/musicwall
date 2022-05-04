@@ -15,6 +15,7 @@ import DualRing from '../../../components/primitives/Animations/DualRing'
 import getuser from '../../../services/getuser'
 import Error from 'next/error'
 import Head from 'next/head'
+import PlaySongSpotify from '../../../components/compounds/Song/PlaySongSpotify'
 
 const Cont = styled.main`
   /* background-color:${vars.GREY}; */
@@ -219,6 +220,7 @@ AlbumCover='https://images.unsplash.com/photo-1498598457418-36ef20772bb9?ixlib=r
       </Head>
 
        <Cont>
+         {/* <PlaySongSpotify/> */}
       <ProfileBar
       bio = {data.profile.profileinfo.bio}
       username = {data.profile.username}

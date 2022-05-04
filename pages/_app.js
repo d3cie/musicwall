@@ -85,8 +85,12 @@ if(loading)return<div style = {{background:vars.GREY,
 
 }}> <Icon/> </div>
 
+if (router.pathname == '/'){
+  return <Component {...pageProps} />
+}
+
   if (router.pathname == '/accounts/login' ||
-  router.pathname == '/accounts/edit' ||
+    router.pathname == '/accounts/edit' ||
       router.pathname ==  '/accounts/signup'){
 
     return <Cont>

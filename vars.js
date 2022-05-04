@@ -4,10 +4,13 @@ export const DARKER_BLUE = '#033872'
 export const PALE_BLUE = '#7cafc4'
 export const YELLOW = "#ffda00"
 export const MAIN_RED = '#ef3b22'
-export const ORANGE = '#f79256'
-export const GREY = '#1a1a1a'
-export const DARK_GREY = '#121212'
-export const LIGHT_GREY = '#2a2a2a'
+export const ORANGE = '#ef8342'
+export const GREY = '#202027'
+//1a1a1a
+export const DARK_GREY = '#202029'
+//121212
+export const LIGHT_GREY = '#2a2a2f'
+//2a2a2a
 export const LIGHER_GREY = '#3a3a3a'
 export const MAX_WIDTH = '1200px'
 export const SECONDARY_BLUE = '#4d446f'

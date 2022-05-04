@@ -148,7 +148,7 @@ const ProfileCont = styled.div`
 
 export default function ProfileBar(props) {
     return (
-        <Wrapper>
+        <Wrapper {...props}>
             <Cont>
                 <ProfileCont>
                     <Profile

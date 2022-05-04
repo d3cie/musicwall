@@ -10,7 +10,7 @@ import Spotify from '../../primitives/Icons/Spotify'
 const Wrapper = styled.div`
     border-radius:4px;
     overflow:hidden;
-    padding:10px;
+    padding:5px;
     /* padding-right:40px; */
     min-width: 350px;
     @media (max-width: 450px) {
@@ -28,7 +28,7 @@ const Wrapper = styled.div`
    
     & div{
         overflow:hidden;
-        border-radius:4px;
+        border-radius:2px;
 
     }
     width:fit-content;
@@ -57,7 +57,7 @@ const PlayPauseCont = styled.div`
 
     }
     & svg{
-        fill:${vars.ACCENT_COLOR};
+        fill:${vars.MAIN_BLUE};
         opacity:.8;
 
         transition: .2s;
@@ -197,7 +197,6 @@ export default function Song(props) {
             <PlayPauseCont>
           
                 <button>
-                    <Spotify style = {{fill:'#1DB954'}}/>
                 </button>
                 {(props.isPreview) ?
                     <PlayPause
@@ -213,7 +212,7 @@ export default function Song(props) {
 
 
 
-
+            {/* <iframe src="https://open.spotify.com/embed/track/0lqAn1YfFVQ3SdoF7tRZO2?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> */}
 
         </Wrapper>
 
