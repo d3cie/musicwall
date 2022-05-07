@@ -11,14 +11,14 @@ const Wrapper = styled.div`
     border-radius:4px;
     overflow:hidden;
     position:relative;
-    width:210px;
+    width:190px;
     background-color:${vars.LIGHT_GREY};
     padding:10px;
     margin:5px;
     height:fit-content;
-    
-    padding-top:20px;
-    padding-bottom: 20px;
+    border:solid 1px ${vars.LIGHER_GREY};
+    padding-top:10px;
+    padding-bottom: 10px;
     `
 
 const DetailsInner = styled.div`
@@ -26,7 +26,21 @@ const DetailsInner = styled.div`
     font-size:1rem;
     font-weight: 500;
     text-align: center;
+    justify-content: center;
+    line-height:25px;
+    display:flex;
+    & button{
+        font-size:15px;
+        padding:0;
+     
+        margin:2px;
+        margin-left: 5px;
+        height:20px;
+        padding:2px;
+        width:20px;
+        font-weight: 600;}
 
+       
     & div{
         opacity:.8;
         font-size:.9rem;
@@ -104,16 +118,14 @@ export default function ArtistSearch(props) {
   
             
        
-        <ButtonCont>
-            <SecondaryButton buttonTitle = { <Plus/> }/>
-            </ButtonCont>
+     
     <div
-    style = {{borderRadius :'50%',border:`solid ${vars.MAIN_BLUE}`,width:'100%', overflow:'hidden'}}
+    style = {{borderRadius :'50%',border:`solid ${vars.LIGHER_GREY} 1px`,width:'100%', overflow:'hidden'}}
     >
         <Image
-        width = '190px'
+        width = '170px'
         alt = {props.Artist}
-        height = '190px'
+        height = '170px'
          imagesrc = {props.ArtistImage}
          />
          </div>
@@ -127,7 +139,9 @@ export default function ArtistSearch(props) {
             
 
         
-
+                   {/* <ButtonCont> */}
+            <SecondaryButton buttonTitle = { <Plus/> }/>
+            {/* </ButtonCont> */}
        </DetailsInner>
        
    </Details>

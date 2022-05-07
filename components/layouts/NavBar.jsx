@@ -18,6 +18,7 @@ const Wrapper = styled.div`
     /* padding:20px; */
     display:flex;
     overflow: hidden;
+    margin-bottom: -1px;
     align-items:center;
     justify-content:center;`
     

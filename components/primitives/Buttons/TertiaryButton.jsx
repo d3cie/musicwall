@@ -14,7 +14,8 @@ const ButtonStyle  = styled.button`
     height: 30px;
     font-weight: 500;
     background-color:${vars.LIGHT_GREY};
-    border:none;
+    border:solid 1px ${vars.LIGHER_GREY};
+
     cursor: pointer;
     transition: all 0.2s;
     &:active{
@@ -47,7 +48,7 @@ const ButtonStyle  = styled.button`
       background:grey;
       border-color:grey;
     }
-   font-weight: 500px;
+   font-weight: 900px;
     `
 
 export default function TertiaryButton(props) {

@@ -30,36 +30,45 @@ const createLoginToken =(user, username) =>{
   //remember to refresh the token on each login
 }
 
-
 const handler = async (req, res) => {
     if (req.method === 'POST') {
       const { username, password } = req.body;
       const cookies = new Cookies(req, res)
 
         if (username && password) {
-            const userDocument = await User.findOne( {username: username} ).exec()
-            const isUser = await verifyUser(userDocument, password)
 
-            if (!isUser){
-                res.status(401)
-                res.send({status: 'error', message: 'Invalid Details'})
-                return
-            }
+            try{
+                const userDocument = await User.findOne( {username: username} ).exec()
+                const isUser = await verifyUser(userDocument, password)
+
+                if (!isUser){
+                    res.status(401)
+                    res.send({status: 'error', message: 'Invalid Details'})
+                    return ({status: 'error', message: 'Invalid Details'})
+                }
+                
+                const logintoken = createLoginToken(userDocument, username).token
+                var expires =  (new Date(Date.now() + 5184000000))
             
-            const logintoken = createLoginToken(userDocument, username).token
-     
-           
-                cookies.set('logintoken', logintoken, {
-                    httpOnly: true,
-                    maxAge: 86400*60
-                })
+                    cookies.set('logintoken', logintoken, {
+                        httpOnly: true,
+                        expires: expires
+                    })
 
-              res.status(200)
-              res.json({status:'success', message: "Logged in successfully"});
-
+                res.status(200)
+                res.json({status:'success', message: "Logged in successfully"});
+                return {status:'success', message: "Logged in successfully"}
+            }
+            catch (e) {
+                console.log(e)
+                res.status(500)
+                res.json({status:'error', message: "Internal Error"});
+                return {status:'error', message: "Internal Error"}
+            }
         }
         else {
             res.status(422).send({status:'error', error:'Data incomplete'});
+            return {status:'error', error:'Data incomplete'}
         }
     } 
     else {

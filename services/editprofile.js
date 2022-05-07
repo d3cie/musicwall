@@ -1,19 +1,19 @@
-export default async function register(username, password, email) {
+export default async function edit(displayname, bio, birthday, profileimage,countrycode) {
 
     let result;
 
     try {
         result = await Promise.race([
-            fetch('/api/v1/accounts/signup',
+            fetch('/api/v1/accounts/edit',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password, email })
+                    body: JSON.stringify({ displayname, bio, birthday, profileimage,countrycode })
                 })
                 ,
 
                 new Promise((_, reject) =>
-                setTimeout(()=>reject(new Error('Timeout')), 10000)
+                setTimeout(()=>reject(new Error('Timeout')), 100000)
                 
                 )
       

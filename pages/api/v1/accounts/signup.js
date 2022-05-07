@@ -58,21 +58,24 @@ const emailValidator = (email) => {
 }
 
 const createUser = async (username, password, email) =>{
+    const validateUsername = userNameValidator(username)
+    const validatePassword = passwordValidator(password)
+    const validateEmail = emailValidator(email)
 
-    if (userNameValidator(username).status != 'ok'){
-        return userNameValidator(username)
+    if (validateUsername.status != 'ok'){
+        return validateUsername
     }
-    if (passwordValidator(password).status != 'ok'){
-        return passwordValidator(password)
+    if (validatePassword.status != 'ok'){
+        return validatePassword
     }
-    if (emailValidator(email).status != 'ok'){
-        return emailValidator(email)
+    if (validateEmail.status != 'ok'){
+        return validateEmail
     }
 
     try {
         let passwordhash = await bcrypt.hash(password, 10)
      
-        const response = await User.create({
+        await User.create({
             username,
             email,
             passwordhash,
@@ -112,7 +115,7 @@ const handler = async (req, res) => {
             res.send(newUser)
         }   
         else if(newUser.status == 'success'){
-            login(req,res).then(res.status(200).send({status:"success", message:"Signed in and logged in successfully"}))
+            login(req,res)
 
         }
         

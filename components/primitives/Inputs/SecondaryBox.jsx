@@ -6,19 +6,25 @@ import * as vars from '../../../vars'
 const InputStyle  = styled.input`
 
 
+    width:100%;
+   
+
+    
+
     font-size: 1.2em;
     border-radius:4px;
     font-weight: 400;
-    border:none;
     background-color: ${vars.GREY};
     color:${vars.MAIN_WHITE};
    padding: 10px 10px;
-    width:100%;
+    border: solid 1px  ${vars.LIGHT_GREY};
+    position: relative;
      
+  
     &:focus {
         outline: none;
-        color:${vars.GREY};
-        background-color:${vars.MAIN_WHITE};
+        color:${vars.MAIN_WHITE};
+        background-color:${vars.LIGHER_GREY};
     }
     `
 

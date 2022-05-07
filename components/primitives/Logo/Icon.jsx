@@ -11,7 +11,7 @@ const Icon = (props) => (
     {...props}
   >
     <defs>
-      <style>{".cls-2{fill:#eee}"}</style>
+      <style>{`.cls-2{fill:${props.color}}`}</style>
     </defs>
     <g id="Logo">
       <path
@@ -20,7 +20,7 @@ const Icon = (props) => (
         style={{
           stroke: "#eee",
           strokeMiterlimit: 10,
-          fill: "#eee",
+          fill: props.color,
         }}
       />
       <path
@@ -36,5 +36,7 @@ const Icon = (props) => (
     </g>
   </svg>
 )
-
+Icon.defaultProps = {
+  color:'#eee'
+}
 export default Icon

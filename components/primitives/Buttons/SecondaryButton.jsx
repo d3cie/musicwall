@@ -15,6 +15,8 @@ const ButtonStyle  = styled.button`
     font-weight: 500;
     background-color:${vars.MAIN_BLUE};
     border:none;
+    border:solid 1px ${vars.PALE_BLUE};
+
     cursor: pointer;
     transition: all 0.2s;
     &:active{

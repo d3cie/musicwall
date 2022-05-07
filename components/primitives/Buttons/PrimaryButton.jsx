@@ -14,7 +14,8 @@ const ButtonStyle  = styled.button`
     height: 40px;
     font-weight: 300;
     background-color:${vars.DARK_BLUE};
-    border:none;
+    border:solid 1px #0956ab;
+    /* border:none; */
     cursor: pointer;
     transition: all 0.2s;
     &:active{
@@ -39,7 +40,7 @@ const ButtonStyle  = styled.button`
       background:grey;
       border-color:grey;
     }
-   font-weight: 500px;
+   font-weight: 600px;
     `
 
 export default function PrimaryButton(props) {

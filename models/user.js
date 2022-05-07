@@ -5,8 +5,8 @@ var profileinfo = new Schema({
   displayname:{type: String},
   birthday:{type:Date},
   bio:{type: String},
-  sex:{type: String},
-  profileimagepath:{type: String}
+  countrycode:{type: String},
+  profileimage:{type: String}
 })
 
 var user = new Schema({

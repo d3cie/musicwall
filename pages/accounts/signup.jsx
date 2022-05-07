@@ -1,12 +1,13 @@
 
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import * as vars from '../../vars'
 import PrimaryBox from '../../components/primitives/Inputs/PrimaryBox'
 import PrimaryButton from '../../components/primitives/Buttons/PrimaryButton'
 import signupservice from '../../services/signup'
-
+import Head from 'next/head';
+import {useRouter} from 'next/router';
 
 
 const ButtonContOut = styled.div`
@@ -17,6 +18,11 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+
+@media (max-width:600px) {
+    margin-top:100px;
+    margin-bottom:40px;
+}
 `
 const InputCont = styled.div`
   padding:5px;
@@ -35,13 +41,15 @@ const ErrorMsg = styled.h4`
   word-wrap: break;
   text-align: center;
   margin:0;
-  max-width:328px;
+  font-weight: 500;
+  max-width:380px;
+  /* max-width:328px; */
   color:${vars.ORANGE};
   `
 
 const RegisterText = styled.h6`
   color:#bbb;
-  font-size:.8rem;
+  font-size:.9rem;
   /* opacity:.5; */
   font-weight: 400;
   margin-left:20px;
@@ -51,69 +59,77 @@ const RegisterText = styled.h6`
 export default function Signup() {
     const [isWorking, setIsWorking] = useState(false)
     const [errorMsg, setErrorMsg] = useState()
-    
+    const router= useRouter()
+
     async function formSubmit() {
-            setErrorMsg()
-            const email = document.getElementById('email').value
-            const username = document.getElementById('username').value
-            const password = document.getElementById('password').value
-            console.log(username, password,email)
-            if(email && username && password &&!isWorking){
-                setIsWorking(true)
-                const response = await signupservice(username, password, email)
+        setErrorMsg()
+        const email = document.getElementById('email').value
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        if (email && username && password && !isWorking) {
+            setIsWorking(true)
+            const response = await signupservice(username, password, email)
+
+            if (!response.error) {
                 const result = await response.json()
 
-                if(result.status == 'error'){
+                if (result.status == 'error') {
                     setErrorMsg(result.error)
                     setIsWorking(false)
                     return
                 }
 
-                if(result.status == 'success'){
-                    alert('donzxo')
+                if (result.status == 'success') {
+                    setIsWorking(false)
+                    router.push('/accounts/edit?next=/search')
+
                 }
-                return
+            }else{
+                setIsWorking(false)
+                setErrorMsg(response.error)
             }
-            setErrorMsg('All fields are required.')
-        // document.getElementById("form").submit(function(e) {
-        //     
-        // });
-        // Form submission
-        // document.getElementById("form").preventDefault();
-        // setButtonState(true)
-    
+            return
+
+        }
+        setErrorMsg('All fields are required.')
+
     }
 
     return (
 
-    
-           
-             
-            <React.Fragment>
-                <InputCont>
-                    <PrimaryBox  id = 'username' type = 'username' placeholderText='Username' />
-                </InputCont>
-                <InputCont>
-                    <PrimaryBox id = 'email'  type = 'email' placeholderText='Email' />
-                </InputCont>
-               
-                <InputCont>
-                    <PrimaryBox id = 'password' type = 'password' placeholderText='Password' />
-                </InputCont>
-               
 
 
-                <LinkStyle href='' >
-                    forgot password?
-                </LinkStyle>
-                <ErrorMsg>{errorMsg}</ErrorMsg>
 
-                <ButtonContOut>
+        <React.Fragment>
+            <Head>
+                <meta name="theme-color" content={vars.GREY} />
+                <title>Musicwall</title>
+                <link rel="icon" href="/icon.png" />
 
-                    <PrimaryButton isWorking={isWorking} onClick ={formSubmit}  buttonTitle={"Continue"} />
+                <meta name="description" content="Login to your Musicwall account." />
+            </Head>
+            <InputCont>
+                <PrimaryBox id='username' type='username' placeholderText='Username' />
+            </InputCont>
+            <InputCont>
+                <PrimaryBox id='email' type='email' placeholderText='Email' />
+            </InputCont>
 
-                </ButtonContOut>
-                <RegisterText>Already have an account? <Link href={'/accounts/login'}><a style={{ color: vars.MAIN_BLUE }}>Log In</a></Link></RegisterText>
-                </React.Fragment>
+            <InputCont>
+                <PrimaryBox id='password' type='password' placeholderText='Password' />
+            </InputCont>
+
+
+
+
+            <ErrorMsg>{errorMsg}</ErrorMsg>
+
+            <ButtonContOut>
+
+                <PrimaryButton isWorking={isWorking} onClick={formSubmit} buttonTitle={"Continue"} />
+
+            </ButtonContOut>
+            <RegisterText>Already have an account? <Link href={'/accounts/login'}><a style={{ color: vars.MAIN_BLUE }}>Log In</a></Link></RegisterText>
+        </React.Fragment>
     )
 }

@@ -13,7 +13,7 @@ const InputStyle  = styled.select`
     background-color: ${vars.DARK_GREY};
     color:${vars.MAIN_WHITE};
    padding: 9px 10px;
-    max-width:95px;
+    max-width:100px;
     position: relative;
      
     &:focus {
@@ -40,6 +40,7 @@ export default function Selector(props) {
   return (
       <div style = {{width:'fit-content',margin:'10px', position: 'relative'}}>
         <InputStyle type = 'date' required = {true} {...props}>
+            <option value = 'none'></option>
             {props.options}
         </InputStyle>
         <Label>{props.placeholderText}</Label>

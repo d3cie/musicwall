@@ -52,7 +52,11 @@ export default function Login() {
 
     const [isWorking, setIsWorking] = useState(false)
     const [errorMsg, setErrorMsg] = useState()
-    
+    document.getElementById('form').addEventListener('submit',
+    (e)=>{
+        e.preventDefault()
+    })
+
     async function formSubmit() {
             setErrorMsg()
             const username = document.getElementById('username').value
@@ -69,7 +73,11 @@ export default function Login() {
                 }
 
                 if(result.status == 'success'){
-                    window.location.href =next
+                    if(next){
+                        window.location.href =next
+                        return
+                    }
+                    window.location.href = `/u/${username}`
                 }
                 return
             }

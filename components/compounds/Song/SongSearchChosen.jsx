@@ -10,8 +10,9 @@ const Wrapper = styled.div`
     overflow:hidden;
     padding:5px;
     width:fit-content;
-    min-width: 95px;
+    min-width: 90px;
     margin:5px;
+    margin-inline: 0px;
     position:relative;
     display:flex;
    
@@ -58,10 +59,10 @@ export default function SongSearchChosen(props) {
                     imagesrc={props.AlbumCover}
                 />
             </div>
-
+{/* 
             <ButtonCont>
-              <SecondaryButton buttonTitle={<Minus/>} />
-            </ButtonCont>
+              <SecondaryButton  buttonTitle={<Minus/>} />
+            </ButtonCont> */}
 
 
 

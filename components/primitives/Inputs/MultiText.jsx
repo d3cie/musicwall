@@ -14,14 +14,17 @@ const InputStyle  = styled.textarea`
     background-color: ${vars.DARK_GREY};
     color:${vars.MAIN_WHITE};
    padding: 10px 10px;
-    min-width:300px;
+    min-width:350px;
+    width:100%;
+    border: solid 1px  ${vars.LIGHT_GREY};
     position: relative;
      
     &:focus {
         outline: none;
-        color:${vars.GREY};
-        background-color:${vars.MAIN_WHITE};
+        color:${vars.MAIN_WHITE};
+        background-color:${vars.LIGHT_GREY};
     }
+
     `
 const Label = styled.label`
         position:absolute;

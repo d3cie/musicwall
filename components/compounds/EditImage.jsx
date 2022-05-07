@@ -8,8 +8,8 @@ import XIcon from '../primitives/Icons/XIcon'
 
 
 const OutCont = styled.div`
-       width: 100vw;
-    height: 100vh;
+       width: 100%;
+       height: 100%;
     overflow:hidden;
     background-color:#000000aa;
     position:absolute;
@@ -18,28 +18,44 @@ const OutCont = styled.div`
     top:0;
         z-index:5;
 
-    @media (max-width: 600px) {
-      background-color: ${vars.GREY};
-
-    }
+ 
     
     display:flex;
     justify-content: center;
-    align-items: center;`
+    align-items: center;
+    @media (max-width: 600px) {
+      /* top:-30%; */
+          height: 120vh;
+
+      background-color: ${vars.GREY};
+      justify-content: left;
+    align-items: left;
+    }
+    `
 
 const ExitButton = styled.button`
     position:absolute;
-    right:5%;
+    left:5%;
     height:30px;
     background-color:#00000000;
     border:none;
+    z-index:10;
     fill:${vars.MAIN_WHITE};
-    top:5%;
+    /* top:5%; */
 `
 
 const Cont = styled.div`
       width:fit-content;
+          border:solid 1px ${vars.LIGHT_GREY};
     height: fit-content;
+    position: absolute;
+      @media (max-width: 600px) {
+        /* height: 100%; */
+        top:0;
+
+        border:none;
+    
+    }
     @keyframes fadein {
       from{
         opacity:0;
@@ -53,10 +69,9 @@ const Cont = styled.div`
     animation: fadein 0.2s ease-in-out forwards;
     background-color: ${vars.GREY};
     padding:0px;
-   
+
     @media (max-width: 350px) {
       /* width:100%; */
-      transform:scale(.8);
     }
     border-radius: 4px;
     border-bottom-left-radius: 0px;
@@ -75,7 +90,7 @@ const TopBar = styled.div`
 const Title = styled.h2`
     margin:0px;
     font-size: 1rem;
-    font-weight: 200;
+    font-weight: 600;
     color:${vars.MAIN_WHITE};
     `
 const Next = styled.button`
@@ -87,7 +102,7 @@ const Next = styled.button`
     cursor:pointer;
 
     font-size: 1rem;
-    font-weight: 100;
+    font-weight: 600;
     color:${vars.MAIN_BLUE};
     `
 const Zoom = styled.span`
@@ -98,6 +113,8 @@ const Zoom = styled.span`
         background:${vars.DARK_GREY};
         border:none;
         margin-inline:2px;
+        font-weight: 600;
+
         cursor:pointer;
         padding-inline:10px ;
     }`
@@ -125,18 +142,23 @@ class EditImage extends React.Component {
   
   render(){
 
-  return (
-    <OutCont>
-      <ExitButton onClick={this.props.exitButton} > <XIcon/> </ExitButton>
+  return (<>
+
+  <OutCont>
       <Cont>
         <TopBar>
+        {/* <ExitButton onClick={this.props.exitButton} > <XIcon/> </ExitButton> */}
+
             <Zoom>
-            <button onClick = {(e) => this.setState({zoomValue:1 })} >x1</button> 
-            <button onClick = {(e) => this.setState({zoomValue:1.5 })} >x1.5</button>
-             <button onClick = {(e) => this.setState({zoomValue:2 })}>x2</button>
+            <button type="button" onClick = {(e) => this.setState({zoomValue:1 })} >x1</button> 
+            <button type="button" onClick = {(e) => this.setState({zoomValue:1.5 })} >x1.5</button>
+             <button type="button" onClick = {(e) => this.setState({zoomValue:2 })}>x2</button>
             </Zoom>
           <Title>Crop</Title>
-          <Next   onClick = {this.onClickSave}> Next</Next>
+          {/* <ExitButton onClick={this.props.exitButton} > Cancel </ExitButton> */}
+          {/* <Next  style={{color: vars.MAIN_WHITE, right:70}} onClick={this.props.exitButton}> Cancel</Next> */}
+
+          <Next type="button"  onClick = {this.onClickSave}> Next</Next>
         </TopBar>
         <AvatarEditor
             ref={this.setEditorRef}
@@ -154,6 +176,8 @@ class EditImage extends React.Component {
         </AvatarEditor>
       </Cont>
     </OutCont>
+    </>
+    
   )
 }
 }

@@ -6,13 +6,18 @@ import DualRing from '../../primitives/Animations/DualRing'
 import SecondaryButton from '../../primitives/Buttons/SecondaryButton'
 import PlayPause from '../../primitives/Toggles/PlayPause'
 import Plus from '../../primitives/Icons/Plus'
-
+import Minus from '../../primitives/Icons/Minus'
+import PlaySongSpotify from './PlaySongSpotify'
 const Wrapper = styled.div`
     border-radius:4px;
     overflow:hidden;
     padding:5px;
     width:100%;
+    transition: all 0.2s;
     max-width:700px;
+    :hover{
+        background-color:${vars.LIGHER_GREY};
+    }
     /* padding-right:40px; */
     /* min-width: 350px; */
     /* @media (max-width: 450px) {
@@ -24,10 +29,8 @@ const Wrapper = styled.div`
     position:relative;
 
     background: ${vars.LIGHT_GREY};
-    outline:solid 1px ${vars.LIGHT_GREY};
-    @media (prefers-color-scheme: dark) {
-        background: ${vars.GREY};
-}
+    border:solid 1px ${vars.LIGHER_GREY};
+
     display:flex;
    
     & div{
@@ -122,42 +125,25 @@ const Exclamation = (props) => (
 )
 
 export default function SongSearch(props) {
-    const [isBuffering, setIsBuffering] = useState(true)
     const [isPlaying, setIsPlaying] = useState(false)
-    const [songFile, setSongFile] = useState()
-    const [isError, setError] = useState(false)
-
-    useEffect(() => {
-        if(props.SongPreview != null){
-        setSongFile(new Audio(props.SongPreview));
-        () => {
-            songFile.load();
-
-        }
-
-    }},
-        [])
+    const [isChosen, setIsChosen] = useState(props.isSongChosen)
 
 
-    function playSong() {
-        songFile.addEventListener('ended', () => { setIsPlaying(false) })
-
-        if (!isPlaying) {
-            songFile.play()
-            setIsPlaying(true)
+    function addRemoveSong(){
+        if(!isChosen){
+            props.addSong()
+            setIsChosen(true)
             return
         }
-
-        setIsPlaying(false)
-        songFile.pause()
+        setIsChosen(false)
+        props.removeSong()
     }
-
-
+  
     return (
+        <>
+        
         <Wrapper>
-            <audio id='sound' src={songFile}></audio>
-            {(!isBuffering) ? <Loading><DualRing /></Loading> : ''}
-            {(isError) ? <Loading><Exclamation /><a style={{ color: vars.ACCENT_COLOR, cursor: 'pointer' }} onClick={() => { playSong(testfile) }}></a></Loading> : ''}
+            
 
 <div style = {{minWidth:'60px'}}>
 <Image
@@ -183,22 +169,26 @@ export default function SongSearch(props) {
             </DetailsInner>
 
 
+             
 
             <ButtonCont>
-            {(props.SongPreview != null)?
-            <SecondaryButton onClick ={()=>playSong()} style ={{backgroundColor:vars.ACCENT_COLOR}} buttonTitle = {<PlayPause isPlay={!isPlaying} color = {vars.MAIN_WHITE}/>}/>
-            :''
-            }
-            <SecondaryButton buttonTitle = { <Plus/> }/>
+            {/* {(props.SongPreview != null)? */}
+            <SecondaryButton onClick ={()=>props.onPlay()} style ={{backgroundColor:vars.ORANGE, borderColor:vars.ACCENT_COLOR}} buttonTitle = {<PlayPause isPlay={!isPlaying} color = {vars.MAIN_WHITE}/>}/>
+            {/* :'' */}
+            {/* } */}
+            <SecondaryButton style={{backgroundColor:(!isChosen)?vars.MAIN_BLUE:vars.MAIN_RED, borderColor:(!isChosen)?vars.MAIN_BLUE:'#bb7777'}} onClick = {addRemoveSong} buttonTitle = {(isChosen)?<Minus/>:<Plus/> }/>
           
             </ButtonCont>
 
 
 
 
+                      
 
         </Wrapper>
+                  {/* <PlaySongSpotify/> */}
 
+        </>
     )
 }
 SongSearch.defaultProps = {

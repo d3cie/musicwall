@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     border-radius:4px;
     overflow:hidden;
     position:relative;
-    width:210px;
+    width:190px;
     
     margin:5px;
     padding:5px;
@@ -118,10 +118,10 @@ export default function AlbumSearch(props) {
     <Wrapper>
   
         <Image
-        width = '200px'
+        width = '180px'
         alt = {props.AlbumName}
           
-        height = '200px'
+        height = '180px'
          imagesrc = {props.AlbumCover}
          />
 

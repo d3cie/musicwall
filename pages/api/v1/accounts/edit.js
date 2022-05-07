@@ -10,10 +10,10 @@ const handler = async (req, res) => {
           displayname: req.body?.displayname,
           birthday: req.body?.birthday,
           bio: req.body?.bio,
-          sex: req.body?.sex,
-          profileimagepath: req.body?.profileimagepath
+          countrycode: req.body?.countrycode,
+          profileimage: req.body?.profileimage
      }}
-
+  
      User.findOneAndUpdate(filter, update).then(() => {res.status(200).send({status: 'success', message:'Updated Profile'})})
                                           .catch((err)=>{console.log(err); res.status(500).send({status: 'error'})})
 }

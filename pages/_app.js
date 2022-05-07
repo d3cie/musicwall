@@ -15,6 +15,7 @@ const Cont = styled.div`
 
       @media (max-width: 600px) {
       background-color: ${vars.GREY};
+      height: 110vh;
 
     }
     
@@ -23,7 +24,7 @@ const Cont = styled.div`
     align-items: center;
     `
 
-const FormCont = styled.main`
+const FormCont = styled.form`
     width:fit-content;
     height: fit-content;
     @keyframes fadein {
@@ -39,8 +40,12 @@ const FormCont = styled.main`
     padding:20px;
     padding-bottom: 20px;
     padding-top:40px;
-    @media (max-width: 350px) {
-      transform:scale(.8);
+    border:solid 1px ${vars.LIGHT_GREY};
+    @media (max-width: 600px) {
+      border:none;
+
+      transform:scale(1);
+      padding:0px;
 
     }
     border-radius: 4px;
@@ -57,7 +62,10 @@ function MyApp({ Component, pageProps }) {
     
   useEffect(
     ()=>{
+     
       async function getData(){
+       
+
       const response = await fetch('/api/v1/accounts/verifylogin').then((res)=>{return res})
       const responsejson = await response.json()
       if (responsejson.status == 'success'){
@@ -65,8 +73,9 @@ function MyApp({ Component, pageProps }) {
       }
       setIsLoading(false)
     }
-   getData()
+  
 
+  getData()
   }
     ,[])
  
@@ -83,18 +92,24 @@ if(loading)return<div style = {{background:vars.GREY,
   justifyContent: 'center',
   alignItems: 'center'
 
-}}> <Icon/> </div>
+}}>
+ 
+  
+   <Icon/> </div>
 
 if (router.pathname == '/'){
   return <Component {...pageProps} />
 }
+function handleForm(event) { event.preventDefault(); } 
+
 
   if (router.pathname == '/accounts/login' ||
     router.pathname == '/accounts/edit' ||
       router.pathname ==  '/accounts/signup'){
 
     return <Cont>
-      <FormCont onsubmit="return false" id = 'form'>
+     
+      <FormCont onSubmit={(e)=>{handleForm(e);return false}} id = 'form'>
       <Component {...pageProps} />
       </FormCont>
       </Cont>
