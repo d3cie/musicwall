@@ -10,6 +10,8 @@ import Plus from '../../primitives/Icons/Plus'
 const Wrapper = styled.div`
     border-radius:4px;
     overflow:hidden;
+    border:solid 1px ${vars.LIGHER_GREY};
+
     position:relative;
     width:160px;
     background-color:${vars.GREY};
@@ -33,7 +35,7 @@ const DetailsInner = styled.div`
 
 
 
-export default function Artist(props) {
+export default function ArtistMobile(props) {
         
    return (
     <Wrapper>

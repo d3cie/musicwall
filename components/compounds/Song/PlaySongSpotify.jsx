@@ -24,7 +24,7 @@ const Wrapper = styled.div`
       position:absolute;
       right:20px;
       border:none;
-      top:20px;
+      top:90px;
       background: transparent;
       fill:${vars.MAIN_WHITE};
     }
@@ -38,14 +38,6 @@ export default function PlaySongSpotify(props) {
 
   return (
     <Wrapper>
-<Head>
-        <title>Musicwall | Search</title>
-        <meta name="description" content="Search musicwall for your favourite music and artists" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="color-scheme" content="light dark"></meta>
-        <meta name="theme-color" content= '#09090b' />
-      </Head>
-      
       <button onClick = {()=>props.closePlayer()}> <XIcon/> </button>
       {(isLoading)?<Ellipsis color = {vars.MAIN_WHITE}/>:'' }
        <iframe id = "frame" onLoad = {()=>{setIsLoading(false)}} style = {{maxWidth:vars.MAX_WIDTH, borderRadius:4}} src={`https://open.spotify.com/embed/track/${props.id}?utm_source=generator`} width= {"100%"} height="380px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>

@@ -6,18 +6,23 @@ import * as vars from '../../../vars'
 import DualRing from '../../primitives/Animations/DualRing'
 import SecondaryButton from '../../primitives/Buttons/SecondaryButton'
 import Plus from '../../primitives/Icons/Plus'
+import Minus from '../../primitives/Icons/Minus'
 
 const Wrapper = styled.div`
     border-radius:4px;
     overflow:hidden;
     position:relative;
-    width:190px;
-    
+    width:192px;
+    border:solid 1px ${vars.LIGHER_GREY};
     margin:5px;
     padding:5px;
     height:fit-content;
     /* min-height: 300px; */
     background-color:${vars.LIGHT_GREY};
+    & div{
+        overflow:hidden;
+        border-radius: 4px;
+    }
     `
 
 const DetailsInner = styled.div`
@@ -113,14 +118,23 @@ const ButtonCont = styled.div`
 
 
 export default function AlbumSearch(props) {
-        
+    const [isChosen, setIsChosen] = useState(props.isAlbumChosen)
+
+    function addRemoveAlbum(){
+        if(!isChosen){
+            props.addAlbum()
+            setIsChosen(true)
+            return
+        }
+        setIsChosen(false)
+        props.removeAlbum()
+    }
    return (
     <Wrapper>
   
         <Image
         width = '180px'
         alt = {props.AlbumName}
-          
         height = '180px'
          imagesrc = {props.AlbumCover}
          />
@@ -140,7 +154,7 @@ export default function AlbumSearch(props) {
 
        </DetailsInner>
        <ButtonCont>
-       <SecondaryButton buttonTitle = { <Plus/> }/>
+       <SecondaryButton style={{backgroundColor:(!isChosen)?vars.MAIN_BLUE:vars.MAIN_RED, borderColor:(!isChosen)?vars.MAIN_BLUE:'#bb7777'}} onClick = {addRemoveAlbum} buttonTitle = {(isChosen)?<Minus/>:<Plus/> }/>
        </ButtonCont>
    </Details>
    

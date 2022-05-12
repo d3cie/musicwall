@@ -12,7 +12,8 @@ const Wrapper = styled.div`
     overflow:hidden;
     padding:5px;
     /* padding-right:40px; */
-    min-width: 350px;
+    min-width: 300px;
+    /* margin:5px; */
     @media (max-width: 450px) {
         min-width: 330px;
 
@@ -20,10 +21,8 @@ const Wrapper = styled.div`
     position:relative;
 
     background: ${vars.GREY};
-    outline:solid 1px ${vars.GREY};
-    @media (prefers-color-scheme: dark) {
-        background: ${vars.GREY};
-}
+    border:solid 1px ${vars.LIGHER_GREY};
+
     display:flex;
    
     & div{
@@ -42,6 +41,8 @@ const PlayPauseCont = styled.div`
     z-index: 3;
     right:10px;
     justify-content:center;
+    align-items:center;
+    top:-5px;
     width: 30px;
     padding-top:5%;
     height: 100%;
@@ -172,10 +173,10 @@ export default function Song(props) {
 
 
             <Image
-                width='100px'
+                width='80px'
                 alt={props.AlbumName}
 
-                height='100px'
+                height='80px'
                 imagesrc={props.AlbumCover}
             />
             <DetailsInner>

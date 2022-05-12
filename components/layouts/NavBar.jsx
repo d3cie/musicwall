@@ -10,6 +10,8 @@ import {LoginContext} from '../../pages/_app'
 import SecondaryButton from '../primitives/Buttons/SecondaryButton'
 import TertiaryButton from '../primitives/Buttons/TertiaryButton'
 import MagnifyingGlass from '../primitives/Icons/MagnifyingGlass'
+import Plus from '../primitives/Icons/Plus'
+import House from '../primitives/Icons/House'
 
 const Wrapper = styled.div`
     width:100%; 
@@ -17,14 +19,17 @@ const Wrapper = styled.div`
     height:60px;
     /* padding:20px; */
     display:flex;
+    position: fixed;
+    border-bottom:solid 1px ${vars.LIGHER_GREY};
     overflow: hidden;
     margin-bottom: -1px;
+    z-index: 30;
     align-items:center;
     justify-content:center;`
     
 
 const Cont = styled.div`
-    max-width:${vars.MAX_WIDTH};
+    /* max-width:${vars.MAX_WIDTH}; */
     width:100%;
 
     display:flex;
@@ -46,15 +51,18 @@ const Navigation = styled.nav`
     justify-content: flex-end;
     `
 const NavBut = styled.button`
-    height:36px;
+    height:34px;
     background-color:${vars.MAIN_WHITE};
-    /* width:34.04px; */
-    /* aspect-ratio: 1/1; */
-    padding:0;
-    width: 36px;
+       fill:${vars.GREY};
     border-radius:50%;
+    display: flex;
+    width:34px;
+    
+    align-items: center;
+    justify-content: center;
     border:none;
-    overflow: hidden;
+    padding:0;
+    /* overflow: hidden; */
     cursor: pointer;
 
 
@@ -120,6 +128,7 @@ export default function NavBar() {
     const isLogged = useContext(LoginContext)
 
     const router = useRouter()
+    // console.log(router.asPath)
     // useEffect(()=>{
     //     window.addEventListener('searched', ()=>{setIsSearching(true)})
     // }
@@ -141,29 +150,32 @@ export default function NavBar() {
                 {(isLogged != null)?
                 <Navigation>
                    
-                    <NavBut>
-                        <Compass/>
-                    </NavBut>
-                    <NavBut 
-                   onClick = {()=>{router.push('/search')}}
-                   style = {{padding:'9px', background:vars.MAIN_WHITE}}>
-                       <MagnifyingGlass/>
+                   <NavBut 
+                   onClick = {()=>router.push(`/u/${isLogged.username}`)}
+                   style = {{padding:'5px', background:vars.MAIN_WHITE}}>
+                        <House  style={{fill:vars.DARK_GREY, margin:'2px'}}/>
+                   </NavBut>
+                   <NavBut 
+                   onClick = {()=>router.push('/search')}
+                   style = {{padding:'5px', background:vars.MAIN_WHITE}}>
+                        <Plus style={{fill:vars.DARK_GREY}} />
                    </NavBut>
                     {/* } */}
 
                     {/* {(isSearching)? '':  */}
-
+                        
                         <ProfileCont
 
                                             style = {{ animation: (isSearching != null)?(isSearching)?'fadeOut .2s ease-in-out forwards': 'fadeIn .2s ease-in-out forwards':'' }}
                                             >
                         <Profile
                         padding = "2px"
-
+                        profileImage = {isLogged.profileinfo.profileimage}
                         height = "32.5px"
                         width = '32.5px'/>
                         </ProfileCont>
                         {/* } */}
+                        
                 </Navigation>
                 : <Navigation>
                     

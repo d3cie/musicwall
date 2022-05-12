@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import * as vars from '../vars'
 import EditImage from '../components/compounds/EditImage'
 import Icon from '../components/primitives/Logo/Icon'
+import NextNProgress from "nextjs-progressbar";
 
 const Cont = styled.div`
     width: 100%;
@@ -116,7 +117,7 @@ function handleForm(event) { event.preventDefault(); }
 
   }
 
-  return <LoginContext.Provider value = {loggedInData}><NavBar/><Component {...pageProps} /></LoginContext.Provider> 
+  return <LoginContext.Provider value = {loggedInData}><NavBar/><div style = {{height: '50px'}}/><NextNProgress options={{ showSpinner: false }} height={2} color={vars.MAIN_BLUE} /><Component {...pageProps} /></LoginContext.Provider> 
 }
 
 export default MyApp

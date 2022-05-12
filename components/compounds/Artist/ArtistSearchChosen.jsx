@@ -18,7 +18,7 @@ const Wrapper = styled.div`
    
     & div{
         overflow:hidden;
-        border-radius:4px;
+        border-radius:50%;
     }
     /* width:fit-content; */
     height:fit-content;
@@ -45,7 +45,7 @@ const ButtonCont = styled.div`
     }
     `
 
-export default function SongSearchChosen(props) {
+export default function ArtistSearchChosen(props) {
 
     return (
         <Wrapper>
@@ -53,19 +53,11 @@ export default function SongSearchChosen(props) {
             <div style={{ minWidth: '60px' }}>
                 <Image
                     width='80px'
-                    alt={props.AlbumName}
+                    alt={props.ArtistName}
                     height='80px'
-                    imagesrc={props.AlbumCover}
+                    imagesrc={props.Image}
                 />
             </div>
-{/* 
-            <ButtonCont>
-              <SecondaryButton  buttonTitle={<Minus/>} />
-            </ButtonCont> */}
-
-
-
-
 
         </Wrapper>
 

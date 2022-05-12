@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import wall from './wall'
 var Schema = mongoose.Schema;
 
 var profileinfo = new Schema({
@@ -24,7 +25,7 @@ var user = new Schema({
     required: true
   },
   profileinfo:profileinfo,
-
+  walls:[wall],
   since: {
     type: Date,
     default: Date.now

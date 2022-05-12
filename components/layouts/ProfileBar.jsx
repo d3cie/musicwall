@@ -6,29 +6,38 @@ import SecondaryButton from '../primitives/Buttons/SecondaryButton'
 import Fire from '../primitives/Icons/Fire'
 import Thumbtack from '../primitives/Icons/Thumbtack'
 import ReactCountryFlag from "react-country-flag"
+import Share from '../primitives/Icons/Share'
 
 const Wrapper = styled.div`
     width:100wv; 
     /* width:fit-content; */
-    background-color: ${vars.DARK_GREY};
+    background-color: ${vars.GREY};
     height:fit-content;
     padding:20px;
+    padding-top:20px;
+    border-bottom:solid 1px ${vars.LIGHER_GREY};
+
     display:flex;
     @media (max-width: 500px) {
-        padding-inline:0px;
+        padding-inline:10px;
+        padding-bottom:40px;
+
 }
     flex-direction:column;
-    border-bottom:solid 1px ${vars.DARK_GREY};
+    /* border-bottom:solid 1px ${vars.DARK_GREY}; */
     align-items:center;
     justify-content:center;
-    
     `
+
+
 
 const Cont = styled.div`
     width:100%;
+    position: relative;
     padding:20px;
+    padding-bottom:0px;
     @media (max-width: 650px) {
-        margin-bottom:-25px;
+        /* margin-bottom:-25px; */
         padding-inline:5px;
 
 }
@@ -45,7 +54,7 @@ const Name = styled.h1`
 
     display: flex;
     margin-top:0px;
-    margin-bottom:-5px;
+    margin-bottom:5px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -54,11 +63,10 @@ const Bio = styled.div`
         font-weight: 400;
     font-size: 1.1rem;
     color:${vars.MAIN_WHITE};
-    margin: 20px 0;
     white-space: pre-line;
-@media (max-width: 650px) {
-    display: none;
-}
+    padding-right: 20px;
+    margin-left: 10px;
+
     /* width:100%; */
     /* overflow: hidden; */
     /* text-overflow: ellipsis; */
@@ -66,6 +74,7 @@ const Bio = styled.div`
     `
 const BioMobile = styled.div`
      font-weight: 400;
+     width:100%;
     font-size: 1.2rem;
     color:${vars.MAIN_WHITE};
     margin: 20px 0;
@@ -73,7 +82,7 @@ const BioMobile = styled.div`
     padding-inline:20px;
     white-space: pre-line;
     @media (min-width: 650px) {
-        display:none;
+        /* display:none; */
 }
 @media (max-width: 650px) {
     font-size: 1rem;
@@ -86,7 +95,7 @@ const BioMobile = styled.div`
 const PinsCont = styled.div`
     font-weight: 400;
     color:${vars.MAIN_WHITE};
-    
+    border:1px ${vars.LIGHT_GREY} solid;
     padding:2px;
     background-color:${vars.LIGHT_GREY};
     border-radius: 4px;
@@ -98,7 +107,7 @@ const PinsCont = styled.div`
     align-items:center;
     width:fit-content;
     
-    fill:${vars.YELLOW};
+    fill:${vars.ORANGE};
     font-size: 1.1em;
     height:1.6em;
     & b{
@@ -107,7 +116,7 @@ const PinsCont = styled.div`
 
     }
     @media (max-width: 650px) {
-        font-size: 1em;
+        font-size: 1.1em;
         margin:2px;
 
         /* margin-top:-10px; */
@@ -131,9 +140,19 @@ const DetailsCont = styled.section`
         margin-bottom:15px;
     }
     `
+const ButtonCont = styled.div`
+width: 100%;
+display: flex;
+margin-left:-20px;
+/* align-items: center;
+justify-content: center; */
+    `
 const ProfileCont = styled.div`
     max-width:130px;
     width:100%;
+    transform:scale(.8);
+    max-width: 100px;
+        margin-top:-10px;
     @media (max-width: 650px) {
         transform:scale(.8);
         max-width: 100px;
@@ -149,48 +168,63 @@ const ProfileCont = styled.div`
 export default function ProfileBar(props) {
     return (
         <Wrapper {...props}>
+
+
             <Cont>
+
                 <ProfileCont>
                     <Profile
-                        imagesrc='' />
+                        profileImage={props.profileimage} />
                 </ProfileCont>
                 <DetailsCont>
-                    <Name>{props.DisplayName} 
+                    <Name>{props.DisplayName}
+
+                        <ReactCountryFlag
+                            countryCode={props.countrycode}
+                            svg
+                            style={{
+                                // padding: '2px',
+                                margin: '.5rem 0 0 10px ',
+                                borderRadius: '4px',
+
+                                // width: '2.2rem',
+                                height: '100%',
+                            }}
+                            title="US"
+                        />
+
                        
-                    <ReactCountryFlag
-                        countryCode="ZW"
-                        svg
-                        style={{
-                            // padding: '2px',
-                            margin: '.5rem 0 0 10px ',
-                            borderRadius: '4px',
-                            
-                            // width: '2.2rem',
-                            height: '100%',
-                        }}
-                        title="US"
-                    />
-
-                    {/* <SecondaryButton style={{ marginLeft: '30px' }} state={'active'} buttonTitle={'pin'} /> */}
                     </Name>
-                    <div id = 'username'>@{props.username}</div>
+                    <div id='username'>@{props.username}</div>
 
-                    <div style={{ display: 'flex' ,flexDirection:'column'}}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
                         {/* <PinsCont>
                             <Fire /> <b>436</b>
                         </PinsCont> */}
-                        {/* <PinsCont style={{ fill: vars.MAIN_RED }}>
-                            <Thumbtack /> <b/>Pinned By<a><b>40</b>Pinned</a><b>40</b> 
-                        </PinsCont> */}
+                        <PinsCont style={{ fill: vars.MAIN_RED }}>
+                            <Thumbtack /> <b>40</b>Pins
+                        </PinsCont>
                     </div>
-                    <Bio>
+                   
+                </DetailsCont>
+    
+            </Cont>
+
+            <Cont>
+            <Bio>
                         {props.bio}
                     </Bio>
-                </DetailsCont>
+
+                  
             </Cont>
-            <BioMobile>
-                        {props.bio}
-                    </BioMobile>
+            <Cont>
+            <ButtonCont>
+                {(props.isProf)?
+                    <SecondaryButton style={{ marginLeft: '30px' }} onClick = {()=>window.location.href = `/accounts/edit?next=/u/${props.username}`} buttonTitle={'Edit Profile'} />
+                :    <SecondaryButton style={{ marginLeft: '30px' }} state={'activ'} buttonTitle={'Pin'} />}
+                        <SecondaryButton style={{ border:"none", background:vars.LIGHT_GREY,border:`1px solid ${vars.LIGHER_GREY}`}} buttonTitle={ "Share"} />
+                    </ButtonCont>
+            </Cont>
         </Wrapper>
     )
 }

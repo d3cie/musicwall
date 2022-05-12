@@ -12,7 +12,7 @@ export const DARK_GREY = '#1b1b21'
 export const LIGHT_GREY = '#2a2a2f'
 //2a2a2a
 export const LIGHER_GREY = '#3a3a3a'
-export const MAX_WIDTH = '1200px'
+export const MAX_WIDTH = '1000px'
 export const SECONDARY_BLUE = '#4d446f'
 export const URL = 'http://192.168.100.9:9999'
 export const GOLD_COLOR = '#DFB15B'

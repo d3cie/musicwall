@@ -6,6 +6,7 @@ import * as vars from '../../../vars'
 import DualRing from '../../primitives/Animations/DualRing'
 import SecondaryButton from '../../primitives/Buttons/SecondaryButton'
 import Plus from '../../primitives/Icons/Plus'
+import Minus from '../../primitives/Icons/Minus'
 
 const Wrapper = styled.div`
     border-radius:4px;
@@ -112,7 +113,17 @@ const ButtonCont = styled.div`
 
 
 export default function ArtistSearch(props) {
-        
+    const [isChosen, setIsChosen] = useState(props.isArtistChosen)
+
+    function addRemoveArtist(){
+        if(!isChosen){
+            props.addArtist()
+            setIsChosen(true)
+            return
+        }
+        setIsChosen(false)
+        props.removeArtist()
+    }
    return (
     <Wrapper>
   
@@ -140,7 +151,7 @@ export default function ArtistSearch(props) {
 
         
                    {/* <ButtonCont> */}
-            <SecondaryButton buttonTitle = { <Plus/> }/>
+                   <SecondaryButton style={{backgroundColor:(!isChosen)?vars.MAIN_BLUE:vars.MAIN_RED, borderColor:(!isChosen)?vars.MAIN_BLUE:'#bb7777'}} onClick = {addRemoveArtist} buttonTitle = {(isChosen)?<Minus/>:<Plus/> }/>
             {/* </ButtonCont> */}
        </DetailsInner>
        

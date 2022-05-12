@@ -7,13 +7,17 @@ const Wrapper = styled.div`
     border-radius:4px;
     overflow:hidden;
     position:relative;
-    width:160px;
-    
+    width:fit-content;
+    border:solid 1px ${vars.LIGHER_GREY};
+
     /* margin:5px; */
     padding:5px;
     height:fit-content;
     /* min-height: 300px; */
     background-color:${vars.GREY};
+    & div{
+        border-radius: 2px;
+    }
     `
 
 const DetailsInner = styled.div`
@@ -63,7 +67,7 @@ const Details = styled.div`
     `
 
 
-export default function Album(props) {
+export default function AlbumMobile(props) {
         
    return (
     <Wrapper>

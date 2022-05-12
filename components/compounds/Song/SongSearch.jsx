@@ -15,6 +15,7 @@ const Wrapper = styled.div`
     width:100%;
     transition: all 0.2s;
     max-width:700px;
+    width: 100%;
     :hover{
         background-color:${vars.LIGHER_GREY};
     }
@@ -25,7 +26,7 @@ const Wrapper = styled.div`
 
     } */
     margin:10px;
-    margin-inline:0px;
+    margin-inline:5px;
     position:relative;
 
     background: ${vars.LIGHT_GREY};
@@ -118,11 +119,6 @@ const Loading = styled.div`
     justify-content:center;
     z-index:3;`
 
-const Exclamation = (props) => (
-    <svg fill={vars.MAIN_WHITE} style={{ margin: '20px' }} height={'40%'} viewBox="0 0 192 512" {...props}>
-        <path d="M176 432c0 44.112-35.888 80-80 80s-80-35.888-80-80 35.888-80 80-80 80 35.888 80 80zM25.26 25.199l13.6 272C39.499 309.972 50.041 320 62.83 320h66.34c12.789 0 23.331-10.028 23.97-22.801l13.6-272C167.425 11.49 156.496 0 142.77 0H49.23C35.504 0 24.575 11.49 25.26 25.199z" />
-    </svg>
-)
 
 export default function SongSearch(props) {
     const [isPlaying, setIsPlaying] = useState(false)

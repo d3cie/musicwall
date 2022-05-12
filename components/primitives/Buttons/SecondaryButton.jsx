@@ -16,7 +16,7 @@ const ButtonStyle  = styled.button`
     background-color:${vars.MAIN_BLUE};
     border:none;
     border:solid 1px ${vars.PALE_BLUE};
-
+transition: all .2s;
     cursor: pointer;
     transition: all 0.2s;
     &:active{
@@ -29,11 +29,10 @@ const ButtonStyle  = styled.button`
             filter:brightness(100%);}
     }
 
-    &.active{
+    &#active{
         cursor: not-allowed;
         color:${vars.MAIN_WHITE};
-        border:solid 2px ${vars.MAIN_BLUE};
-        background-color:${vars.LIGHT_GREY};
+       
         &:active{
             filter:brightness(100%);}
     }
@@ -57,10 +56,15 @@ export default function SecondaryButton(props) {
   return (
     <ButtonStyle 
         {...props}
+        id = {props.isWorking ? 'active' : 'normal'} 
         className = {props.state} 
         
         >
-       {props.buttonTitle}
+       {(props.isWorking) ? <BouncyDots
+        color = {vars.MAIN_WHITE}
+        
+        
+        /> : props.buttonTitle}
 
     </ButtonStyle>
   )

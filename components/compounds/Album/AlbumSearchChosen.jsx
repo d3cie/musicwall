@@ -45,7 +45,7 @@ const ButtonCont = styled.div`
     }
     `
 
-export default function SongSearchChosen(props) {
+export default function AlbumSearchChosen(props) {
 
     return (
         <Wrapper>
