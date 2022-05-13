@@ -12,6 +12,7 @@ import TertiaryButton from '../primitives/Buttons/TertiaryButton'
 import MagnifyingGlass from '../primitives/Icons/MagnifyingGlass'
 import Plus from '../primitives/Icons/Plus'
 import House from '../primitives/Icons/House'
+import Bell from '../primitives/Icons/Bell'
 
 const Wrapper = styled.div`
     width:100%; 
@@ -151,15 +152,22 @@ export default function NavBar() {
                 <Navigation>
                    
                    <NavBut 
-                   onClick = {()=>router.push(`/u/${isLogged.username}`)}
-                   style = {{padding:'5px', background:vars.MAIN_WHITE}}>
-                        <House  style={{fill:vars.DARK_GREY, margin:'2px'}}/>
+                   onClick = {()=>router.push('/accounts/notifications')}
+                   style = {{padding:'7px', background:vars.MAIN_WHITE}}>
+                        <Bell style={{fill:vars.DARK_GREY}} />
                    </NavBut>
+                  
                    <NavBut 
                    onClick = {()=>router.push('/search')}
                    style = {{padding:'5px', background:vars.MAIN_WHITE}}>
                         <Plus style={{fill:vars.DARK_GREY}} />
                    </NavBut>
+                   <NavBut 
+                   onClick = {()=>router.push(`/u/${isLogged.username}`)}
+                   style = {{padding:'5px', background:vars.MAIN_WHITE}}>
+                        <House  style={{fill:vars.DARK_GREY, margin:'2px'}}/>
+                   </NavBut>
+
                     {/* } */}
 
                     {/* {(isSearching)? '':  */}

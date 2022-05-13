@@ -177,7 +177,7 @@ export default function ProfileBar(props) {
                         profileImage={props.profileimage} />
                 </ProfileCont>
                 <DetailsCont>
-                    <Name>{props.DisplayName}
+                    <Name>{props.DisplayName || props.username}
 
                         <ReactCountryFlag
                             countryCode={props.countrycode}

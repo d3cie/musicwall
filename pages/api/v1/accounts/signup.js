@@ -109,7 +109,7 @@ const handler = async (req, res) => {
   if (req.method === 'POST') {
     const { username, email, password } = req.body;
     if (username && email && password) {
-        const newUser = await createUser(username, password, email)
+        const newUser = await createUser(username.toLowerCase(), password, email)
 
         if (newUser.status == 'error'){
             res.send(newUser)

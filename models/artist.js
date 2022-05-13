@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 var Schema = mongoose.Schema;
 
 var artist = new Schema({
-    spotifyArtistId: {
+    spotifyArtistID: {
         type: String,
         required: true,
         unique:true

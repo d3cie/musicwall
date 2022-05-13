@@ -25,6 +25,7 @@ import Plus from '../../../components/primitives/Icons/Plus'
 import AddBio from '../../../components/layouts/Objectives/AddBio'
 import AddPicture from '../../../components/layouts/Objectives/AddPicture'
 import AddWall from '../../../components/layouts/Objectives/AddWall'
+import getwalls from '../../../services/getwalls'
 
 
 const Cont = styled.main`
@@ -139,17 +140,16 @@ export default function UserProfile() {
 
   useEffect(() => {
     setUsername(window.location.pathname.substring(3))
-    console.log(isLoggedInData.username, username)
 
     if (isLoggedInData?.username == username) {
-      console.log(isLoggedInData.username, username)
       setIsLoggedInAccount(true)
     }
     async function fetchData() {
       const response = getuser(window.location.pathname.substring(3))
       setData(await response)
-
-
+      // console.log()
+      console.log(await getwalls(data.profile.walls))
+      
     }
     fetchData()
 
