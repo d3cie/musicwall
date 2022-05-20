@@ -2,6 +2,16 @@ import mongoose from 'mongoose';
 import wall from './wall'
 var Schema = mongoose.Schema;
 
+var pin = new Schema({
+  username: {
+    type: String,
+  },
+  since: {
+    type: Date,
+    default: Date.now
+  },
+  
+})
 var profileinfo = new Schema({
   displayname:{type: String},
   birthday:{type:Date},
@@ -16,6 +26,8 @@ var user = new Schema({
     unique: true,
     required: true
   },
+  pins: [pin],
+  pinnedby: [pin],
   email: {
     type: String,
     required: true
@@ -30,7 +42,7 @@ var user = new Schema({
     type: Date,
     default: Date.now
   }
-}, 	{ collection: 'users' });
+},	{ collection: 'users' });
 
 mongoose.models = {};
 

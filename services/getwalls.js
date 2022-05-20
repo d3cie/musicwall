@@ -78,6 +78,7 @@ console.log(data)
 
 export default async function getwalls(walls){
     const data =  getWallsAndJoin(walls)
+    console.log(walls)
     try {
         const res = await fetch(`/api/v1/getwall`,
             {

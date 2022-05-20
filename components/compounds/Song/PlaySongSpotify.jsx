@@ -40,7 +40,7 @@ export default function PlaySongSpotify(props) {
     <Wrapper>
       <button onClick = {()=>props.closePlayer()}> <XIcon/> </button>
       {(isLoading)?<Ellipsis color = {vars.MAIN_WHITE}/>:'' }
-       <iframe id = "frame" onLoad = {()=>{setIsLoading(false)}} style = {{maxWidth:vars.MAX_WIDTH, borderRadius:4}} src={`https://open.spotify.com/embed/track/${props.id}?utm_source=generator`} width= {"100%"} height="380px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+       <iframe id = "frame" onLoad = {()=>{setIsLoading(false)}} style = {{maxWidth:vars.MAX_WIDTH, borderRadius:4}} src={`https://open.spotify.com/embed/track/${props.id}?utm_source=generator`} width= {"100%"} height="380px" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
     </Wrapper>
   )
 }

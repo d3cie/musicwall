@@ -12,7 +12,7 @@ const ButtonStyle  = styled.button`
     justify-content: center;
     width:fit-content;
     height: 40px;
-    font-weight: 300;
+    /* font-weight: 300; */
     background-color:${vars.DARK_BLUE};
     border:solid 1px #0956ab;
     /* border:none; */

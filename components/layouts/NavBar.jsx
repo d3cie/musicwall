@@ -1,18 +1,19 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import * as vars from '../../vars'
 import styled from 'styled-components'
 import Logo from '../primitives/Logo/Icon'
 import Compass from '../primitives/Icons/Compass'
 import Profile from '../compounds/Profile'
 import SearchBox from '../primitives/Inputs/SearchBox'
-import {useRouter} from 'next/router'
-import {LoginContext} from '../../pages/_app'
+import { useRouter } from 'next/router'
+import { LoginContext } from '../../pages/_app'
 import SecondaryButton from '../primitives/Buttons/SecondaryButton'
 import TertiaryButton from '../primitives/Buttons/TertiaryButton'
 import MagnifyingGlass from '../primitives/Icons/MagnifyingGlass'
 import Plus from '../primitives/Icons/Plus'
 import House from '../primitives/Icons/House'
 import Bell from '../primitives/Icons/Bell'
+import Notifications from './Notifications'
 
 const Wrapper = styled.div`
     width:100%; 
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
     z-index: 30;
     align-items:center;
     justify-content:center;`
-    
+
 
 const Cont = styled.div`
     /* max-width:${vars.MAX_WIDTH}; */
@@ -123,7 +124,7 @@ const ProfileCont = styled.div`
 
 
 
-export default function NavBar() {
+export default function NavBar(props) {
     const [isSearching, setIsSearching] = useState(null)
     const [timeOut, setTimeOut] = useState(true)
     const isLogged = useContext(LoginContext)
@@ -139,60 +140,60 @@ export default function NavBar() {
     //     setIsSearching(state)
     // }
 
-  return (
-      <Wrapper>
+    return (
+        <Wrapper>
             <Cont>
                 <LogoCont>
 
-                   
-                    <Logo/>
+
+                    <Logo />
 
                 </LogoCont>
-                {(isLogged != null)?
-                <Navigation>
-                   
-                   <NavBut 
-                   onClick = {()=>router.push('/accounts/notifications')}
-                   style = {{padding:'7px', background:vars.MAIN_WHITE}}>
-                        <Bell style={{fill:vars.DARK_GREY}} />
-                   </NavBut>
-                  
-                   <NavBut 
-                   onClick = {()=>router.push('/search')}
-                   style = {{padding:'5px', background:vars.MAIN_WHITE}}>
-                        <Plus style={{fill:vars.DARK_GREY}} />
-                   </NavBut>
-                   <NavBut 
-                   onClick = {()=>router.push(`/u/${isLogged.username}`)}
-                   style = {{padding:'5px', background:vars.MAIN_WHITE}}>
-                        <House  style={{fill:vars.DARK_GREY, margin:'2px'}}/>
-                   </NavBut>
+                {(isLogged != null) ?
+                    <Navigation>
 
-                    {/* } */}
+                        <NavBut
+                            onClick={() => props.showHideNotifs(showHideNotifsPrev => !showHideNotifsPrev)}
+                            style={{ padding: '7px', background: vars.MAIN_WHITE }}>
+                            <Bell style={{ fill: vars.DARK_GREY }} />
+                        </NavBut>
 
-                    {/* {(isSearching)? '':  */}
-                        
+                        <NavBut
+                            onClick={() => router.push('/search')}
+                            style={{ padding: '5px', background: vars.MAIN_WHITE }}>
+                            <Plus style={{ fill: vars.DARK_GREY }} />
+                        </NavBut>
+                        <NavBut
+                            onClick={() => router.push(`/u/${isLogged.username}`)}
+                            style={{ padding: '5px', background: vars.MAIN_WHITE }}>
+                            <House style={{ fill: vars.DARK_GREY, margin: '2px' }} />
+                        </NavBut>
+
+                        {/* } */}
+
+                        {/* {(isSearching)? '':  */}
+
                         <ProfileCont
-
-                                            style = {{ animation: (isSearching != null)?(isSearching)?'fadeOut .2s ease-in-out forwards': 'fadeIn .2s ease-in-out forwards':'' }}
-                                            >
-                        <Profile
-                        padding = "2px"
-                        profileImage = {isLogged.profileinfo.profileimage}
-                        height = "32.5px"
-                        width = '32.5px'/>
+                            onClick={() => props.showHideSettings(showHideSettings => !showHideSettings)}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <Profile
+                                padding="2px"
+                                profileImage={isLogged.profileinfo.profileimage}
+                                height="32.5px"
+                                width='32.5px' />
                         </ProfileCont>
                         {/* } */}
-                        
-                </Navigation>
-                : <Navigation>
-                    
-                    <SecondaryButton onClick = {()=>{router.push(`/accounts/login?next=${router.asPath}`)}} style = {{padding: '18px 20px'}}buttonTitle = {'Log In'}/>
-                    <TertiaryButton buttonTitle = {'Sign up'}/>
-                </Navigation>}
-                
+
+                    </Navigation>
+                    : <Navigation>
+
+                        <SecondaryButton onClick={() => { router.push(`/accounts/login?next=${router.asPath}`) }} style={{ padding: '18px 20px' }} buttonTitle={'Log In'} />
+                        <TertiaryButton onClick={() => router.push(`/accounts/register`)} buttonTitle={'Sign up'} />
+                    </Navigation>}
+
             </Cont>
-      </Wrapper>
-    
-  )
+        </Wrapper>
+
+    )
 }

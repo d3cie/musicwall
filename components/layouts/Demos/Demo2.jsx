@@ -33,24 +33,12 @@ const DisplayBox = styled.div`
 
     background-color: ${vars.LIGHT_GREY};
 
-    & #profilebar{
+    /* & #profilebar{
         @media (min-width:650px) {
             min-width: 650px;
             width:100%
         }
-    }
-    `
-
-const ItemCont = styled.div`
-        /* margin:15px; */
-        margin:10px;
-    `
-const ItemsCont = styled.div`
-    margin-left:30px;
-    margin-bottom:40px;
-
-  
-    margin-top:-10px;
+    } */
     `
 
 const Demo2 = () => {
@@ -58,13 +46,13 @@ const Demo2 = () => {
         <Wrapper>
             <DisplayBox>
                 <ProfileBar
-                id = "profilebar"
-                DisplayName = 'HeyItsFemzy'
-                username = 'decefemz'
-                bio = {`Hi friends 👋🏽\nWelcome to my wall.  Get ready to feast your ears on the best music planet earth 🌍 has to offer.🤪  `}
-                 
-                 />
-               </DisplayBox>
+                    id="profilebar"
+                    DisplayName='HeyItsFemzy'
+                    username='decefemz'
+                    bio={`Hi friends 👋🏽\nWelcome to my wall.  Get ready to feast your ears on the best music planet earth 🌍 has to offer.🤪  `}
+
+                />
+            </DisplayBox>
         </Wrapper>
     );
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import * as vars from '../../../vars'
 
-const InputStyle  = styled.input`
+const InputStyle = styled.input`
 
 
     font-size: 1.2em;
@@ -37,12 +37,12 @@ const Label = styled.label`
 `
 export default function PrimaryBox(props) {
   return (
-      <div style = {{width:'fit-content',margin:'10px', position: 'relative'}}>
-        <InputStyle required = {true} {...props}>
-        </InputStyle>
-        <Label>{props.placeholderText}</Label>
-    
-      </div>
-    
+    <div style={{ width: 'fit-content', margin: '10px', position: 'relative' }}>
+      <InputStyle autoComplete="off" required={true} {...props}>
+      </InputStyle>
+      <Label>{props.placeholderText}</Label>
+
+    </div>
+
   )
 }

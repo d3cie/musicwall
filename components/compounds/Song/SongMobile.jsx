@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     overflow:hidden;
     padding:5px;
     /* padding-right:40px; */
-    min-width: 300px;
+    width: 300px;
     /* margin:5px; */
     @media (max-width: 450px) {
         min-width: 330px;
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
         border-radius:2px;
 
     }
-    width:fit-content;
+    /* width:fit-content; */
     height:fit-content;
     `
 const PlayPauseCont = styled.div`
@@ -91,11 +91,21 @@ const DetailsInner = styled.div`
     font-size:1.1rem;
     /* position:absolute; */
    margin-left:20px;
-   
+   overflow:hidden;
+   width:150px;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap; 
+   /* width:100%; */
+   overflow:hidden;
     font-weight: 500;
     & div{
         opacity:.8;
         font-size:.9rem;
+        overflow:hidden;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap; 
         & a{
             margin-bottom:20px;
 

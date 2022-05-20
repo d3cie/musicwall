@@ -13,6 +13,7 @@ const Wrapper = styled.div`
     justify-content: center;
     flex-direction: column;
     height: 100%;
+    padding-left:40px;
         padding-right:40px;
     @media (max-width:1250px) {
       padding-right:20px;
@@ -20,6 +21,7 @@ const Wrapper = styled.div`
         }
           @media (max-width: 850px) {
             padding-right:0px;
+            margin-left: -20px;
 
   }
     `
@@ -111,11 +113,9 @@ const Demo4 = () => {
                     <TimeStamp><Point />Added These on - 03.12.21</TimeStamp>
 
                 </TimeStampCont>
-                
-               </DisplayBox>
-               <DisplayBox style = {{marginTop:60}}>
-                   236
-               </DisplayBox>
+
+            </DisplayBox>
+
         </Wrapper>
     );
 }

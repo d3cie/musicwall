@@ -110,7 +110,7 @@ const Demo1 = () => {
                     <TimeStamp><Point />Added These on - 03.12.12</TimeStamp>
                 </TimeStampCont>
                 <ItemsCont>
-                    <Title>Added Songs</Title>
+                    <Title>ADDED SONGS</Title>
                     <ItemCont>
                         <Song
                             SongName="Ultralight Beam"
@@ -121,7 +121,7 @@ const Demo1 = () => {
                     </ItemCont>
 
                     <ItemCont>
-                    <Song
+                        <Song
                             SongName="RUNNING OUT OF TIME"
                             AlbumName="IGOR"
                             SongArtist="Tyler, The Creator"
@@ -129,40 +129,41 @@ const Demo1 = () => {
                         />
                     </ItemCont>
                 </ItemsCont>
-                
-                <ItemsCont>
-                    <Title>Added Albums &#38; Artists</Title>
-                    <div style = {{display: 'flex', marginLeft:5,marginTop:5,width: '100%'}}>
-                        
-                    
-                    <ItemCont style = {{margin:'5px'}}>
-                        <Artist
-                        Artist = 'Taylor Swift'
-                        ArtistImage = 'https://i.scdn.co/image/ab6761610000e5eb9e3acf1eaf3b8846e836f441'
-                        />
 
-                       
-                    </ItemCont>
- 
-                    <ItemCont style = {{margin:'5px'}}>
-                        <Album
-                        Artist = 'Wet Lag'
-                        AlbumName = 'Wet Lag'
-                        AlbumCover = 'https://i.scdn.co/image/ab67616d00001e02ea1126a33b0fb88e79915262'
-                        />
-                    </ItemCont>
-                    
-                    <ItemCont id = 'hiddenAtMobile' style = {{margin:'5px'}}>
-                        <Album
-                        Artist = 'Olivia Rodrigo'
-                        AlbumName = 'SOUR'
-                        AlbumCover = 'https://i.scdn.co/image/ab67616d00001e02a91c10fe9472d9bd89802e5a'
-                        />
-                    </ItemCont>
+                <ItemsCont>
+                    <Title>ADDED ALBUMS</Title>
+                    <div style={{ display: 'flex', marginLeft: 5, marginTop: 5, width: '100%' }}>
+
+
+                        <ItemCont style={{ margin: '5px' }}>
+                            <Album
+                                AlbumName="2 Alivë"
+                                Artist='Yeat'
+                                AlbumCover='https://i.scdn.co/image/ab67616d0000b27372b69f1f356613717909d6db'
+                            />
+
+
+                        </ItemCont>
+
+                        <ItemCont style={{ margin: '5px' }}>
+                            <Album
+                                Artist='Wet Lag'
+                                AlbumName='Wet Lag'
+                                AlbumCover='https://i.scdn.co/image/ab67616d00001e02ea1126a33b0fb88e79915262'
+                            />
+                        </ItemCont>
+
+                        <ItemCont id='hiddenAtMobile' style={{ margin: '5px' }}>
+                            <Album
+                                Artist='Olivia Rodrigo'
+                                AlbumName='SOUR'
+                                AlbumCover='https://i.scdn.co/image/ab67616d00001e02a91c10fe9472d9bd89802e5a'
+                            />
+                        </ItemCont>
                     </div>
                 </ItemsCont>
 
-               </DisplayBox>
+            </DisplayBox>
         </Wrapper>
     );
 }

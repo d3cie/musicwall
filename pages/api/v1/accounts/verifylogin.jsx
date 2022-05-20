@@ -5,17 +5,19 @@ import connectDB from '../../../../middleware/mongodb';
 
 const handler = async (req, res) => {
     if (req.method === 'GET') {
+        // const date_received = Date.now()
+        console.log('received')
         if (req.isLoggedIn) {
-            User.findOne({ _id: req.id })
+            User.findOne({ _id: req.id },)
                 .then((user) => {
                     if (user == null) {
-                        res.status(401).send({ status: 'error', message: 'User Not Found' })
+                        res.status(200).send({ status: 'error', message: 'User Not Found' })
                         return
                     }
 
 
 
-
+                    // console.log('resolved', (date_received - Date.now()))
                     res.status(200).send({
                         status: 'success',
                         profile: { id: user._id, username: user.username, profileinfo: user.profileinfo, since: user.since }

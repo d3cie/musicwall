@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import * as vars from '../../../vars'
 import Facebook from '../../primitives/Icons/Facebook';
 import Instagram from '../../primitives/Icons/Instagram';
+import Reddit from '../../primitives/Icons/Reddit';
 import RightArrow from '../../primitives/Icons/RightArrow';
 import Share from '../../primitives/Icons/Share';
 import Twitter from '../../primitives/Icons/Twitter';
@@ -30,33 +31,27 @@ const DisplayBox = styled.div`
     position: relative;
     /* padding:20px; */
     /* padding-left:40px; */
-    /* height:80px; */
+    height:80px;
 display: flex;
     border-radius:4px;
     overflow: hidden;
 padding:5px;
 padding-inline:30px;
-    background-color: ${vars.LIGHT_GREY};
+    /* background-color: ${vars.LIGHT_GREY}; */
   `
 export default function Demo3() {
   return (
     <Wrapper>
-        <DisplayBox>
-        <div style = {{display: 'flex', height:"80px", padding:5,borderRadius:2}}> 
+      <DisplayBox>
 
-            <Share/>
-            <div style = {{padding:15,fill:vars.MAIN_WHITE, paddingInline:5}}>
-            <RightArrow/>
-            </div>
-            </div>
-            <div style = {{display: 'flex', height:"80px",padding:10,backgroundColor:vars.LIGHER_GREY, borderRadius:2}}> 
-                <Twitter/>
-                <Instagram/>
+        <Reddit />
 
-                <Facebook/>
 
-            </div>
-            </DisplayBox>
+        <Twitter />
+        <Instagram />
+
+        <Facebook />
+      </DisplayBox>
     </Wrapper>
   )
 }

@@ -8,6 +8,8 @@ import Logo from '../components/primitives/Logo/Icon'
 import Wave from '../components/compounds/Backgrounds/wave1'
 import Wave2 from '../components/compounds/Backgrounds/wave2'
 
+import useRouter from 'next/router'
+
 import Demo1 from '../components/layouts/Demos/Demo1'
 import Demo2 from '../components/layouts/Demos/Demo2'
 import Demo3 from '../components/layouts/Demos/Demo3'
@@ -15,6 +17,8 @@ import Demo3 from '../components/layouts/Demos/Demo3'
 import Spotify from '../components/primitives/Icons/Spotify'
 import SecondaryButton from '../components/primitives/Buttons/SecondaryButton'
 import Demo4 from '../components/layouts/Demos/Demo4'
+import Icon from '../components/primitives/Logo/Icon'
+import ExpandedLogo from '../components/primitives/Logo'
 
 
 const Wrapper = styled.div`
@@ -74,6 +78,7 @@ const Hero = styled.section`
 const LogoCont = styled.div`
   height:60px;
   top:0;
+  left:0;
   position: absolute;
   padding:12px 20px;
   `
@@ -131,6 +136,7 @@ justify-content: center;
 
 const DescrCont = styled.div`
 margin:20px;
+
 padding-left:160px;
   @media (max-width:1250px) {
     padding-left:60px;
@@ -145,7 +151,9 @@ text-justify:center;
   `
 const Cont = styled.div`
   display:flex;
-  margin-top:40px;
+  margin-top:60px;
+  margin-bottom:60px;
+
   /* height:fit-content; */
   position: relative;
   max-width:${vars.MAX_WIDTH};
@@ -161,6 +169,7 @@ const Cont = styled.div`
    
     &#second{
       flex-direction: column-reverse;
+
       & #descrcont{
         
           /* padding-right: 200px; */
@@ -172,7 +181,7 @@ const Cont = styled.div`
   }
   `
 
-  const ButtonCont = styled.div`
+const ButtonCont = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;`
@@ -180,15 +189,16 @@ const Cont = styled.div`
 
 
 const DescrTitle = styled.h2`
-  font-size: 3.5rem;
+  font-size: 3rem;
   color:${vars.DARK_GREY};
+ 
+ 
   `
 const Descr = styled.p`
   font-size:1.5rem;
   `
 
 export default function Welcome() {
-
 
   return (
 
@@ -202,29 +212,29 @@ export default function Welcome() {
       </Head>
       <HeroCont>
         {/* <Wave style={{ position: 'absolute', bottom: '-10px' }} /> */}
-
+        <LogoCont>
+          <Logo />
+        </LogoCont>
         <Hero>
 
-          <LogoCont>
-            <Logo />
-          </LogoCont>
+
           <Header>Music is Everything!</Header>
           <ParaCont>
             <Para>
               ...And everything is music! Thats why we are here, to help you share
               your favourite <b>everything</b> with friends and family and the rest of the world.
-              
+
 
             </Para>
           </ParaCont>
           <ButtonCont >
-            
-              <PrimaryButton onClick={()=>{location.href = '/accounts/login'}} style={{ background: vars.LIGHT_GREY, color: 'white' }} buttonTitle={<a href="/accounts/login">LOG IN</a> }></PrimaryButton>
-    
+
+            <PrimaryButton onClick={() => { location.href = '/accounts/login' }} style={{ background: vars.LIGHT_GREY, borderColor: vars.LIGHER_GREY, color: 'white' }} buttonTitle={'LOG IN'}></PrimaryButton>
+
           </ButtonCont>
 
           <ButtonCont style={{ marginTop: '50px' }}>
-            <TertiaryButton style={{ background: '#00000000', color: vars.MAIN_WHITE }} buttonTitle={'Dont have an account?'} />
+            <TertiaryButton onClick={() => { location.href = '/accounts/signup' }} style={{ background: '#ffffff11', borderRadius: 2, border: 'solid 1px #ffffff22', color: vars.MAIN_WHITE }} buttonTitle={'Dont have an account?'} />
           </ButtonCont>
         </Hero>
       </HeroCont>
@@ -234,79 +244,89 @@ export default function Welcome() {
 
           <Demo1 />
           <DescrCont>
-            <DescrTitle style = {{textAlign: 'right'}} >Show off your fave music to friends!</DescrTitle>
-            <Descr style = {{textAlign: 'right'}}>
+            <DescrTitle style={{ textAlign: 'right' }} >Show off your fave music to friends!</DescrTitle>
+            <Descr style={{ textAlign: 'right' }}>
               Select artists, songs and albums from the extensive list provided
               by Spotify <Spotify style={{ transform: 'translateY(5px)' }} width="25px" /> to put up on
-              your own personal Musicwall, free of charge.
+              your own personal Musicwall.
             </Descr>
           </DescrCont>
         </Cont>
       </OutterCont>
-
-
-      <OutterCont style={{ background: '#eee' }}>
-
-<Cont id='second'>
-  <DescrCont id='descrcont' style={{ paddingLeft: '0', minWidth:'55%' }}>
-    <DescrTitle>Keep a history of music you have added.</DescrTitle>
-    <Descr>
-     Music you have selected previously is kept in an archive (timewall)
-     for you or your friends to revisit later.  You can add a new timewall
-     after 24hrs.
-     <br/><br/>
-     Gain points that will be displayed on your profile for adding a new timewall
-    </Descr>
-  </DescrCont>
-
-  <Demo4 />
-
-</Cont>
-
-
-
-</OutterCont>
 
 
       <OutterCont style={{ background: '#eee' }}>
 
         <Cont id='second'>
-          <DescrCont id='descrcont' style={{ paddingLeft: '0'}}>
+          <DescrCont id='descrcont' style={{ paddingLeft: '0', minWidth: '55%' }}>
+            <DescrTitle>Keep a history of music you love.</DescrTitle>
+            <Descr>
+              Music you have selected previously is kept in an archive
+              for you and your friends to revisit later on your page.  You can add a new wall anytime.
+            </Descr>
+          </DescrCont>
+          <div style={{ marginTop: 0 }}>
+
+
+            <Demo4 />
+          </div>
+        </Cont>
+
+
+
+      </OutterCont>
+
+
+      <OutterCont style={{ background: '#eee' }}>
+
+        <Cont style={{ flexDirection: 'column' }}>
+          <Demo2 />
+
+          <DescrCont id='descrcont' style={{ paddingLeft: '0', textAlign: 'center' }}>
             <DescrTitle>Customize your wall however you like.</DescrTitle>
             <Descr>
-             Set a display name, country, bio, profile picture to add 
-             even more uniqueness to your wall.  
+              Set a display name, country, bio, profile picture to add
+              even more uniqueness to your wall.
             </Descr>
           </DescrCont>
 
-          <Demo2 />
 
         </Cont>
 
 
 
       </OutterCont>
+
       <OutterCont>
 
-<Cont>
-  <DescrCont>
-    <Demo3/>
-    <DescrTitle style = {{textAlign: 'center'}}>Share your walls to your favourite social platforms!</DescrTitle>
-    <Descr style = {{textAlign: 'center'}}>
-      Using your unique link connected to your wall, share your wall
-      to the social platforms above and more!
-      <br></br>
-    So what are you waiting for?
-    </Descr>
-    <div style = {{display: 'flex', alignItems: 'center', justifyContent: 'center'}}> 
+        <Cont style={{ flexDirection: 'column' }}>
 
-    
-    <SecondaryButton style = {{fontSize:'1.2rem',marginTop:40,padding:'25px 20px'}} buttonTitle = {'GET STARTED NOW'}/>
-    </div>
-  </DescrCont>
-</Cont>
-</OutterCont>
-    </Wrapper>
+          <DescrCont id='descrcont' style={{ paddingLeft: '0', textAlign: 'center' }} >
+            <DescrTitle >Share your walls to your favourite social platforms!</DescrTitle>
+            <Descr>Send and post your pages and walls to the platforms below and more.</Descr>
+          </DescrCont>
+          <Demo3 />
+
+
+        </Cont>
+        <div style={{ display: 'flex', marginTop: -20, marginBottom: 80, alignItems: 'center', justifyContent: 'center' }}>
+          <SecondaryButton style={{ fontSize: '1rem', width: '350px', marginLeft: 20, marginTop: 0, padding: '20px 20px' }} buttonTitle={'CONVINCED? GET STARTED NOW'} />
+
+
+        </div>
+      </OutterCont>
+      <footer style={{ height: 80, paddingBottom: 15, width: '100%', padding: 10, background: vars.GREY }}>
+        <section style={{ height: '100%', opacity: .9, alignItems: 'center', display: 'flex', width: '100%' }}>
+          <ExpandedLogo style={{ height: 40 }} />
+
+          <div style={{ height: '100%', textAlign: 'right', padding: 15, width: '100%', textJustify: 'center', alignSelf: 'center', color: vars.MAIN_WHITE }}>
+
+            2022-2022 Musicwall.
+          </div>
+        </section>
+
+      </footer>
+    </Wrapper >
 
 
 

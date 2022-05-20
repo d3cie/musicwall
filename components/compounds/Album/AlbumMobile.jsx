@@ -31,6 +31,8 @@ const DetailsInner = styled.div`
   text-overflow:ellipsis;
   overflow:hidden;
   white-space:nowrap; 
+  max-width:150px;
+
    /* margin-left:20px;
    padding-right:80px;
    max-width:400px */
