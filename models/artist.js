@@ -5,7 +5,7 @@ var artist = new Schema({
     spotifyArtistID: {
         type: String,
         required: true,
-        unique:true
+        unique: true
     },
     artistName: {
         type: String,

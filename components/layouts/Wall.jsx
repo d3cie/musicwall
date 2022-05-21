@@ -9,13 +9,24 @@ import { useState, useEffect } from 'react'
 import WallIcon from '../primitives/Icons/Wall'
 import Ellipsis from '../primitives/Animations/Elipsis'
 import Plus from '../primitives/Icons/Plus'
+import Bin from '../primitives/Icons/Bin'
+import Heart from '../primitives/Icons/Heart'
+
+import HeartSolid from '../primitives/Icons/HeartSolid'
+import likewallservice from '../../services/likewall'
+import unlikewallservice from '../../services/unlikewall'
 const Point = styled.div`
 position:absolute;
 width:20px;
-background-color:${vars.GREY};
+background-color:${vars.ORANGE};
+
+&.latest{
+  background-color:${vars.MAIN_BLUE};
+
+}
 left:-29px;
 border-radius: 50%;
-border: solid 6px ${vars.MAIN_WHITE} ;
+border: solid 4px ${vars.MAIN_WHITE} ;
 top:10px;
 height:20px;
 `
@@ -23,8 +34,9 @@ const NoWallsCont = styled.div`
   display:flex;
   align-items: center;
   justify-content: center;
-  height: 40vh;
+  min-height: 100%;
   color: ${vars.MAIN_WHITE};
+  margin-top:20px;
   font-weight: 400;
   font-size: 1.5rem;
 
@@ -124,7 +136,7 @@ const TimeLine = styled.div`
 min-height:100px;
 position:absolute;
 left:-20px;
-height:120%;
+height:140%;
 margin-top:20px;
 width:2px;
 background:${vars.MAIN_WHITE};
@@ -143,13 +155,15 @@ const GridContInner = styled.div`
   width:fit-content;
   width:100%;
   max-width:${vars.MAX_WIDTH};
-
   position:relative;
   `
 
 const GridContOutter = styled.section`
   display:flex;
   width:100%;
+  max-width:860px;
+    width:fit-content;
+
   flex-direction: row;
   padding:40px;
   position:relative;
@@ -167,8 +181,11 @@ const GridCont = styled.div`
 /* width:100%; */
 /* padding:40px; */
 /* width:100%; */
-gap: 10px 10px;
+grid-gap: 10px 10px;
 margin-top:5px;
+min-width: 350px;
+
+width:fit-content;
 padding-bottom:60px;
 display: grid;
 grid-template-columns: 1fr 1fr 1fr;
@@ -187,8 +204,10 @@ const GridContAlbum = styled.div`
 /* width:100%; */
 /* padding:40px; */
 max-width:${vars.MAX_WIDTH};
-gap: 10px 10px;
+grid-gap: 10px 10px;
 margin-top:5px;
+width:fit-content;
+min-width: 350px;
 padding-bottom:60px;
 display: grid;
 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -201,6 +220,36 @@ grid-template-columns: 1fr 1fr;
 
 }
 `
+
+const WallActionsCont = styled.div`
+  display:inline;
+  height:30px;
+  margin-left:20px;
+  & button{
+    height:25px;
+    transform:translateY(3px);
+    background: none;
+    border:none;
+    opacity:.9;
+    fill:${vars.MAIN_WHITE};
+  
+    transition: all 0.2s;
+    :hover{
+      opacity: 1;
+      fill:${vars.ORANGE};
+
+    }
+
+  }
+  & #hearts{
+        height:27px;
+
+    :hover{
+      fill:${vars.MAIN_RED};
+    }
+  }
+  `
+
 const Title = styled.div`
 color:white;
 width:100%; 
@@ -220,21 +269,29 @@ position: relative;
 export default function Wall(props) {
   const [isLoading, setIsLoading] = useState(true)
   const [loggedIn, setIsLoggedIn] = useState(null)
+  const [loggedInName, setLoggedInName] = useState(null)
   const [data, setData] = useState(null)
 
   useEffect(() => {
     setIsLoggedIn(props.isloggedinaccount)
-    getwalls(props.walls.reverse()).then((res) => {
-      setData(res)
-      console.log(res)
-    })
-  }, [props.isloggedinaccount])
-  // useEffect(()=>{
-  //   getwalls(props.walls).then(
+    setLoggedInName(props.isLoggedInUsername)
+    if (props.walls.length) {
 
-  //   )
-  // })
-  if (!data) return <div
+      const walls = props.walls
+      getwalls(walls.reverse()).then((res) => {
+        setData(res)
+        setIsLoading(false)
+
+      })
+    } else {
+      setIsLoading(false)
+
+    }
+
+
+  }, [props.walls, props.isLoggedInUsername, props.isloggedinaccount])
+
+  if (isLoading) return <div
 
     style={{
       // position: 'absolute',
@@ -275,24 +332,51 @@ export default function Wall(props) {
             </div>
             <ul style={{ marginBottom: '80px' }}>
               <li>Press the <Plus style={{ background: vars.MAIN_WHITE, padding: 2, borderRadius: '50%', fill: vars.GREY }} width='1.2rem' height='1.2rem' /> button to open up the search page.</li>
-              <li>Choose at least 3 songs, an album and an artist to add to a wall and save it.</li>
-              <li>Already saved walls are archived on your page as a part of your page history.</li>
-              <li>You can add another wall to your wall by clicking the add button after 24 hours of your last wall.</li>
+              <li>Choose at least 1 song, album or artist to add to a wall and save it.</li>
+              <li>Previously saved walls are shown on your page as a part of your page history.</li>
             </ul>
 
-
-            {/* <div id='objcont'>
-          <AddBio />
-          <AddPicture />
-          <AddWall />
-        </div> */}
           </GettingStarted>
           : ''}
       </div>
     </>
   }
-  if (props.walls == null) {
+  if (data == null) {
     return <NoWalls />
+  }
+
+  function Like(props) {
+    const [isLiked, setIsLiked] = useState(false)
+    const [isWorking, setIsWorking] = useState(false)
+
+    useEffect(() => {
+      // if (!isWorking) {
+      props.likes.map(({ username }) => { if (username == loggedInName) { setIsLiked(true) } })
+      // }
+    },
+      [props.likes, loggedInName, data]
+    )
+    function likeHandler() {
+      if (!isWorking) {
+        setIsWorking(true)
+        setIsLiked(liked => !liked)
+
+        likewallservice(props.username, props.wallid).then((res) => { setIsWorking(false); })
+      }
+    }
+
+    function removelikeHandler() {
+      if (!isWorking) {
+        setIsWorking(true)
+        setIsLiked(liked => !liked)
+
+        unlikewallservice(props.username, props.wallid).then((res) => { setIsWorking(false); })
+      }
+    }
+
+    return <button onClick={() => (isLiked) ? removelikeHandler() : likeHandler()} {...props} id="hearts">
+      {(isLiked) ? <HeartSolid style={{ fill: vars.MAIN_RED }} /> : <Heart />}
+    </button>
   }
 
   function displayArtists(artist) {
@@ -320,17 +404,27 @@ export default function Wall(props) {
 
         <div>
           <TimeStampCont>
-            <TimeStamp><Point />Added These on - {wall.since.substring(10, 0)}</TimeStamp>
+            <TimeStamp><Point className={(i == 0) ? 'latest' : ''} />Added These on - {wall.since.substring(10, 0)}
+              <WallActionsCont>
+                <Like likes={wall.likes} wallid={wall._id} username={props.wallOwner} />
+
+                <button>
+                  <Bin />
+                </button>
+
+              </WallActionsCont>
+            </TimeStamp>
+
           </TimeStampCont>
-          <div hidden = {!wall?.songs.length}>
+          <div hidden={!wall?.songs.length}>
             <Title>SONGS ADDED</Title>
 
             <GridCont>
-              {wall?.songs.map((song) => (
+              {wall?.songs.map((song, j) => (
 
 
                 <SongMobile
-
+                  key={j}
                   SongName={song.songName}
                   AlbumName={song.albumName}
                   SongArtist={displayArtists(song.artist)}
@@ -343,13 +437,14 @@ export default function Wall(props) {
             </GridCont>
           </div>
 
-          <div hidden = {!wall?.albums.length}>
+          <div hidden={!wall?.albums.length}>
             <Title>ALBUMS ADDED</Title>
             <GridContAlbum>
-              {wall?.albums.map((album) => (
+              {wall?.albums.map((album, j) => (
 
 
                 <AlbumMobile
+                  key={j}
 
                   AlbumName={album.albumName}
                   Artist={displayArtists(album.artist)}
@@ -360,14 +455,15 @@ export default function Wall(props) {
 
           </div>
 
-          <div hidden = {!wall?.artists.length}>
+          <div hidden={!wall?.artists.length}>
             <Title>ARTISTS ADDED</Title>
             {/* <AlbumMobile/> */}
             <GridContAlbum>
-              {wall?.artists.map((artist) => (
+              {wall?.artists.map((artist, j) => (
 
 
                 <ArtistMobile
+                  key={j}
 
                   Artist={artist.artistName}
                   ArtistImage={artist.artistImage}

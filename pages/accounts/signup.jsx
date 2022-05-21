@@ -7,7 +7,7 @@ import PrimaryBox from '../../components/primitives/Inputs/PrimaryBox'
 import PrimaryButton from '../../components/primitives/Buttons/PrimaryButton'
 import signupservice from '../../services/signup'
 import Head from 'next/head';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 
 const ButtonContOut = styled.div`
@@ -29,11 +29,6 @@ const InputCont = styled.div`
   margin-top:10px;`
 
 
-const LinkStyle = styled.a`
-  color:${vars.MAIN_BLUE};
-  font-size:.8rem;
-  margin-left:20px;
-  `
 
 
 const ErrorMsg = styled.h4`
@@ -59,7 +54,7 @@ const RegisterText = styled.h6`
 export default function Signup() {
     const [isWorking, setIsWorking] = useState(false)
     const [errorMsg, setErrorMsg] = useState()
-    const router= useRouter()
+    const router = useRouter()
 
     async function formSubmit() {
         setErrorMsg()
@@ -81,10 +76,11 @@ export default function Signup() {
 
                 if (result.status == 'success') {
                     setIsWorking(false)
-                    router.push('/accounts/edit?next=/search')
+                    location.href = `/u/${username}`
+
 
                 }
-            }else{
+            } else {
                 setIsWorking(false)
                 setErrorMsg(response.error)
             }

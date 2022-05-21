@@ -300,17 +300,17 @@ export default function Welcome() {
       <OutterCont>
 
         <Cont style={{ flexDirection: 'column' }}>
+          <Demo3 />
 
           <DescrCont id='descrcont' style={{ paddingLeft: '0', textAlign: 'center' }} >
-            <DescrTitle >Share your walls to your favourite social platforms!</DescrTitle>
-            <Descr>Send and post your pages and walls to the platforms below and more.</Descr>
+            <DescrTitle >Share your walls to your favourite social platforms for everyone else to see!</DescrTitle>
+            {/* <Descr>Send and post your pages and walls to the platforms below and more.</Descr> */}
           </DescrCont>
-          <Demo3 />
 
 
         </Cont>
         <div style={{ display: 'flex', marginTop: -20, marginBottom: 80, alignItems: 'center', justifyContent: 'center' }}>
-          <SecondaryButton style={{ fontSize: '1rem', width: '350px', marginLeft: 20, marginTop: 0, padding: '20px 20px' }} buttonTitle={'CONVINCED? GET STARTED NOW'} />
+          <PrimaryButton onClick={() => { location.href = '/accounts/signup' }} style={{ fontSize: '1rem', width: '350px', marginLeft: 20, marginTop: 0, padding: '20px 20px' }} buttonTitle={'CONVINCED? GET STARTED NOW'} />
 
 
         </div>

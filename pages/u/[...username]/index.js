@@ -51,7 +51,7 @@ export default function UserProfile() {
   const [isloggedinaccount, setIsLoggedInAccount] = useState(false)
 
   async function pin(user) {
-   
+
 
   }
 
@@ -66,12 +66,11 @@ export default function UserProfile() {
       const response = getuser(window.location.pathname.substring(3))
       setData(await response)
       // console.log()
-      
+
     }
     fetchData()
 
   }, [username])
-
 
   if (!data) return <Cont
 
@@ -115,11 +114,11 @@ export default function UserProfile() {
           username={data.profile.username}
           countrycode={data.profile.profileinfo.countrycode}
           DisplayName={data.profile.profileinfo.displayname}
-          isProf = {isloggedinaccount}
+          isProf={isloggedinaccount}
         />
 
-        <Cont>
-          <Wall walls = {data.profile?.walls} isloggedinaccount = {isloggedinaccount}/>
+        <Cont style={{ alignItems: 'center' }}>
+          <Wall wallOwner={data.profile.username} walls={data.profile?.walls} isLoggedInUsername={isLoggedInData?.username} isloggedinaccount={isloggedinaccount} />
         </Cont>
 
       </Cont>

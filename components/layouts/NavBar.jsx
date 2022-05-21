@@ -189,7 +189,7 @@ export default function NavBar(props) {
                     : <Navigation>
 
                         <SecondaryButton onClick={() => { router.push(`/accounts/login?next=${router.asPath}`) }} style={{ padding: '18px 20px' }} buttonTitle={'Log In'} />
-                        <TertiaryButton onClick={() => router.push(`/accounts/register`)} buttonTitle={'Sign up'} />
+                        <TertiaryButton onClick={() => router.push(`/accounts/signup`)} buttonTitle={'Sign up'} />
                     </Navigation>}
 
             </Cont>

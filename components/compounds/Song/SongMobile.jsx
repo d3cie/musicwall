@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     overflow:hidden;
     padding:5px;
     /* padding-right:40px; */
-    width: 300px;
+    width: 330px;
     /* margin:5px; */
     @media (max-width: 450px) {
         min-width: 330px;
@@ -206,7 +206,7 @@ export default function Song(props) {
 
 
             <PlayPauseCont>
-          
+
                 <button>
                 </button>
                 {(props.isPreview) ?

@@ -1,8 +1,8 @@
-import islogged from '../../../middleware/islogged'
-import Song from '../../../models/song';
-import Album from '../../../models/album';
-import connectDB from '../../../middleware/mongodb';
-import Artist from '../../../models/artist';
+import islogged from '../../../../middleware/islogged'
+import Song from '../../../../models/song';
+import Album from '../../../../models/album';
+import connectDB from '../../../../middleware/mongodb';
+import Artist from '../../../../models/artist';
 
 const GetToken = async function () {
     const CLIENT_ID = process.env.CLIENT_ID
@@ -22,7 +22,8 @@ const GetToken = async function () {
 }
 
 const getSongsFromSpotify = async (songs, token) => {
-    if (songs == ''){
+
+    if (songs == '') {
         return
     }
     songs = encodeURI(songs);
@@ -47,10 +48,10 @@ const getSongsFromSpotify = async (songs, token) => {
     }))
 }
 const getAlbumsFromSpotify = async (albums, token) => {
-  
+
     albums = encodeURI(albums);
 
-    if (albums == ''){
+    if (albums == '') {
         return
     }
     const response = await fetch(`https://api.spotify.com/v1/albums?market=ES&ids=${albums}`, {
@@ -62,21 +63,20 @@ const getAlbumsFromSpotify = async (albums, token) => {
         return (await response.json())
     }
     const result = await response.json()
-    
+
     result.albums = result.albums.filter((album) => (album != null))
 
-    return result.albums.map(({ id, name, artists,images }) => ({
+    return result.albums.map(({ id, name, artists, images }) => ({
         spotifyAlbumID: id,
-        albumName:name,
+        albumName: name,
         artist: artists.map(({ name, id }) => ({ artistsName: name, artistsID: id })),
-        albumArt:images[0].url,
+        albumArt: images[0].url,
     }))
 }
 const getArtistsFromSpotify = async (artists, token) => {
-  
-    artists = encodeURI(artists);
 
-    if (artists == ''){
+    artists = encodeURI(artists);
+    if (artists == '') {
         return
     }
     const response = await fetch(`https://api.spotify.com/v1/artists?market=ES&ids=${artists}`, {
@@ -89,60 +89,85 @@ const getArtistsFromSpotify = async (artists, token) => {
     }
     const result = await response.json()
     result.artists = result.artists.filter((artist) => (artist != null))
-   
 
-    return result.artists.map(({ id, name,images }) => ({
+
+    return result.artists.map(({ id, name, images }) => ({
         spotifyArtistID: id,
-        artistName:name,
-        artistImage:images[0].url,
+        artistName: name,
+        artistImage: images[0].url,
     }))
 }
 const getSongs = async (songs) => {
-    const result = await Song.find({ spotifySongID: { $in: songs } })
-    let notfound = []
-    notfound = songs.filter((song) => {
-        for (let i = 0; i < result.length; i++) {
-            if (result[i].spotifySongID == song) { return false }
+
+    if (songs.length) {
+        const result = await Song.find({ spotifySongID: { $in: songs } })
+
+        let notfound = []
+        if (!result.length) {
+            return ({ result, notfound: songs })
         }
-        return true
+        notfound = songs.filter((song) => {
+
+            for (let i = 0; i < result.length; i++) {
+
+                if (result[i].spotifySongID == song) { return false }
+            }
+            return true
+        }
+        )
+        return ({ result, notfound })
     }
-    )
-    return ({ result, notfound })
+    return ({ result: [], notfound: [] })
 }
 const getAlbums = async (albums) => {
-    
-    const result = await Album.find({ spotifyAlbumID: { $in: albums } })
-    let notfound = []
-
-     notfound = albums.filter((album) => {
-        for (let i = 0; i < result.length; i++) {
-            if (result[i].spotifyAlbumID == album) { return false }
+    if (albums.length) {
+        const result = await Album.find({ spotifyAlbumID: { $in: albums } })
+        let notfound = []
+        if (!result.length) {
+            return ({ result, notfound: albums })
         }
-        return true
+        notfound = albums.filter((album) => {
+            for (let i = 0; i < result.length; i++) {
+                if (result[i].spotifyAlbumID == album) { return false }
+            }
+            return true
+        }
+        )
+        return ({ result, notfound })
     }
-    )
-    return ({ result, notfound })
+    return ({ result: [], notfound: [] })
 }
 const getArtists = async (artists) => {
-    const result = await Artist.find({ spotifyArtistID: { $in: artists } })
-    let notfound = []
-    notfound = artists.filter((artist) => {
-        for (let i = 0; i < result.length; i++) {
-            if (result[i].spotifyArtistID == artist) { return false }
+    if (artists.length) {
+        const result = await Artist.find({ spotifyArtistID: { $in: artists } })
+        let notfound = []
+
+        if (!result.length) {
+            return ({ result, notfound: artists })
         }
-        return true
+
+        notfound = artists.filter((artist) => {
+            for (let i = 0; i < result.length; i++) {
+                if (result[i].spotifyArtistID == artist) { return false }
+            }
+            return true
+        }
+        )
+        return ({ result, notfound })
     }
-    )
-    return ({ result, notfound })
+    return ({ result: [], notfound: [] })
 }
 
 const handler = async (req, res) => {
     if (req.method === 'POST') {
-        const songs = req.body.songs
-        let token;
-        const albums = req.body.albums
-        const artists = req.body.artists
+
+        const songs = req.body.songs || []
+        const albums = req.body.albums || []
+        const artists = req.body.artists || []
+
         var data = { tracks: [], albums: [], artists: [] };
+
+        let token;
 
         const allPromise = Promise.all([getSongs(songs), getAlbums(albums), getArtists(artists)],)
 
@@ -151,7 +176,7 @@ const handler = async (req, res) => {
             data.albums = values[1].result
             data.artists = values[2].result
 
-            if (values[0].notfound.length || values[1].notfound.length || values[2].notfound.length){//or ||
+            if (values[0].notfound.length || values[1].notfound.length || values[2].notfound.length) {
                 token = await GetToken()
             }
 

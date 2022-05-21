@@ -81,12 +81,12 @@ color: ${vars.MAIN_WHITE};
 `
 
 const Setting = styled.div`
-    height:60px;
+    height:50px;
     width:100%;
     cursor:pointer;
 display:flex;
      font-weight: 400;
-    font-size: 22px;
+    font-size: 18px;
     color:${vars.MAIN_WHITE};
   align-items:center;
     text-justify: center;
@@ -98,7 +98,7 @@ display:flex;
     }
     & svg{
         fill: ${vars.MAIN_WHITE};
-        margin-right:15px;
+        margin-right:10px;
         opacity:.9;
     }
 
