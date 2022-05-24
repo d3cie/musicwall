@@ -1,12 +1,12 @@
-export default async function pinuserservice(username) {
+export default async function unpinuserservice(username) {
 
     let result;
 
     try {
         result = await Promise.race([
-            fetch(`/api/v1/users/pinuser?pinneduser=${username}`,
+            fetch(`/api/v1/users/unpinuser?pinneduser=${username}`,
                 {
-                    method: 'POST',
+                    method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 })
             ,

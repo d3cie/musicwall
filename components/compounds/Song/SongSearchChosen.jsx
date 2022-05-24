@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     width:fit-content;
     min-width: 90px;
     margin:5px;
-    margin-inline: 0px;
+    margin-inline: 5px;
     position:relative;
     display:flex;
    
@@ -39,6 +39,7 @@ const ButtonCont = styled.div`
         margin:2px;
         height:20px;
         padding:2px;
+        border:1px solid ${vars.SECONDARY_RED};
         background-color: ${vars.MAIN_RED};
         width:20px;
 
@@ -58,9 +59,9 @@ export default function SongSearchChosen(props) {
                     imagesrc={props.AlbumCover}
                 />
             </div>
-{/* 
+            {/* 
             <ButtonCont>
-              <SecondaryButton  buttonTitle={<Minus/>} />
+                <SecondaryButton onClick={() => props.removeSong()} buttonTitle={<Minus />} />
             </ButtonCont> */}
 
 

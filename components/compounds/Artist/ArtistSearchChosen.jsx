@@ -12,11 +12,11 @@ const Wrapper = styled.div`
     width:fit-content;
     min-width: 90px;
     margin:5px;
-    margin-inline: 0px;
+    margin-inline: 5px;
     position:relative;
     display:flex;
-   
-    & div{
+
+    & #image{
         overflow:hidden;
         border-radius:50%;
     }
@@ -24,33 +24,34 @@ const Wrapper = styled.div`
     height:fit-content;
     `
 const ButtonCont = styled.div`
-    display:flex;
-    flex-direction:row;
-    position:absolute;
-    z-index: 3;
-    right:-0px;
-    top:-0px;
-    justify-content:center;
-    height: 100%;
-    
-    & button{
-        font-size:15px;
-        padding:0;
-        margin:2px;
-        height:20px;
-        padding:2px;
-        background-color: ${vars.MAIN_RED};
-        width:20px;
+display:flex;
+flex-direction:row;
+position:absolute;
+z-index: 3;
+right:-0px;
+top:-0px;
+justify-content:center;
+height: 100%;
 
-    }
-    `
+& button{
+    font-size:15px;
+    padding:0;
+    margin:2px;
+    height:20px;
+    padding:2px;
+    background-color: ${vars.MAIN_RED};
+    width:20px;
+    border:1px solid ${vars.SECONDARY_RED};
+
+}
+`
 
 export default function ArtistSearchChosen(props) {
 
     return (
         <Wrapper>
 
-            <div style={{ minWidth: '60px' }}>
+            <div id="image" style={{ minWidth: '60px' }}>
                 <Image
                     width='80px'
                     alt={props.ArtistName}
@@ -58,6 +59,7 @@ export default function ArtistSearchChosen(props) {
                     imagesrc={props.Image}
                 />
             </div>
+
 
         </Wrapper>
 

@@ -125,20 +125,11 @@ const ProfileCont = styled.div`
 
 
 export default function NavBar(props) {
-    const [isSearching, setIsSearching] = useState(null)
-    const [timeOut, setTimeOut] = useState(true)
+
     const isLogged = useContext(LoginContext)
 
     const router = useRouter()
-    // console.log(router.asPath)
-    // useEffect(()=>{
-    //     window.addEventListener('searched', ()=>{setIsSearching(true)})
-    // }
-    //     ,{})
 
-    // function setIsSearchingState(state){
-    //     setIsSearching(state)
-    // }
 
     return (
         <Wrapper>
@@ -188,7 +179,7 @@ export default function NavBar(props) {
                     </Navigation>
                     : <Navigation>
 
-                        <SecondaryButton onClick={() => { router.push(`/accounts/login?next=${router.asPath}`) }} style={{ padding: '18px 20px' }} buttonTitle={'Log In'} />
+                        <SecondaryButton onClick={() => { router.push(`/accounts/login?next=${router.asPath}`) }} style={{ width: 'fit-content', padding: '18px 20px' }} buttonTitle={'Log In'} />
                         <TertiaryButton onClick={() => router.push(`/accounts/signup`)} buttonTitle={'Sign up'} />
                     </Navigation>}
 

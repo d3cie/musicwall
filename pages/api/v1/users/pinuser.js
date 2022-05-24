@@ -1,12 +1,12 @@
 import User from '../../../../models/user';
 import connectDB from '../../../../middleware/mongodb';
-import authorization from '../../../../middleware/islogged';
+import authorization from '../../../../middleware/authorization';
 
 
 const handler = async (req, res) => {
     if (req.method === 'POST') {
-        const pinnedUser = { username: req.query.pinneduser }
-        const pinningUser = { username: req.username }
+        const pinnedUser = { username: { $ne: req.query.pinneduser } }
+        const pinningUser = { username: { $ne: req.username } }
         const updatePinnedUser = { $push: { pinnedby: { username: req.username } } }
         const updateUser = { $push: { pins: { username: req.query.pinneduser } } }
 

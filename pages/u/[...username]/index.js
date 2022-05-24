@@ -4,56 +4,34 @@ import { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import React from 'react'
 import ProfileBar from '../../../components/layouts/ProfileBar'
-import Music from '../../../components/primitives/Icons/Music'
-import Album from '../../../components/primitives/Icons/Album'
-import Artist from '../../../components/primitives/Icons/Artist'
-import Link from 'next/link'
-import Song from '../../../components/compounds/Song'
-import SongMobile from '../../../components/compounds/Song/SongMobile'
 import Ellipsis from '../../../components/primitives/Animations/Elipsis'
-import DualRing from '../../../components/primitives/Animations/DualRing'
 import getuser from '../../../services/getuser'
 import Error from 'next/error'
 import Head from 'next/head'
-import PlaySongSpotify from '../../../components/compounds/Song/PlaySongSpotify'
-import AlbumMobile from '../../../components/compounds/Album/AlbumMobile'
-import ArtistMobile from '../../../components/compounds/Artist/ArtistMobile'
-import WallIcon from '../../../components/primitives/Icons/Wall'
-import { LoginContext } from '../../../pages/_app'
-import Wall from '../../../components/layouts/Wall'
-import Plus from '../../../components/primitives/Icons/Plus'
-import AddBio from '../../../components/layouts/Objectives/AddBio'
-import AddPicture from '../../../components/layouts/Objectives/AddPicture'
-import AddWall from '../../../components/layouts/Objectives/AddWall'
 import getwalls from '../../../services/getwalls'
 
+import { LoginContext } from '../../../pages/_app'
+import Walls from '../../../components/layouts/Walls'
 
 const Cont = styled.main`
-  /* background-color:${vars.GREY}; */
   background-color: ${vars.LIGHT_GREY};
-  /* min-height:100vh; */
   display: flex;
   flex-direction: column;
   width:100%;
-
   height:fit-content;`
 
 
 
-export default function UserProfile() {
+function UserProfile(props) {
   const router = useRouter()
   const pathname = router.asPath
   const [data, setData] = useState(null)
   const [username, setUsername] = useState(null)
   const isLoggedInData = useContext(LoginContext)
+  const [populatedWalls, setPopulatedWalls] = useState(null)
 
 
   const [isloggedinaccount, setIsLoggedInAccount] = useState(false)
-
-  async function pin(user) {
-
-
-  }
 
 
   useEffect(() => {
@@ -63,14 +41,22 @@ export default function UserProfile() {
       setIsLoggedInAccount(true)
     }
     async function fetchData() {
-      const response = getuser(window.location.pathname.substring(3))
-      setData(await response)
-      // console.log()
+      const response = await getuser(window.location.pathname.substring(3))
+      setData(response)
+      if (response.profile.walls.length) {
+        getwalls(response.profile.walls.reverse()).then((res) => {
+          setPopulatedWalls(res)
+        }
+        )
+      } else {
+        setPopulatedWalls([])
+      }
 
     }
+
     fetchData()
 
-  }, [username])
+  }, [username, router.asPath])
 
   if (!data) return <Cont
 
@@ -109,16 +95,11 @@ export default function UserProfile() {
       <Cont>
         {/* <PlaySongSpotify/> */}
         <ProfileBar
-          bio={data.profile.profileinfo.bio}
-          profileimage={data.profile.profileinfo.profileimage}
-          username={data.profile.username}
-          countrycode={data.profile.profileinfo.countrycode}
-          DisplayName={data.profile.profileinfo.displayname}
-          isProf={isloggedinaccount}
+          profile={data.profile}
         />
 
         <Cont style={{ alignItems: 'center' }}>
-          <Wall wallOwner={data.profile.username} walls={data.profile?.walls} isLoggedInUsername={isLoggedInData?.username} isloggedinaccount={isloggedinaccount} />
+          <Walls wallOwner={username} walls={populatedWalls} />
         </Cont>
 
       </Cont>
@@ -128,52 +109,4 @@ export default function UserProfile() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <CategoryCont>
-        <Link href={`/u/${username}/songs`}>
-
-          <Category className={(pathname == `/u/${username}/songs`) ? 'active' : 'normal'}>
-            <Music />Songs
-          </Category>
-        </Link>
-
-        <Link href={`/u/${username}/albums`} >
-          <Category className={(pathname == `/u/${username}/albums`) ? 'active' : 'normal'}>
-            <Album />Albums
-          </Category>
-        </Link>
-
-        <Link href={`/u/${username}/artists`}>
-          <Category className={(pathname == `/u/${username}/artists`) ? 'active' : 'normal'}>
-            <Artist /> Artists
-          </Category>
-        </Link>
-      </CategoryCont> */}
+export default UserProfile

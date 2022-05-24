@@ -5,8 +5,6 @@ import connectDB from '../../../../middleware/mongodb';
 
 const handler = async (req, res) => {
     if (req.method === 'GET') {
-        // const date_received = Date.now()
-        console.log('received')
         if (req.isLoggedIn) {
             User.findOne({ _id: req.id },)
                 .then((user) => {

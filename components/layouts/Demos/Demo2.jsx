@@ -46,10 +46,19 @@ const Demo2 = () => {
         <Wrapper>
             <DisplayBox>
                 <ProfileBar
+                    demo={true}
+                    profile={
+                        {
+                            username: 'decefemz',
+                            profileinfo: {
+                                displayname: 'HeyItsFemzy',
+                                bio: `Hi friends 👋🏽\nWelcome to my wall.  Get ready to feast your ears on the best music planet earth 🌍 has to offer.🤪  `
+                            },
+                            pins: []
+                        }
+                    }
                     id="profilebar"
-                    DisplayName='HeyItsFemzy'
-                    username='decefemz'
-                    bio={`Hi friends 👋🏽\nWelcome to my wall.  Get ready to feast your ears on the best music planet earth 🌍 has to offer.🤪  `}
+
 
                 />
             </DisplayBox>

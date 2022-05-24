@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from '../../primitives/Image'
 import PlayPause from '../../primitives/Toggles/PlayPause'
@@ -102,6 +102,7 @@ const ButtonCont = styled.div`
         padding:2px;
         width:40px;
         font-weight: 600;
+        
 
         /* padding-inline:10px; */
     }
@@ -115,8 +116,8 @@ const ButtonCont = styled.div`
 export default function ArtistSearch(props) {
     const [isChosen, setIsChosen] = useState(props.isArtistChosen)
 
-    function addRemoveArtist(){
-        if(!isChosen){
+    function addRemoveArtist() {
+        if (!isChosen) {
             props.addArtist()
             setIsChosen(true)
             return
@@ -124,41 +125,41 @@ export default function ArtistSearch(props) {
         setIsChosen(false)
         props.removeArtist()
     }
-   return (
-    <Wrapper>
-  
-            
-       
-     
-    <div
-    style = {{borderRadius :'50%',border:`solid ${vars.LIGHER_GREY} 1px`,width:'100%', overflow:'hidden'}}
-    >
-        <Image
-        width = '170px'
-        alt = {props.Artist}
-        height = '170px'
-         imagesrc = {props.ArtistImage}
-         />
-         </div>
-         <Details>
-       
-       <DetailsInner>
-           
-         
-          
-                   {props.Artist}
-            
+    return (
+        <Wrapper>
 
-        
-                   {/* <ButtonCont> */}
-                   <SecondaryButton style={{backgroundColor:(!isChosen)?vars.MAIN_BLUE:vars.MAIN_RED, borderColor:(!isChosen)?vars.MAIN_BLUE:'#bb7777'}} onClick = {addRemoveArtist} buttonTitle = {(isChosen)?<Minus/>:<Plus/> }/>
-            {/* </ButtonCont> */}
-       </DetailsInner>
-       
-   </Details>
-    </Wrapper>
-   
-  )
+
+
+
+            <div
+                style={{ borderRadius: '50%', border: `solid ${vars.LIGHER_GREY} 1px`, width: '100%', overflow: 'hidden' }}
+            >
+                <Image
+                    width='170px'
+                    alt={props.Artist}
+                    height='170px'
+                    imagesrc={props.ArtistImage}
+                />
+            </div>
+            <Details>
+
+                <DetailsInner>
+
+
+
+                    {props.Artist}
+
+
+
+                    {/* <ButtonCont> */}
+                    <SecondaryButton style={{ backgroundColor: (!isChosen) ? vars.MAIN_BLUE : vars.MAIN_RED, borderColor: (!isChosen) ? vars.MAIN_BLUE : '#bb7777' }} onClick={addRemoveArtist} buttonTitle={(isChosen) ? <Minus /> : <Plus />} />
+                    {/* </ButtonCont> */}
+                </DetailsInner>
+
+            </Details>
+        </Wrapper>
+
+    )
 }
 // Album.defaultProps = {
 //     isPreview : true

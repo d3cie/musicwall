@@ -5,19 +5,20 @@ var Schema = mongoose.Schema;
 var pin = new Schema({
   username: {
     type: String,
+    unique: true
   },
   since: {
     type: Date,
     default: Date.now
   },
-  
+
 })
 var profileinfo = new Schema({
-  displayname:{type: String},
-  birthday:{type:Date},
-  bio:{type: String},
-  countrycode:{type: String},
-  profileimage:{type: String}
+  displayname: { type: String },
+  birthday: { type: Date },
+  bio: { type: String },
+  countrycode: { type: String },
+  profileimage: { type: String }
 })
 
 var user = new Schema({
@@ -32,17 +33,20 @@ var user = new Schema({
     type: String,
     required: true
   },
+  points: {
+    type: Number,
+  },
   passwordhash: {
     type: String,
     required: true
   },
-  profileinfo:profileinfo,
-  walls:[wall],
+  profileinfo: profileinfo,
+  walls: [wall],
   since: {
     type: Date,
     default: Date.now
   }
-},	{ collection: 'users' });
+}, { collection: 'users' });
 
 mongoose.models = {};
 

@@ -11,6 +11,7 @@ export const DARK_GREY = '#1b1b21'
 //121212
 export const LIGHT_GREY = '#2a2a2f'
 //2a2a2a
+export const SECONDARY_RED = '#ff5555'
 export const LIGHER_GREY = '#3a3a3a'
 export const MAX_WIDTH = '1000px'
 export const SECONDARY_BLUE = '#4d446f'

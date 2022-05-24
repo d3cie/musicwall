@@ -1,0 +1,25 @@
+import { useState, useEffect, useContext } from 'react'
+import Wall from "../compounds/Wall/Wall"
+import { LoginContext } from '../../pages/_app'
+import NoWall from '../compounds/Wall/NoWall'
+import Loading from './Loading'
+
+export default function Walls(props) {
+  const [data, setData] = useState(null)
+  const isLogged = useContext(LoginContext)
+
+  useEffect(() => {
+    setData(props.walls)
+  }, [props.walls]
+  )
+
+  if (data == null) return <Loading />
+
+  if (!data.length) {
+    return <NoWall loggedIn={isLogged?.username == props.wallOwner} />
+  }
+
+  return <>{data.map((wall, i) => (
+    <Wall wallOwner={props.wallOwner} loggedInName={isLogged?.username} wall={wall} i={i} ></Wall>
+  ))}</>
+}

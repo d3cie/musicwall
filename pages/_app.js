@@ -14,18 +14,15 @@ const Cont = styled.div`
     height: 100vh;
     overflow:hidden;
     background-color: ${vars.MAIN_BLUE};
-
       @media (max-width: 600px) {
       background-color: ${vars.GREY};
       height: 110vh;
 
     }
-    
     display:flex;
     justify-content: center;
     align-items: center;
     `
-
 const FormCont = styled.form`
     width:fit-content;
     height: fit-content;
@@ -47,10 +44,9 @@ const FormCont = styled.form`
 
       transform:scale(1);
       padding:0px;
-
     }
     border-radius: 4px;
-  `
+   `
 
 export const LoginContext = React.createContext()
 
@@ -71,7 +67,6 @@ function MyApp({ Component, pageProps }) {
             res.json().then((responsejson) => {
               if (responsejson.status == 'success') {
                 setLoggedInData(responsejson.profile)
-                console.log(responsejson.profile)
               }
               setIsLoading(false)
             })
@@ -84,29 +79,25 @@ function MyApp({ Component, pageProps }) {
     }
     , [])
 
+  if (loading) {
+    return <div style={{
+      background: vars.GREY,
+      width: '100%',
+      height: '100vh',
+      overflow: 'hidden',
+      display: 'flex',
+      position: "fixed",
+      zIndex: 50,
+      top: 0,
+      left: 0,
+      justifyContent: 'center',
+      alignItems: 'center'
 
-  //this is a note to anyone reading this code base in the future 
-  //i decided to use inline styles cause for some reason styled-components
-  //was taking a second to load.
-
-  // if(loading) return<div style = {{background:vars.GREY,
-  //   width: '100%',
-  //   height: '100vh',
-  //   overflow:'hidden',
-  //   display:'flex',
-
-  //   justifyContent: 'center',
-  //   alignItems: 'center'
-
-  // }}>
-
-
-  //    <Icon/> </div>
+    }}>  <Icon /> </div>
+  }
 
   if (router.pathname == '/') {
     if (loggedInData != null) {
-      console.log("loggedInData")
-
       router.push(`/u/${loggedInData.username}`)
       return
     }
@@ -149,21 +140,7 @@ function MyApp({ Component, pageProps }) {
 
   return <LoginContext.Provider value={loggedInData}>
 
-    {(loading) ? <div style={{
-      background: vars.GREY,
-      width: '100%',
-      height: '100vh',
-      overflow: 'hidden',
-      display: 'flex',
-      position: "fixed",
-      zIndex: 50,
-      top: 0,
-      left: 0,
-      justifyContent: 'center',
-      alignItems: 'center'
 
-    }}>  <Icon /> </div>
-      : null}
     <NavBar showHideSettings={((state) => { setShowNotifications(false); setShowHideSettings(state) })} showHideNotifs={((state) => { setShowHideSettings(false); setShowNotifications(state) })} />
     <div style={{ height: '50px' }} />
     <NextNProgress options={{ showSpinner: false }} height={2} color={vars.MAIN_BLUE} />

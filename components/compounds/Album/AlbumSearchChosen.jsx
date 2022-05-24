@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     width:fit-content;
     min-width: 90px;
     margin:5px;
-    margin-inline: 0px;
+    margin-inline: 5px;
     position:relative;
     display:flex;
    
@@ -41,6 +41,7 @@ const ButtonCont = styled.div`
         padding:2px;
         background-color: ${vars.MAIN_RED};
         width:20px;
+        border:1px solid ${vars.SECONDARY_RED};
 
     }
     `
@@ -58,10 +59,6 @@ export default function AlbumSearchChosen(props) {
                     imagesrc={props.AlbumCover}
                 />
             </div>
-{/* 
-            <ButtonCont>
-              <SecondaryButton  buttonTitle={<Minus/>} />
-            </ButtonCont> */}
 
 
 

@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Profile from '../compounds/Profile'
 import * as vars from '../../vars'
 import SecondaryButton from '../primitives/Buttons/SecondaryButton'
 import Fire from '../primitives/Icons/Fire'
+import { LoginContext } from '../../pages/_app'
 import Thumbtack from '../primitives/Icons/Thumbtack'
 import ReactCountryFlag from "react-country-flag"
-import Share from '../primitives/Icons/Share'
+import pinuserservice from '../../services/pinuser'
+import unpinuserservice from '../../services/unpinuser'
 
 const Wrapper = styled.div`
     width:100wv; 
@@ -28,9 +30,6 @@ const Wrapper = styled.div`
     align-items:center;
     justify-content:center;
     `
-
-
-
 const Cont = styled.div`
     width:100%;
     position: relative;
@@ -66,32 +65,7 @@ const Bio = styled.div`
     white-space: pre-line;
     padding-right: 20px;
     margin-left: 10px;
-
-    /* width:100%; */
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
-    /* white-space: nowrap; */
     `
-const BioMobile = styled.div`
-     font-weight: 400;
-     width:100%;
-    font-size: 1.2rem;
-    color:${vars.MAIN_WHITE};
-    margin: 20px 0;
-    line-height: 1.4rem;
-    padding-inline:20px;
-    white-space: pre-line;
-    @media (min-width: 650px) {
-        /* display:none; */
-}
-@media (max-width: 650px) {
-    font-size: 1rem;
-
-       margin:10px 0px;
-}
-  
-    `
-
 const PinsCont = styled.div`
     font-weight: 400;
     color:${vars.MAIN_WHITE};
@@ -107,7 +81,7 @@ const PinsCont = styled.div`
     align-items:center;
     width:fit-content;
     
-    fill:${vars.ORANGE};
+    fill:${vars.YELLOW};
     font-size: 1.1em;
     height:1.6em;
     & b{
@@ -118,12 +92,7 @@ const PinsCont = styled.div`
     @media (max-width: 650px) {
         font-size: 1.1em;
         margin:2px;
-
-        /* margin-top:-10px; */
-}
-
-   
-
+    }
     `
 const DetailsCont = styled.section`
     margin:-5px 0px 0px 30px;
@@ -144,8 +113,6 @@ const ButtonCont = styled.div`
 width: 100%;
 display: flex;
 margin-left:-20px;
-/* align-items: center;
-justify-content: center; */
     `
 const ProfileCont = styled.div`
     max-width:130px;
@@ -166,6 +133,44 @@ const ProfileCont = styled.div`
     `
 
 export default function ProfileBar(props) {
+    const isLogged = useContext(LoginContext)
+    const [isUserPinnedState, setIsUserPinnedState] = useState(false)
+    const [isWorkingOnPin, setIsWorkingOnPin] = useState(false)
+
+    function isUserPinned() {
+        props.profile.pinnedby.map(({ username }) => { if (username == isLogged?.username) setIsUserPinnedState(true) })
+    }
+    useEffect(() => {
+        isUserPinned()
+    }, [])
+
+    function pinUser(username) {
+        setIsWorkingOnPin(true)
+        if (!isWorkingOnPin) {
+            pinuserservice(username).then((res) => {
+                if (res.status == 'success') {
+                    setIsWorkingOnPin(false)
+                    setIsUserPinnedState(true)
+                    return
+                }
+                setIsWorkingOnPin(false)
+            })
+        }
+    }
+    function unpinUser(username) {
+        setIsWorkingOnPin(true)
+        if (!isWorkingOnPin) {
+            unpinuserservice(username).then((res) => {
+                if (res.status == 'success') {
+                    setIsWorkingOnPin(false)
+                    setIsUserPinnedState(false)
+                    return
+                }
+                setIsWorkingOnPin(false)
+            })
+        }
+    }
+
     return (
         <Wrapper {...props}>
 
@@ -174,56 +179,55 @@ export default function ProfileBar(props) {
 
                 <ProfileCont>
                     <Profile
-                        profileImage={props.profileimage} />
+                        profileImage={props.profile.profileinfo.profileimage} />
                 </ProfileCont>
                 <DetailsCont>
-                    <Name>{props.DisplayName || props.username}
+                    <Name>{props.profile.profileinfo.displayname || props.profile.username}
 
                         <ReactCountryFlag
-                            countryCode={props.countrycode}
+                            countryCode={props.profile.profileinfo.countrycode}
                             svg
                             style={{
-                                // padding: '2px',
                                 margin: '.5rem 0 0 10px ',
                                 borderRadius: '4px',
-
-                                // width: '2.2rem',
                                 height: '100%',
                             }}
                             title="US"
                         />
 
-                       
-                    </Name>
-                    <div id='username'>@{props.username}</div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    </Name>
+                    <div id='username'>@{props.profile.username}</div>
+
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
                         {/* <PinsCont>
-                            <Fire /> <b>436</b>
+                            <Fire /> <b>{props.profile.points || 0}</b> Points
                         </PinsCont> */}
                         <PinsCont style={{ fill: vars.MAIN_RED }}>
-                            <Thumbtack /> <b>40</b>Pins
+                            <Thumbtack /> <b></b>Pinned by <b>{props.profile.pinnedby.length} </b>others
                         </PinsCont>
                     </div>
-                   
+                    <PinsCont style={{ fill: vars.MAIN_RED }}>
+                        <b>{Math.round((Date.now() - Date.parse(props.profile.since)) / 604800000)}</b>Weeks Old
+                    </PinsCont>
                 </DetailsCont>
-    
+
             </Cont>
 
             <Cont>
-            <Bio>
-                        {props.bio}
-                    </Bio>
+                <Bio>
+                    {props.profile.profileinfo.bio}
+                </Bio>
 
-                  
+
             </Cont>
             <Cont>
-            <ButtonCont>
-                {(props.isProf)?
-                    <SecondaryButton style={{ marginLeft: '30px' }} onClick = {()=>window.location.href = `/accounts/edit?next=/u/${props.username}`} buttonTitle={'Edit Profile'} />
-                :    <SecondaryButton style={{ marginLeft: '30px' }} state={'activ'} buttonTitle={'Pin'} />}
-                        <SecondaryButton style={{ border:"none", background:vars.LIGHT_GREY,border:`1px solid ${vars.LIGHER_GREY}`}} buttonTitle={ "Share"} />
-                    </ButtonCont>
+                <ButtonCont>
+                    {((props.demo ? { username: props.profile.username } : isLogged?.username) == props.profile.username) ?
+                        <SecondaryButton style={{ marginLeft: '30px', width: 'fit-content' }} onClick={() => window.location.href = `/accounts/edit?next=/u/${props.profile.username}`} buttonTitle={'Edit Profile'} />
+                        : <SecondaryButton buttonwidth={'80px'} style={{ marginLeft: '30px' }} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />}
+                    <SecondaryButton style={{ border: "none", background: vars.LIGHT_GREY, border: `1px solid ${vars.LIGHER_GREY}` }} buttonTitle={"Share"} />
+                </ButtonCont>
             </Cont>
         </Wrapper>
     )
