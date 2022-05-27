@@ -33,6 +33,6 @@ export default function Like(props) {
     }
 
     return <button onClick={() => (isLiked) ? removelikeHandler() : likeHandler()} {...props} id="hearts">
-        {(isLiked) ? <HeartSolid style={{ fill: vars.MAIN_RED }} /> : <Heart />}
+        {(isLiked) ? <HeartSolid style={{ fill: vars.MAIN_RED, strokeWidth: '20px', stroke: vars.SECONDARY_RED }} /> : <Heart />}
     </button>
 }

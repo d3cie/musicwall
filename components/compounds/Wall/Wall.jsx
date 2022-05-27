@@ -113,11 +113,25 @@ const GridContInner = styled.div`
 
 const GridContOutter = styled.section`
   display:flex;
-  scroll-margin-top: 40px;
+  scroll-margin-top: 10px;
   width:100%;
   max-width:${vars.MAX_WIDTH};
     /* width:fit-content; */
+/* filter:brightness(105%); */
+transition: all 0.2s;
+opacity:1;
+@keyframes flash {
+  0%{
+    opacity: .1;
 
+  }
+  50%{
+    opacity: .7;
+  }
+  100%{
+   opacity: .1;
+  }
+}
   flex-direction: row;
   padding:50px;
   padding-bottom:0px;
@@ -262,7 +276,10 @@ export default function Wall(props) {
     if (props?.scrollto)
       if (props.wall.since == props?.scrollto) {
         setCondenseView(false)
-        document.getElementById(props?.scrollto).scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
+        const wall = document.getElementById(props?.scrollto)
+        wall.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
+        // wall.style.animation = 'flash 1s linear 1'
+
       }
   }, [])
 

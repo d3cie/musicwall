@@ -148,29 +148,36 @@ export default function ProfileBar(props) {
     }, [])
 
     function pinUser(username) {
-        setIsWorkingOnPin(true)
-        if (!isWorkingOnPin) {
-            pinuserservice(username).then((res) => {
-                if (res.status == 'success') {
+        if (!props.demo) {
+
+
+            setIsWorkingOnPin(true)
+            if (!isWorkingOnPin) {
+                pinuserservice(username).then((res) => {
+                    if (res.status == 'success') {
+                        setIsWorkingOnPin(false)
+                        setIsUserPinnedState(true)
+                        return
+                    }
                     setIsWorkingOnPin(false)
-                    setIsUserPinnedState(true)
-                    return
-                }
-                setIsWorkingOnPin(false)
-            })
+                })
+            }
         }
     }
     function unpinUser(username) {
-        setIsWorkingOnPin(true)
-        if (!isWorkingOnPin) {
-            unpinuserservice(username).then((res) => {
-                if (res.status == 'success') {
+        if (!props.demo) {
+
+            setIsWorkingOnPin(true)
+            if (!isWorkingOnPin) {
+                unpinuserservice(username).then((res) => {
+                    if (res.status == 'success') {
+                        setIsWorkingOnPin(false)
+                        setIsUserPinnedState(false)
+                        return
+                    }
                     setIsWorkingOnPin(false)
-                    setIsUserPinnedState(false)
-                    return
-                }
-                setIsWorkingOnPin(false)
-            })
+                })
+            }
         }
     }
 
