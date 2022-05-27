@@ -75,7 +75,6 @@ export default function Signup() {
                 }
 
                 if (result.status == 'success') {
-                    setIsWorking(false)
                     location.href = `/u/${username}`
 
 
