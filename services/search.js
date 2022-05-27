@@ -41,6 +41,7 @@ export default async function (query) {
 
             return getQuery(query, newToken)
         }
+
         return result
 
     }
