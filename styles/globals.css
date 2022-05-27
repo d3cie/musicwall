@@ -16,6 +16,46 @@ html {
   color: #fafafa !important;
 }
 
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  font-family: var(--toastify-font-family);
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+  border: solid 1px #ff5555 !important;
+  background-color: #ef3b22 !important;
+  font-weight: 500 !important;
+  fill: #fafafa !important;
+  color: #fafafa !important;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--default {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  font-family: var(--toastify-font-family);
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+  border: solid 1px #ccc !important;
+  background-color: #fafafa !important;
+  font-weight: 500 !important;
+  fill: #333 !important;
+  color: #333 !important;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  font-family: var(--toastify-font-family);
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+  border: solid 1px #8AFF8A !important;
+  background-color: #2EFF2E !important;
+  font-weight: 500 !important;
+  fill: #fafafa !important;
+  color: #fafafa !important;
+}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0
@@ -44,7 +84,7 @@ html {
   animation: fadeIn .2s ease-in-out;
 }
 
-cssTransition html,
+html,
 body {
   padding: 0;
   margin: 0;

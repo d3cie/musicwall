@@ -5,11 +5,11 @@ import * as vars from '../../../vars'
 
 const InputStyle = styled.input`
 
-
-    font-size: 1.2em;
+    border: solid 1px  ${vars.LIGHT_GREY};
+          font-size: 1.2em;
     border-radius:4px;
     font-weight: 400;
-    border:none;
+    height:45px;
     background-color: ${vars.DARK_GREY};
     color:${vars.MAIN_WHITE};
    padding: 10px 10px;

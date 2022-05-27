@@ -6,6 +6,10 @@ import Profile from '../compounds/Profile';
 import DualRing from '../primitives/Animations/DualRing';
 import ArrowBracket from '../primitives/Icons/ArrowBracket';
 import logoutservice from '../../services/logout'
+import User from '../primitives/Icons/User';
+import Gear from '../primitives/Icons/Gear';
+import Pencil from '../primitives/Icons/Pencil';
+
 
 const Wrapper = styled.div`
     width:100%;
@@ -13,6 +17,7 @@ const Wrapper = styled.div`
         position: fixed;
         z-index: 90;
         top:60px;
+        
         right:0;
         @media (max-width: 650px) {
             height:100%;
@@ -39,9 +44,10 @@ const DisplayBox = styled.div`
     position: relative;
     margin:10px;
     /* padding-left:40px; */
-    height:fit-content;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        height:fit-content;
     position: absolute;
-padding-bottom:20px;
+padding-bottom:00px;
         z-index: 30;
         right:0;
     border-radius:4px;
@@ -102,7 +108,7 @@ display:flex;
         opacity:.9;
     }
 
-    border-bottom: 1px solid ${vars.LIGHER_GREY};
+    /* border-bottom: 1px solid ${vars.LIGHER_GREY}; */
 
     `
 const Username = styled.div`
@@ -116,6 +122,21 @@ const Settings = (props) => {
     const [loggingout, setLoggingOut] = useState(false)
     const router = useRouter()
 
+    const myPageHandler = () => {
+        if (router.asPath == `/u/${props.username}`) {
+            props.close()
+            return
+        }
+        router.push(`/u/${props.username}`)
+        props.close()
+
+    }
+
+    const settingsHandler = () => {
+        router.push('/accounts/edit')
+        props.close()
+
+    }
     const logOutHandler = () => {
         setLoggingOut(true)
         logoutservice().then(res => {
@@ -130,7 +151,8 @@ const Settings = (props) => {
         )
     }
     return (
-        <Wrapper {...props}>
+        <Wrapper id="settings" {...props}>
+            {/* <OutsideClickHandler onOutsideClick={() => props.close()}> */}
             <DisplayBox>
                 <ProfileCont>
                     <Profile profileImage={props.profileImage} width="90px" height="90px" />
@@ -141,7 +163,16 @@ const Settings = (props) => {
                     </DetailsCont>
 
                 </ProfileCont>
-                <Setting onClick={() => logOutHandler()}>
+
+                <Setting onClick={() => myPageHandler()} >
+                    <User />
+                    My Page
+                </Setting>
+                <Setting onClick={() => settingsHandler()}>
+                    <Pencil />
+                    Edit Profile
+                </Setting>
+                <Setting style={{ marginTop: 1, borderTop: `1px solid ${vars.LIGHER_GREY}` }} onClick={() => logOutHandler()}>
                     <ArrowBracket />
                     Log Out
                     <div hidden={!loggingout} style={{ marginTop: 40, position: "absolute", right: -20 }}>
@@ -153,7 +184,8 @@ const Settings = (props) => {
 
 
             </DisplayBox>
-        </Wrapper>
+            {/* </OutsideClickHandler> */}
+        </Wrapper >
     );
 }
 

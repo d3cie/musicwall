@@ -1,7 +1,7 @@
 import React from 'react';
 import Ellipsis from '../primitives/Animations/Elipsis';
 import * as vars from '../../vars'
-const Loading = () => {
+const Loading = (props) => {
     return (
         <div
             style={{
@@ -10,6 +10,7 @@ const Loading = () => {
                 color: vars.MAIN_WHITE,
                 width: '100%',
                 height: '100%',
+                minHeight: props.minHeight,
                 alignItems: 'center',
                 justifyContent: 'center',
                 transition: 'all 0.2s'

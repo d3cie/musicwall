@@ -13,7 +13,7 @@ const Wrapper = styled.div`
             height:100%;
   }
 `
- 
+
 
 const DisplayBox = styled.div`
     width:400px;
@@ -23,6 +23,7 @@ const DisplayBox = styled.div`
     padding-left:40px;
     height:fit-content;
     position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
         z-index: 30;
         right:0;
@@ -49,7 +50,7 @@ const Notifications = (props) => {
         <Wrapper {...props}>
             <DisplayBox>
                 ddd
-               </DisplayBox>
+            </DisplayBox>
         </Wrapper>
     );
 }

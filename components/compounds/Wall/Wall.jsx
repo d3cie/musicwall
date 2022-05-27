@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import timeStampToHumanTime from '../../../services/timestamptotime'
 import Like from '../Like'
 import styled from 'styled-components'
@@ -91,13 +91,21 @@ const TimeStampCont = styled.div`
 
 const GridContInner = styled.div`
   width:fit-content;
-  min-width:360px;
+  width:100%;
+  min-width:380px;
   @media (max-width:650px) {
     margin-left: 30px;
+    width:fit-content;
+
+  }
+  @media (min-width:650px) {
+    margin-left: 100px;
 
   }
   @media (min-width:${vars.MAX_WIDTH}) {
     width:100%;
+        margin-left: 0px;
+
   max-width:${vars.MAX_WIDTH};
   }
   position:relative;
@@ -105,6 +113,7 @@ const GridContInner = styled.div`
 
 const GridContOutter = styled.section`
   display:flex;
+  scroll-margin-top: 40px;
   width:100%;
   max-width:${vars.MAX_WIDTH};
     /* width:fit-content; */
@@ -248,7 +257,14 @@ const condensedContStyle = {
 }
 export default function Wall(props) {
 
-  const [condenseView, setCondenseView] = useState(false)
+  const [condenseView, setCondenseView] = useState(props.scrollto ? true : false)
+  useEffect(() => {
+    if (props?.scrollto)
+      if (props.wall.since == props?.scrollto) {
+        setCondenseView(false)
+        document.getElementById(props?.scrollto).scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
+      }
+  }, [])
 
   if (!props.wall.songs.length && !props.wall.albums.length && !props.wall.artists.length) {
     return

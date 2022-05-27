@@ -13,13 +13,13 @@ export default function Walls(props) {
   }, [props.walls]
   )
 
-  if (data == null) return <Loading />
+  if (data == null) return <Loading minHeight='50vh' />
 
   if (!data.length) {
     return <NoWall loggedIn={isLogged?.username == props.wallOwner} />
   }
 
   return <>{data.map((wall, i) => (
-    <Wall key={i} wallOwner={props.wallOwner} loggedinname={isLogged?.username} wall={wall} i={i} ></Wall>
+    <Wall scrollto={props.scrollto} key={i} wallOwner={props.wallOwner} loggedinname={isLogged?.username} wall={wall} i={i} ></Wall>
   ))}</>
 }

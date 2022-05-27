@@ -25,7 +25,7 @@ export default async function (query) {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             }), 60000)
-
+        console.log(resp)
         return resp
     }
 
@@ -33,24 +33,22 @@ export default async function (query) {
         const searchToken = sessionStorage.getItem('searchToken')
         const result = await getQuery(query, searchToken)
 
-
+        console.log(result)
         if (!result?.error) { return result }
         if (result?.error == 'Invalid access token') {
             const newToken = await getTokenAndSetToStorage()
             if (newToken?.error) { return newToken }
 
             return getQuery(query, newToken)
-        } else {
-            //throw error for next to see
-            return result
         }
+        return result
 
     }
     const newToken = await getTokenAndSetToStorage()
     if (newToken?.error) { return newToken }
 
     const queryResponse = getQuery(query, newToken)
-    if (result?.error) { return result }
+    if (queryResponse?.error) { return queryResponse }
     return queryResponse
 }
 

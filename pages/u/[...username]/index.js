@@ -8,6 +8,7 @@ import Ellipsis from '../../../components/primitives/Animations/Elipsis'
 import getuser from '../../../services/getuser'
 import Error from 'next/error'
 import Head from 'next/head'
+import Loading from '../../../components/layouts/Loading'
 import getwalls from '../../../services/getwalls'
 
 import { LoginContext } from '../../../pages/_app'
@@ -40,14 +41,16 @@ function UserProfile(props) {
   const isLoggedInData = useContext(LoginContext)
   const [populatedWalls, setPopulatedWalls] = useState(null)
 
-  const { notifs } = router.query
-
+  const { from } = router.query
+  const { wall } = router.query
   const [isloggedinaccount, setIsLoggedInAccount] = useState(false)
 
 
   useEffect(() => {
     setUsername(window.location.pathname.substring(3))
-    props.setProfileImage()
+
+
+
     if (isLoggedInData?.username == username) {
       setIsLoggedInAccount(true)
     }
@@ -67,27 +70,9 @@ function UserProfile(props) {
 
     fetchData()
     //removed router.aspath and notifs.  Were causing an unnessesary re-render
-  }, [window.location.pathname])
+  }, [window.location.pathname, from])
 
-  if (!data) return <Cont
-
-    style={{
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      zIndex: 10,
-      display: 'flex',
-      flexDirection: 'column-reverse',
-      color: vars.MAIN_WHITE,
-      fontWeight: '200',
-      width: '100%',
-      height: '100vh',
-      alignItems: 'center',
-      justifyContent: 'center',
-      transition: 'all 0.2s'
-    }}
-
-  ><Ellipsis color={vars.MAIN_WHITE} /></Cont>
+  if (!data) return <Loading minHeight='100vh' />
 
   if (data.status != "success") {
     return <Error statusCode={404} />
@@ -118,11 +103,12 @@ function UserProfile(props) {
       <Cont>
         {/* <PlaySongSpotify/> */}
         <ProfileBar
+
           profile={data.profile}
         />
 
         <Cont style={{ alignItems: 'center' }}>
-          <Walls wallOwner={username} walls={populatedWalls} />
+          <Walls scrollto={wall} wallOwner={username} walls={populatedWalls} />
         </Cont>
 
       </Cont>

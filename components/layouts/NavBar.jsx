@@ -154,15 +154,6 @@ export default function NavBar(props) {
                             style={{ padding: '5px', background: vars.MAIN_WHITE }}>
                             <Plus style={{ fill: vars.DARK_GREY }} />
                         </NavBut>
-                        <NavBut
-                            onClick={() => router.push(`/u/${isLogged.username}`)}
-                            style={{ padding: '5px', background: vars.MAIN_WHITE }}>
-                            <House style={{ fill: vars.DARK_GREY, margin: '2px' }} />
-                        </NavBut>
-
-                        {/* } */}
-
-                        {/* {(isSearching)? '':  */}
 
                         <ProfileCont
                             onClick={() => props.showHideSettings(showHideSettings => !showHideSettings)}

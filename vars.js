@@ -7,6 +7,8 @@ export const MAIN_RED = '#ef3b22'
 export const ORANGE = '#ef8342'
 export const GREY = '#202027'
 //1a1a1a
+export const PRIMARY_GREEN = "#2EFF2E"
+export const SECONDARY_GREEN = '#8AFF8A'
 export const DARK_GREY = '#1b1b21'
 //121212
 export const LIGHT_GREY = '#2a2a2f'

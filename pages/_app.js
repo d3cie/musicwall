@@ -71,36 +71,43 @@ function MyApp({ Component, pageProps }) {
   const [loggedInData, setLoggedInData] = useState(null)
   const [profileImageFromEdit, setProfileImageFromEdit] = useState(null)
 
-  const setProfileImage = (image) => {
-    if (profileImageFromEdit != null) {
-      let temp = loggedInData
-      temp.profileinfo.profileimage = image
-      setLoggedInData(temp)
 
-      toast.loading('Uploading profile image.  Please wait.')
-      editimageservice(image).then((res) => {
-        setProfileImageFromEdit(null)
-        toast.dismiss()
 
-        res.json().then((res) => {
-          if (res.status == 'success') {
-            console.log(res)
-            toast.success('Profile image uploaded successfully.')
-          }
-          if (res.status == 'error') {
-            toast.error('Profile image not uploaded due to an error. Please try again.')
-          }
-        })
+  const setProfileImage = async (image) => {
+
+    toast.loading('Uploading profile image.  Please wait.')
+    editimageservice(image).then((res) => {
+      setProfileImageFromEdit(null)
+      toast.dismiss()
+
+      res.json().then((res) => {
+
+
+        if (res.status == 'success') {
+
+          toast.success('Profile image uploaded successfully.  Refresh page to see changes.')
+
+          return image
+        }
+        if (res.status == 'error') {
+          toast.error('Profile image not uploaded due to an error. Please try again.')
+          return null
+        }
       })
-        .catch((error) => {
-          toast.dismiss()
-          toast.error('Profile image not uploaded due to an unexpected error. Please try again.')
-          console.log(error)
-        })
-    }
+    })
+      .catch((error) => {
+        toast.dismiss()
+        toast.error('Profile image not uploaded due to an unexpected error. Please try again.')
+        console.log(error)
+        return null
 
+      })
+    setProfileImageFromEdit(null)
   }
 
+  if (profileImageFromEdit != null) {
+    setProfileImage(profileImageFromEdit)
+  }
 
   useEffect(
     () => {
@@ -170,7 +177,6 @@ function MyApp({ Component, pageProps }) {
 
 
   if (router.pathname == '/accounts/login' ||
-    router.pathname == '/accounts/edit' ||
     router.pathname == '/accounts/resetpassword' ||
     router.pathname == '/accounts/signup') {
 
@@ -192,7 +198,7 @@ function MyApp({ Component, pageProps }) {
 
 
       <FormCont onSubmit={(e) => { handleForm(e); return false }} id='form'>
-        <Component setProfileImage={setProfileImageFromEdit} {...pageProps} />
+        <Component  {...pageProps} />
       </FormCont>
     </Cont>
     </LoginContext.Provider>
@@ -216,13 +222,14 @@ function MyApp({ Component, pageProps }) {
       pauseOnHover
     />
 
-    <NavBar showHideSettings={((state) => { setShowNotifications(false); setShowHideSettings(state) })} showHideNotifs={((state) => { setShowHideSettings(false); setShowNotifications(state) })} />
+    <NavBar showHideSettings={((state) => { console.log(state); setShowNotifications(false); setShowHideSettings(state) })} showHideNotifs={((state) => { setShowHideSettings(false); setShowNotifications(state) })} />
     <div style={{ height: '50px' }} />
     <NextNProgress options={{ showSpinner: false }} height={2} color={vars.MAIN_BLUE} />
     <Notifications hidden={!showNotifications} />
-    <Settings since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
 
-    <Component setProfileImage={() => setProfileImage(profileImageFromEdit)} {...pageProps} />
+    <Settings close={() => setShowHideSettings(false)} since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
+
+    <Component setProfileImage={setProfileImageFromEdit}  {...pageProps} />
   </LoginContext.Provider>
 }
 
