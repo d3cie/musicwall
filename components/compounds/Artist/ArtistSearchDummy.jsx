@@ -3,18 +3,17 @@ import styled from 'styled-components'
 import * as vars from '../../../vars'
 
 const Wrapper = styled.div`
-    border-radius:4px;
+      border-radius:4px;
     overflow:hidden;
     position:relative;
-    width:210px;
-    /* width:100%; */
+    width:190px;
     background-color:${vars.LIGHT_GREY};
     padding:10px;
     margin:5px;
     height:fit-content;
-    
-    padding-top:20px;
-    padding-bottom: 20px;
+    border:solid 1px ${vars.LIGHER_GREY};
+    padding-top:10px;
+    padding-bottom: 10px;
     `
 
 const DetailsInner = styled.div`
@@ -22,7 +21,7 @@ const DetailsInner = styled.div`
     text-align: center;
     border-radius:4px;
 background-color:${vars.LIGHER_GREY};
-   height:20px;
+   height:25px;
    width:100px;
     
     `
@@ -82,18 +81,10 @@ export default function ArtistSearchDummy(props) {
 
     return (
         <Wrapper>
-
-
-
-            <ButtonCont>
-                <div  />
-            </ButtonCont>
             <div
-                style={{ borderRadius: '50%',border:`solid ${vars.MAIN_BLUE}`, width: '190px',height:'190px',backgroundColor:vars.LIGHER_GREY, overflow: 'hidden' }}
+                style={{ borderRadius: '50%', width: '170px', height: '170px', backgroundColor: vars.LIGHER_GREY, overflow: 'hidden' }}
             />
-                
             <Details>
-
                 <DetailsInner>
                 </DetailsInner>
 

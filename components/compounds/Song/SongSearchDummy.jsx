@@ -3,22 +3,26 @@ import * as vars from '../../../vars'
 import SecondaryButton from '../../primitives/Buttons/SecondaryButton'
 
 const Wrapper = styled.div`
-    border-radius:4px;
+   border-radius:4px;
     overflow:hidden;
     padding:5px;
     width:100%;
+    transition: all 0.2s;
+    max-width:700px;
+    width: 100%;
     margin:10px;
     margin-inline:0px;
     position:relative;
+
     background: ${vars.LIGHT_GREY};
-    outline:solid 1px ${vars.LIGHT_GREY};
+    border:solid 1px ${vars.LIGHER_GREY};
+
     display:flex;
-       & div{
+   
+    & div{
         overflow:hidden;
         border-radius:4px;
-
     }
-    height:fit-content;
 `
 
 const DetailsInner = styled.div`
@@ -53,20 +57,20 @@ const ButtonCont = styled.div`
 
 
 export default function SongSearchDummy() {
-  
+
     return (
         <Wrapper>
-            <div style = {{width:'60px', height:'60px', background: vars.LIGHER_GREY}}/>
+            <div style={{ width: '60px', height: '60px', background: vars.LIGHER_GREY }} />
             <div>
-            <DetailsInner/>
-            <div  style={{marginLeft:'20px', width:'100px', height:'30px' ,background: vars.LIGHER_GREY}}/> 
+                <DetailsInner />
+                <div style={{ marginLeft: '20px', width: '100px', height: '30px', background: vars.LIGHER_GREY }} />
 
             </div>
-          <ButtonCont>
-            <SecondaryButton style ={{backgroundColor:vars.ACCENT_COLOR}} />
+            <ButtonCont>
+                <SecondaryButton style={{ backgroundColor: vars.ORANGE, borderColor: vars.ACCENT_COLOR }} />
 
-            <SecondaryButton />
-               
+                <SecondaryButton />
+
             </ButtonCont>
         </Wrapper>
 

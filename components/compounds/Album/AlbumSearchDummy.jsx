@@ -2,64 +2,41 @@ import styled from 'styled-components'
 import * as vars from '../../../vars'
 
 const Wrapper = styled.div`
-    border-radius:4px;
+     border-radius:4px;
     overflow:hidden;
     position:relative;
-    width:210px;
+    width:192px;
+    border:solid 1px ${vars.LIGHER_GREY};
     margin:5px;
     padding:5px;
     height:fit-content;
+    /* min-height: 300px; */
     background-color:${vars.LIGHT_GREY};
+    & div{
+        overflow:hidden;
+        border-radius: 4px;
+    }
     `
 
 
 
 const Details = styled.div`
-    background: ${vars.LIGHER_GREY};
-    /* height:25%;
+    background: ${vars.LIGHT_GREY};
+    height:fit-content;
     bottom:10%;
-    width:80%;
-    padding-inline:10px;
-    left:10%; */
+    width:100%;
+    left:10%;
     border-radius: 4px;
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction: column;
     z-index: 4;
-    /* opacity:.8; */
-    padding:5px;
-    transition: all .2s;
-    cursor:pointer;
-    :hover{
-        opacity: 1;
-
-    }
-    height:40px;
-    position: absolute;
-    bottom:10%;
-    width:90%;
-    /* padding-inline:10px; */
-    left:5%;
-    border-radius: 4px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction: column;
-    z-index: 4;
-    /* opacity:.8; */
     padding:5px;
     padding-inline:0;
     transition: all .2s;
     text-justify:left;
     cursor:pointer;
-    :hover{
-        opacity: 1;
-
-    }
-    text-align: left;
-    padding:5px;
-
     `
 
 
@@ -93,19 +70,21 @@ const ButtonCont = styled.div`
     justify-content:center;`
 
 export default function AlbumSearchDummy() {
-        
-   return (
-    <Wrapper>
-  
-            
-        <Details>
-        </Details>
-        <ButtonCont>
-            <div/>
+
+    return (
+        <Wrapper>
+
+            <div style={{ width: '180px', height: '180px', background: vars.LIGHER_GREY }} />
+
+            <Details>
+                <div style={{ width: '180px', height: '50px', background: vars.LIGHER_GREY }} />
+
+            </Details>
+            <ButtonCont>
+                <div />
             </ButtonCont>
 
-      <div style = {{width:'200px', height:'200px', background: vars.LIGHT_GREY}}/>
-    </Wrapper>
-   
-  )
+        </Wrapper>
+
+    )
 }

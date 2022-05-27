@@ -9,6 +9,7 @@ import Thumbtack from '../primitives/Icons/Thumbtack'
 import ReactCountryFlag from "react-country-flag"
 import pinuserservice from '../../services/pinuser'
 import unpinuserservice from '../../services/unpinuser'
+import { useRouter } from 'next/router'
 
 const Wrapper = styled.div`
     width:100wv; 
@@ -137,6 +138,8 @@ export default function ProfileBar(props) {
     const [isUserPinnedState, setIsUserPinnedState] = useState(false)
     const [isWorkingOnPin, setIsWorkingOnPin] = useState(false)
 
+    const router = useRouter()
+
     function isUserPinned() {
         props.profile.pinnedby.map(({ username }) => { if (username == isLogged?.username) setIsUserPinnedState(true) })
     }
@@ -224,7 +227,7 @@ export default function ProfileBar(props) {
             <Cont>
                 <ButtonCont>
                     {((props.demo ? { username: props.profile.username } : isLogged?.username) == props.profile.username) ?
-                        <SecondaryButton style={{ marginLeft: '30px', width: 'fit-content' }} onClick={() => window.location.href = `/accounts/edit?next=/u/${props.profile.username}`} buttonTitle={'Edit Profile'} />
+                        <SecondaryButton style={{ marginLeft: '30px', width: 'fit-content' }} onClick={() => router.push(`/accounts/edit?next=/u/${props.profile.username}`)} buttonTitle={'Edit Profile'} />
                         : <SecondaryButton buttonwidth={'80px'} style={{ marginLeft: '30px' }} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />}
                     <SecondaryButton style={{ border: "none", background: vars.LIGHT_GREY, border: `1px solid ${vars.LIGHER_GREY}` }} buttonTitle={"Share"} />
                 </ButtonCont>

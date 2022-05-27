@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Image from '../../primitives/Image'
 import PlayPause from '../../primitives/Toggles/PlayPause'
@@ -7,6 +7,8 @@ import DualRing from '../../primitives/Animations/DualRing'
 import SecondaryButton from '../../primitives/Buttons/SecondaryButton'
 import Plus from '../../primitives/Icons/Plus'
 import Minus from '../../primitives/Icons/Minus'
+import { LimitContext } from '../../../pages/search'
+
 
 const Wrapper = styled.div`
     border-radius:4px;
@@ -36,9 +38,7 @@ const DetailsInner = styled.div`
   text-overflow:ellipsis;
   overflow:hidden;
   white-space:nowrap; 
-   /* margin-left:20px;
-   padding-right:80px;
-   max-width:400px */
+ 
     & div{
         opacity:.8;
         font-size:.9rem;
@@ -61,13 +61,10 @@ const DetailsInner = styled.div`
     `
 
 const Details = styled.div`
-    /* background:linear-gradient(0deg, #00000099, #00000000); */
     background: ${vars.LIGHT_GREY};
     height:fit-content;
-    /* position: absolute; */
     bottom:10%;
     width:100%;
-    /* padding-inline:10px; */
     left:10%;
     border-radius: 4px;
     display:flex;
@@ -75,7 +72,6 @@ const Details = styled.div`
     align-items:center;
     flex-direction: column;
     z-index: 4;
-    /* opacity:.8; */
     padding:5px;
     padding-inline:0;
     transition: all .2s;
@@ -91,13 +87,11 @@ const Details = styled.div`
 const ButtonCont = styled.div`
     display:flex;
     flex-direction:row;
-    /* align-items:center; */
     position:absolute;
     top:0%;
     right:0;
     padding:10px;
     width: fit-content;
-    /* justify-content:center; */
     height: fit-content;
     
     & button{
@@ -108,20 +102,35 @@ const ButtonCont = styled.div`
         padding:2px;
         width:20px;
         font-weight: 600;
+        animation-iteration-count: 1;
 
         /* padding-inline:10px; */
     }
-    
-
     justify-content:center;`
 
 
 
 export default function AlbumSearch(props) {
     const [isChosen, setIsChosen] = useState(props.isAlbumChosen)
+    const NoOfAlbumsChosen = useContext(LimitContext).albums
+    const [limitReachedAnimation, setLimitReachedAnimation] = useState(false)
 
-    function addRemoveAlbum(){
-        if(!isChosen){
+    const animate = () => {
+        setLimitReachedAnimation(true);
+        setTimeout(() => setLimitReachedAnimation(false), 2000);
+    }
+
+
+    function addRemoveAlbum() {
+
+
+        if (!isChosen) {
+            if (NoOfAlbumsChosen >= props.Limit) {
+                animate()
+                props.notify('albums')
+
+                return
+            }
             props.addAlbum()
             setIsChosen(true)
             return
@@ -129,38 +138,42 @@ export default function AlbumSearch(props) {
         setIsChosen(false)
         props.removeAlbum()
     }
-   return (
-    <Wrapper>
-  
-        <Image
-        width = '180px'
-        alt = {props.AlbumName}
-        height = '180px'
-         imagesrc = {props.AlbumCover}
-         />
+    return (
+        <Wrapper>
 
-               
-        <Details>
-       
-       <DetailsInner>
-           
-           {props.AlbumName}
-           <div>
-               <a>
-                   {props.Artist}
-               </a>
+            <Image
+                width='180px'
+                alt={props.AlbumName}
+                height='180px'
+                imagesrc={props.AlbumCover}
+            />
 
-           </div>
 
-       </DetailsInner>
-       <ButtonCont>
-       <SecondaryButton style={{backgroundColor:(!isChosen)?vars.MAIN_BLUE:vars.MAIN_RED, borderColor:(!isChosen)?vars.MAIN_BLUE:'#bb7777'}} onClick = {addRemoveAlbum} buttonTitle = {(isChosen)?<Minus/>:<Plus/> }/>
-       </ButtonCont>
-   </Details>
-   
-    </Wrapper>
-   
-  )
+            <Details>
+
+                <DetailsInner>
+
+                    {props.AlbumName}
+                    <div>
+                        <a>
+                            {props.Artist}
+                        </a>
+
+                    </div>
+
+                </DetailsInner>
+                <ButtonCont>
+                    <SecondaryButton style={{
+                        animation: limitReachedAnimation ? 'horizontal-shaking .3s ease-in-out' : null,
+
+                        backgroundColor: (!isChosen) ? vars.MAIN_BLUE : vars.MAIN_RED, borderColor: (!isChosen) ? vars.MAIN_BLUE : '#bb7777'
+                    }} onClick={addRemoveAlbum} buttonTitle={(isChosen) ? <Minus /> : <Plus />} />
+                </ButtonCont>
+            </Details>
+
+        </Wrapper>
+
+    )
 }
 // Album.defaultProps = {
 //     isPreview : true

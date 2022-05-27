@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import * as vars from '../../../vars'
 
-const InputStyle  = styled.textarea`
+const InputStyle = styled.textarea`
     resize:vertical;
     min-height:100px;
     max-height:200px;
@@ -18,7 +18,9 @@ const InputStyle  = styled.textarea`
     width:100%;
     border: solid 1px  ${vars.LIGHT_GREY};
     position: relative;
-     
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
     &:focus {
         outline: none;
         color:${vars.MAIN_WHITE};
@@ -38,13 +40,14 @@ const Label = styled.label`
 
 `
 export default function MultiText(props) {
+
   return (
-      <div style = {{width:'fit-content',margin:'10px', position: 'relative'}}>
-        <InputStyle required = {true} {...props}>
-        </InputStyle>
-        <Label>{props.placeholderText}</Label>
-    
-      </div>
-    
+    <div style={{ width: 'fit-content', margin: '10px', position: 'relative' }}>
+      <InputStyle required={true} {...props}>
+      </InputStyle>
+      <Label>{props.placeholderText}</Label>
+
+    </div>
+
   )
 }

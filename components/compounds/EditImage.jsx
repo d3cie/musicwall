@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import AvatarEditor from 'react-avatar-editor'
 import styled from 'styled-components'
@@ -124,62 +124,61 @@ class EditImage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      zoomValue:1,
+      zoomValue: 1,
     };
   }
-  
+
   onClickSave = () => {
     if (this.editor) {
-    
-      const canvas = this.editor.getImage().toDataURL();
-      
-          console.log(this.props.closeEditImage(canvas))
-      
-           const canvasScaled = this.editor.getImageScaledToCanvas()
+
+      // const canvas = this.editor.getImage().toDataURL();
+      const canvasScaled = this.editor.getImageScaledToCanvas().toDataURL();
+      this.props.closeEditImage(canvasScaled)
+
     }
   }
   setEditorRef = (editor) => (this.editor = editor)
-  
-  render(){
 
-  return (<>
+  render() {
 
-  <OutCont>
-      <Cont>
-        <TopBar>
-        {/* <ExitButton onClick={this.props.exitButton} > <XIcon/> </ExitButton> */}
+    return (<>
+
+      <OutCont>
+        <Cont>
+          <TopBar>
+            {/* <ExitButton onClick={this.props.exitButton} > <XIcon/> </ExitButton> */}
 
             <Zoom>
-            <button type="button" onClick = {(e) => this.setState({zoomValue:1 })} >x1</button> 
-            <button type="button" onClick = {(e) => this.setState({zoomValue:1.5 })} >x1.5</button>
-             <button type="button" onClick = {(e) => this.setState({zoomValue:2 })}>x2</button>
+              <button type="button" onClick={(e) => this.setState({ zoomValue: 1 })} >x1</button>
+              <button type="button" onClick={(e) => this.setState({ zoomValue: 1.5 })} >x1.5</button>
+              <button type="button" onClick={(e) => this.setState({ zoomValue: 2 })}>x2</button>
             </Zoom>
-          <Title>Crop</Title>
-          {/* <ExitButton onClick={this.props.exitButton} > Cancel </ExitButton> */}
-          {/* <Next  style={{color: vars.MAIN_WHITE, right:70}} onClick={this.props.exitButton}> Cancel</Next> */}
+            <Title>Crop</Title>
+            {/* <ExitButton onClick={this.props.exitButton} > Cancel </ExitButton> */}
+            {/* <Next  style={{color: vars.MAIN_WHITE, right:70}} onClick={this.props.exitButton}> Cancel</Next> */}
 
-          <Next type="button"  onClick = {this.onClickSave}> Next</Next>
-        </TopBar>
-        <AvatarEditor
+            <Next type="button" onClick={this.onClickSave}> Next</Next>
+          </TopBar>
+          <AvatarEditor
             ref={this.setEditorRef}
             image={this.props.uncroppedPhoto}
             width={400}
             height={400}
             border={2}
-            style = {{transition:'all .2s'}}
+            style={{ transition: 'all .2s' }}
             borderRadius={500}
             color={[66, 73, 82, .4]} // RGBA
             scale={this.state.zoomValue} //zoomValue
-            disableHiDPIScaling = {true}
+            disableHiDPIScaling={true}
             rotate={0}
-        >   
-        </AvatarEditor>
-      </Cont>
-    </OutCont>
+          >
+          </AvatarEditor>
+        </Cont>
+      </OutCont>
     </>
-    
-  )
-}
+
+    )
+  }
 }
 
 

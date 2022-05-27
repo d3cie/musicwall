@@ -8,6 +8,15 @@ import Icon from '../components/primitives/Logo/Icon'
 import NextNProgress from "nextjs-progressbar";
 import Notifications from '../components/layouts/Notifications'
 import Settings from '../components/layouts/Settings'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast, Zoom, cssTransition } from 'react-toastify'
+import editimageservice from '../services/editimage'
+
+const fade = cssTransition({
+  enter: "fade_in",
+  exit: "fade_out"
+});
+
 
 const Cont = styled.div`
     width: 100%;
@@ -51,11 +60,47 @@ const FormCont = styled.form`
 export const LoginContext = React.createContext()
 
 function MyApp({ Component, pageProps }) {
+  const imageUploadingToast = (item) => {
+    toast.info(`Profile image uploading.  Please be patient.`)
+  }
+
   const router = useRouter()
   const [showNotifications, setShowNotifications] = useState(false)
   const [showHideSettings, setShowHideSettings] = useState(false)
   const [loading, setIsLoading] = useState(true)
   const [loggedInData, setLoggedInData] = useState(null)
+  const [profileImageFromEdit, setProfileImageFromEdit] = useState(null)
+
+  const setProfileImage = (image) => {
+    if (profileImageFromEdit != null) {
+      let temp = loggedInData
+      temp.profileinfo.profileimage = image
+      setLoggedInData(temp)
+
+      toast.loading('Uploading profile image.  Please wait.')
+      editimageservice(image).then((res) => {
+        setProfileImageFromEdit(null)
+        toast.dismiss()
+
+        res.json().then((res) => {
+          if (res.status == 'success') {
+            console.log(res)
+            toast.success('Profile image uploaded successfully.')
+          }
+          if (res.status == 'error') {
+            toast.error('Profile image not uploaded due to an error. Please try again.')
+          }
+        })
+      })
+        .catch((error) => {
+          toast.dismiss()
+          toast.error('Profile image not uploaded due to an unexpected error. Please try again.')
+          console.log(error)
+        })
+    }
+
+  }
+
 
   useEffect(
     () => {
@@ -129,17 +174,47 @@ function MyApp({ Component, pageProps }) {
     router.pathname == '/accounts/resetpassword' ||
     router.pathname == '/accounts/signup') {
 
-    return <Cont>
+    return <LoginContext.Provider value={loggedInData}><Cont>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        transition={fade}
+        theme={'colored'}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
 
       <FormCont onSubmit={(e) => { handleForm(e); return false }} id='form'>
-        <Component {...pageProps} />
+        <Component setProfileImage={setProfileImageFromEdit} {...pageProps} />
       </FormCont>
     </Cont>
+    </LoginContext.Provider>
+
 
   }
 
   return <LoginContext.Provider value={loggedInData}>
 
+    <ToastContainer
+      position="bottom-right"
+      autoClose={5000}
+      transition={fade}
+      theme={'colored'}
+      hideProgressBar={true}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
 
     <NavBar showHideSettings={((state) => { setShowNotifications(false); setShowHideSettings(state) })} showHideNotifs={((state) => { setShowHideSettings(false); setShowNotifications(state) })} />
     <div style={{ height: '50px' }} />
@@ -147,7 +222,7 @@ function MyApp({ Component, pageProps }) {
     <Notifications hidden={!showNotifications} />
     <Settings since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
 
-    <Component {...pageProps} />
+    <Component setProfileImage={() => setProfileImage(profileImageFromEdit)} {...pageProps} />
   </LoginContext.Provider>
 }
 

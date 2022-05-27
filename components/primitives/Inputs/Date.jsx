@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import * as vars from '../../../vars'
 
-const InputStyle  = styled.input`
+const InputStyle = styled.input`
 
 
     font-size: 1.2em;
@@ -15,7 +15,9 @@ const InputStyle  = styled.input`
    padding: 10px 10px;
     min-width:150px;
     position: relative;
-     
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
     &:focus {
         outline: none;
         color:${vars.GREY};
@@ -38,12 +40,12 @@ const Label = styled.label`
 `
 export default function Date(props) {
   return (
-      <div style = {{width:'fit-content',margin:'10px', position: 'relative'}}>
-        <InputStyle type = 'date' required = {true} {...props}>
-        </InputStyle>
-        <Label>{props.placeholderText}</Label>
-    
-      </div>
-    
+    <div style={{ width: 'fit-content', margin: '10px', position: 'relative' }}>
+      <InputStyle type='date' required={true} {...props}>
+      </InputStyle>
+      <Label>{props.placeholderText}</Label>
+
+    </div>
+
   )
 }

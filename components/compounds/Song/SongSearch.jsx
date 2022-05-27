@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from '../../primitives/Image'
 import * as vars from '../../../vars'
@@ -8,6 +8,8 @@ import PlayPause from '../../primitives/Toggles/PlayPause'
 import Plus from '../../primitives/Icons/Plus'
 import Minus from '../../primitives/Icons/Minus'
 import PlaySongSpotify from './PlaySongSpotify'
+import { LimitContext } from '../../../pages/search'
+
 const Wrapper = styled.div`
     border-radius:4px;
     overflow:hidden;
@@ -19,14 +21,8 @@ const Wrapper = styled.div`
     :hover{
         background-color:${vars.LIGHER_GREY};
     }
-    /* padding-right:40px; */
-    /* min-width: 350px; */
-    /* @media (max-width: 450px) {
-        min-width: 330px;
-
-    } */
-    margin:10px;
-    margin-inline:5px;
+      margin:10px;
+    margin-inline:0px;
     position:relative;
 
     background: ${vars.LIGHT_GREY};
@@ -39,7 +35,6 @@ const Wrapper = styled.div`
         border-radius:4px;
 
     }
-    /* width:fit-content; */
     height:fit-content;
     `
 const ButtonCont = styled.div`
@@ -60,11 +55,10 @@ const ButtonCont = styled.div`
         padding:2px;
         width:20px;
         font-weight: 600;
+        animation-iteration-count: 1;
 
-        /* padding-inline:10px; */
     }
-    
-
+           
     justify-content:center;`
 
 const DetailsInner = styled.div`
@@ -103,90 +97,75 @@ const DetailsInner = styled.div`
     }
     `
 
-
-const Loading = styled.div`
-    height:100px;
-    width:100px;
-    background-color:#000000aa;
-    position:absolute;
-    overflow: hidden;
-    border-radius: 2px;
-    display:flex;
-    transition:all .2s;
-    flex-direction:column;
-    color:${vars.MAIN_WHITE};
-    align-items:center;
-    justify-content:center;
-    z-index:3;`
-
-
 export default function SongSearch(props) {
-    const [isPlaying, setIsPlaying] = useState(false)
     const [isChosen, setIsChosen] = useState(props.isSongChosen)
+    const NoOfSongsChosen = useContext(LimitContext).songs
+    const [limitReachedAnimation, setLimitReachedAnimation] = useState(false)
+
+    const animate = () => {
+        setLimitReachedAnimation(true);
+        setTimeout(() => setLimitReachedAnimation(false), 2000);
+    }
+
+    function addRemoveSong() {
 
 
-    function addRemoveSong(){
-        if(!isChosen){
+        if (!isChosen) {
+            if (NoOfSongsChosen >= props.Limit) {
+                animate()
+                props.notify('songs')
+                return
+            }
             props.addSong()
+
             setIsChosen(true)
             return
         }
         setIsChosen(false)
         props.removeSong()
     }
-  
+
     return (
         <>
-        
-        <Wrapper>
-            
-
-<div style = {{minWidth:'60px'}}>
-<Image
-                width='60px'
-                alt={props.AlbumName}
-                height='60px'
-                imagesrc={props.AlbumCover}
-            />
-</div>
-           
-            <DetailsInner>
-
-                {props.SongName}
-                <div
-                    style={{ marginTop: '0px' }}>
-                    <a>
-                        {props.SongArtist}
-                    </a>
-                    <div>{props.AlbumName}</div>
-
+            <Wrapper>
+                <div style={{ minWidth: '60px' }}>
+                    <Image
+                        width='60px'
+                        alt={props.AlbumName}
+                        height='60px'
+                        imagesrc={props.AlbumCover}
+                    />
                 </div>
 
-            </DetailsInner>
+                <DetailsInner>
+                    {props.SongName}
+                    <div
+                        style={{ marginTop: '0px' }}>
+                        <a>
+                            {props.SongArtist}
+                        </a>
+                        <div>{props.AlbumName}</div>
+
+                    </div>
+                </DetailsInner>
+
+                <ButtonCont>
+                    <SecondaryButton onClick={() => props.onPlay()} style={{ backgroundColor: vars.ORANGE, borderColor: vars.ACCENT_COLOR }} buttonTitle={<PlayPause isPlay={true} color={vars.MAIN_WHITE} />} />
+                    <SecondaryButton
 
 
-             
+                        style={{
+                            backgroundColor: (!isChosen) ? vars.MAIN_BLUE : vars.MAIN_RED,
+                            borderColor: (!isChosen) ? vars.MAIN_BLUE : vars.SECONDARY_RED,
+                            animation: limitReachedAnimation ? 'horizontal-shaking .3s ease-in-out' : null,
 
-            <ButtonCont>
-            {/* {(props.SongPreview != null)? */}
-            <SecondaryButton onClick ={()=>props.onPlay()} style ={{backgroundColor:vars.ORANGE, borderColor:vars.ACCENT_COLOR}} buttonTitle = {<PlayPause isPlay={!isPlaying} color = {vars.MAIN_WHITE}/>}/>
-            {/* :'' */}
-            {/* } */}
-            <SecondaryButton style={{backgroundColor:(!isChosen)?vars.MAIN_BLUE:vars.MAIN_RED, borderColor:(!isChosen)?vars.MAIN_BLUE:'#bb7777'}} onClick = {addRemoveSong} buttonTitle = {(isChosen)?<Minus/>:<Plus/> }/>
-          
-            </ButtonCont>
+                        }}
 
 
-
-
-                      
-
-        </Wrapper>
-                  {/* <PlaySongSpotify/> */}
-
+                        onClick={addRemoveSong}
+                        buttonTitle={(isChosen) ? <Minus /> : <Plus />} />
+                </ButtonCont>
+            </Wrapper>
         </>
     )
-}
-SongSearch.defaultProps = {
-    isPreview: true
 }

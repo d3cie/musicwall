@@ -10,7 +10,7 @@ export default function Like(props) {
     const [isWorking, setIsWorking] = useState(false)
 
     useEffect(() => {
-        props.likes.map(({ username }) => { if (username == props.loggedInName) { setIsLiked(true) } })
+        props.likes.map(({ username }) => { if (username == props.loggedinname) { setIsLiked(true) } })
     },
         [props.likes]
     )

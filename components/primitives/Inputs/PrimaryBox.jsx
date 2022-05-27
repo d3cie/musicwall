@@ -36,6 +36,7 @@ const Label = styled.label`
 
 `
 export default function PrimaryBox(props) {
+
   return (
     <div style={{ width: 'fit-content', margin: '10px', position: 'relative' }}>
       <InputStyle autoComplete="off" required={true} {...props}>

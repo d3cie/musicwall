@@ -1,14 +1,14 @@
-export default async function edit(displayname, bio, birthday, countrycode) {
+export default async function editimageservice(profileimage) {
 
     let result;
 
     try {
         result = await Promise.race([
-            fetch('/api/v1/accounts/edit',
+            fetch('/api/v1/accounts/editimage',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ displayname, bio, birthday, countrycode })
+                    body: JSON.stringify({ profileimage })
                 })
             ,
 

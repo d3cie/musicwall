@@ -13,6 +13,16 @@ import getwalls from '../../../services/getwalls'
 import { LoginContext } from '../../../pages/_app'
 import Walls from '../../../components/layouts/Walls'
 
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast, cssTransition } from 'react-toastify'
+
+
+const fade = cssTransition({
+  enter: "fade_in",
+  exit: "fade_out"
+});
+
+
 const Cont = styled.main`
   background-color: ${vars.LIGHT_GREY};
   display: flex;
@@ -30,13 +40,14 @@ function UserProfile(props) {
   const isLoggedInData = useContext(LoginContext)
   const [populatedWalls, setPopulatedWalls] = useState(null)
 
+  const { notifs } = router.query
 
   const [isloggedinaccount, setIsLoggedInAccount] = useState(false)
 
 
   useEffect(() => {
     setUsername(window.location.pathname.substring(3))
-
+    props.setProfileImage()
     if (isLoggedInData?.username == username) {
       setIsLoggedInAccount(true)
     }
@@ -55,8 +66,8 @@ function UserProfile(props) {
     }
 
     fetchData()
-
-  }, [username, router.asPath])
+    //removed router.aspath and notifs.  Were causing an unnessesary re-render
+  }, [window.location.pathname])
 
   if (!data) return <Cont
 
@@ -91,7 +102,19 @@ function UserProfile(props) {
         <meta name="color-scheme" content="light dark"></meta>
         <meta name="theme-color" content={vars.DARK_GREY} />
       </Head>
-
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        transition={fade}
+        theme={'colored'}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Cont>
         {/* <PlaySongSpotify/> */}
         <ProfileBar

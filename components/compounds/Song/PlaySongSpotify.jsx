@@ -1,4 +1,4 @@
-import React,{ useState} from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import * as vars from '../../../vars'
 import Ellipsis from '../../primitives/Animations/Elipsis'
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
       position:absolute;
       right:20px;
       border:none;
-      top:90px;
+      bottom:390px;
       background: transparent;
       fill:${vars.MAIN_WHITE};
     }
@@ -34,13 +34,13 @@ const Wrapper = styled.div`
 
 export default function PlaySongSpotify(props) {
   const [isLoading, setIsLoading] = useState(true)
-  
+
 
   return (
     <Wrapper>
-      <button onClick = {()=>props.closePlayer()}> <XIcon/> </button>
-      {(isLoading)?<Ellipsis color = {vars.MAIN_WHITE}/>:'' }
-       <iframe id = "frame" onLoad = {()=>{setIsLoading(false)}} style = {{maxWidth:vars.MAX_WIDTH, borderRadius:4}} src={`https://open.spotify.com/embed/track/${props.id}?utm_source=generator`} width= {"100%"} height="380px" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+      <button onClick={() => props.closePlayer()}> <XIcon /> </button>
+      {(isLoading) ? <Ellipsis color={vars.MAIN_WHITE} /> : ''}
+      <iframe id="frame" onLoad={() => { setIsLoading(false) }} style={{ maxWidth: vars.MAX_WIDTH, borderRadius: 4 }} src={`https://open.spotify.com/embed/track/${props.id}?utm_source=generator`} width={"100%"} height="380px" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
     </Wrapper>
   )
 }

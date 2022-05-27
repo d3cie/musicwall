@@ -38,7 +38,7 @@ const EllipsisSpinner = styled.div`
     top: 27px;
     width: 11px;
     height: 11px;
-    border-radius: 50%;
+    border-radius: 4px;
     background: ${p => p.color};
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }

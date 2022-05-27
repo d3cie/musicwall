@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
 import * as vars from '../vars'
 import Head from 'next/head'
@@ -17,91 +17,20 @@ import addwallservice from '../services/addwall'
 import PlaySongSpotify from '../components/compounds/Song/PlaySongSpotify'
 import SearchChosenListLayout from '../components/layouts/SearchChosenListLayout'
 import SearchMainPage from '../components/layouts/SearchMainPage'
+import ErrorScreen from '../components/layouts/ErrorScreen'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer, toast, Zoom, cssTransition } from 'react-toastify'
+import { LoginContext } from "./_app"
 
-const OutterCont = styled.div`
-  max-width: ${vars.MAX_WIDTH};
-position:relative;
-/* padding:20px; */
-width:100%;
-  display: flex;
-  flex-direction:column;
-
-  @media (max-width:1000px) {
-    flex-direction:column;
-
-  }
-    `
-const Cont = styled.div`
-max-width: ${vars.MAX_WIDTH};
-position:relative;
-padding:20px;
-width:100%;
-margin-right:-20px;
-  display: flex;
-  flex-direction:row;
-
-  @media (max-width:1000px) {
-    flex-direction:column;
-
-  }
-
-`
-const Title = styled.div`
-  color:${vars.MAIN_WHITE};
-  margin-top:5px;
-  font-size:25px;
-  margin-bottom:15px;
-
-  font-weight: 500;
-
-  `
-
-const AlbumsCont = styled.div`
-  
-  width: fit-content; 
-  display: grid;
-  width:fit-content;
-  align-items: center;
-  /* padding-right:10px; */
-  gap:0px;
-  margin-top:-5px;
-
-    /* margin-bottom:40px; */
-
-  grid-template-columns: 1fr 1fr 1fr;
-  @media (max-width:650px) {
-    grid-template-columns: 1fr 1fr;
-
-  }
-  `
-const ArtistsCont = styled.div`
- 
-  overflow-x: auto;
-  padding:0;
-  width: fit-content; 
-  display: grid;
-margin-top:-5px;
-margin-bottom:40px;
-margin-left:-5px;
-
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-
-
-  @media (max-width:1000px) {
-    grid-template-columns: 1fr 1fr 1fr;
-
-  }
-  @media (max-width:650px) {
-    grid-template-columns: 1fr 1fr;
-
-  }
-
-  `
+const fade = cssTransition({
+  enter: "fade_in",
+  exit: "fade_out"
+});
 
 const Main = styled.main`
   width:100%;
   overflow-x: hidden;
-  min-height:100vh;
+  min-height:120vh;
   position:relative;
   /* align-items: center; */
 background-color:${vars.GREY};
@@ -129,6 +58,7 @@ const SearchCont = styled.div`
  ;
 
   padding:20px;
+  padding-bottom:0px;
   width:100%;
   `
 
@@ -158,7 +88,7 @@ border:none;
 fill:${vars.MAIN_WHITE};
 
 background-color:${vars.MAIN_BLUE};
-margin:3px;
+margin:4px;
 cursor: pointer;
 transition: all 0.2s;
 
@@ -168,15 +98,17 @@ transition: all 0.2s;
 }
 
 `
-
+export const LimitContext = React.createContext()
 
 const dummySongs = [<SongSearchDummy key={1} />, <SongSearchDummy key={2} />, <SongSearchDummy key={3} />, <SongSearchDummy key={4} />, <SongSearchDummy key={5} />]
 const dummyArtists = [<ArtistSearchDummy key={1} />, <ArtistSearchDummy key={2} />, <ArtistSearchDummy key={3} />, <ArtistSearchDummy key={4} />, <ArtistSearchDummy key={5} />]
 const dummyAlbums = [<AlbumSearchDummy key={1} />, <AlbumSearchDummy key={2} />, <AlbumSearchDummy key={3} />, <AlbumSearchDummy key={4} />, <AlbumSearchDummy key={5} />]
 
 export default function Search() {
-  const router = useRouter()
 
+  const ITEMS_CHOSEN_LIMIT = 5
+  const router = useRouter()
+  const LoggedInUser = useContext(LoginContext)
   const [showMain, setShowMain] = useState(false)
   const [songsContent, setSongsContent] = useState()
   const [artistsContent, setArtistsContent] = useState()
@@ -184,12 +116,21 @@ export default function Search() {
   const [showSpotifySongPlayer, setShowSpotifySongPlayer] = useState(false)
   const [songPlayerId, setSongPlayerId] = useState()
   const [errorMsg, setErrorMsg] = useState(null)
-  const [isWorking, setIsWorking] = useState(false)
 
+  const [showErr, setShowErr] = useState(false)
+
+  const [isWorking, setIsWorking] = useState(false)
+  const [previousQuery, setPreviousQuery] = useState()
   const [chosenSongsObj, setChosenSongsObj] = useState([])
   const [chosenAlbumsObj, setChosenAlbumsObj] = useState([])
   const [chosenArtistsObj, setChosenArtistsObj] = useState([])
+  const [resState, setRes] = useState(null)
+  const [canAddMoreSongs, setCanAddMoreSongs] = useState(true)
+  let event = new Event("songlimitreached");
 
+  const notifyWhenLimitReached = (item) => {
+    toast.info(`Oops!  You no longer have space for ${item} on this wall.  \n Remove some ${item} from your chosen list or save what you have added already.`)
+  }
   const addSong = (image, id) => {
     setChosenSongsObj(prevArray => [...prevArray, { id, image }])
   }
@@ -200,32 +141,46 @@ export default function Search() {
 
   const addArtist = (image, id) => {
     setChosenArtistsObj(prevArray => [...prevArray, { id, image }])
-
   }
   const removeSong = (id) => {
     setChosenSongsObj(songs => songs.filter(song => song.id !== id))
-  }
+    setCanAddMoreSongs(chosenSongsObj.length > ITEMS_CHOSEN_LIMIT)
 
+  }
   const removeAlbum = (id) => {
     setChosenAlbumsObj(albums => albums.filter(album => album.id !== id))
   }
   const removeArtist = (id) => {
-
     setChosenArtistsObj(artists => artists.filter(artist => artist.id !== id))
-
   }
+
+
   const SearchQuery = (e) => {
     e.preventDefault();
+
+    const query = document.getElementById('searchBox').value
+    if (query == previousQuery) { return }
+    setPreviousQuery(query)
+
+    setShowErr(false)
     setSongsContent(dummySongs)
     setArtistsContent(dummyArtists)
     setAlbumsContent(dummyAlbums)
     setShowMain(true)
-    const query = document.getElementById('searchBox').value
+
     searchService(query).then((res) => {
 
       let songs = [];
       let albums = [];
       let artists = [];
+
+      if (res?.error) {
+        setPreviousQuery()
+        setShowErr(true)
+        setErrorMsg(res.error)
+        return
+      }
+
 
       res.tracks.map((currentElement, index) => {
         const artists = artistsToString(currentElement.artist)
@@ -239,6 +194,9 @@ export default function Search() {
         songs.push(
           <SongSearch
             key={index}
+            notify={notifyWhenLimitReached}
+            Limit={ITEMS_CHOSEN_LIMIT}
+            canBeAdded={chosenSongsObj.length > ITEMS_CHOSEN_LIMIT}
             onPlay={() => { ShowSongPlayer(currentElement.spotifySongID) }}
             isSongChosen={() => isAlreadyChosen()}
             addSong={() => addSong(currentElement.albumArt, currentElement.spotifySongID)}
@@ -252,10 +210,11 @@ export default function Search() {
       })
 
       res.albums.map((currentElement, index) => {
-        let artists;
-        let Feat = '';
+        const artists = artistsToString(currentElement.artist)
 
-        artistsToString(currentElement.artist)
+
+
+
 
         function isAlreadyChosen() {
           for (let j = 0; j < chosenAlbumsObj.length; j++) {
@@ -266,6 +225,10 @@ export default function Search() {
         }
         albums.push(
           <AlbumSearch
+            canBeAdded={chosenAlbumsObj.length < ITEMS_CHOSEN_LIMIT}
+            Limit={ITEMS_CHOSEN_LIMIT}
+            notify={notifyWhenLimitReached}
+
             addAlbum={() => addAlbum(currentElement.albumArt, currentElement.spotifyAlbumID)}
             removeAlbum={() => removeAlbum(currentElement.spotifyAlbumID)}
             key={index}
@@ -290,6 +253,9 @@ export default function Search() {
           <ArtistSearch
             key={index}
             isArtistChosen={() => isAlreadyChosen()}
+            canBeAdded={chosenArtistsObj.length < ITEMS_CHOSEN_LIMIT}
+            Limit={ITEMS_CHOSEN_LIMIT}
+            notify={notifyWhenLimitReached}
 
             addArtist={() => addArtist(currentElement.artistImage, currentElement.spotifyArtistId)}
             removeArtist={() => removeArtist(currentElement.spotifyArtistId)}
@@ -308,32 +274,21 @@ export default function Search() {
       setAlbumsContent(albums)
     })
   }
+
   async function save() {
-    setErrorMsg()
     setIsWorking(true)
-    const response = await addwallservice(chosenSongsObj.map(({ id }) => { return id }), chosenAlbumsObj.map(({ id }) => { return id }), chosenArtistsObj.map(({ id }) => { return id }))
-
-    if (!response.error) {
-      const result = await response.json()
-
-      if (result.status == 'error') {
-        setErrorMsg(result.error)
-        setIsWorking(false)
-        return
-      }
-
-      if (result.status == 'success') {
-        setIsWorking(false)
-        if (next) {
-          // window.location.href = `u/${username}`
-          alert('added')
-        }
-      }
-    } else {
-      setIsWorking(false)
+    setShowErr(false)
+    const response = await addwallservice(chosenSongsObj.map(({ id }) => { return id }),
+      chosenAlbumsObj.map(({ id }) => { return id }),
+      chosenArtistsObj.map(({ id }) => { return id }))
+    setIsWorking(false)
+    if (response.error) {
       setErrorMsg(response.error)
+      setShowErr(true)
+      return
     }
-    return
+    const Message = "Wall added succesfully."
+    router.push(`u/${LoggedInUser.username}`)
 
   }
 
@@ -343,58 +298,80 @@ export default function Search() {
   }
 
   return (
-    <Main>
+    <LimitContext.Provider value={{ songs: chosenSongsObj.length, albums: chosenAlbumsObj.length, artists: chosenArtistsObj.length }}>
 
-      <Head>
-        <title>Musicwall | Search</title>
-        <meta name="description" content="Search musicwall for your favourite music and artists" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="color-scheme" content="light dark"></meta>
-        <meta name="theme-color" content={vars.DARK_GREY} />
-      </Head>
-      <SearchContOutter>
-        {
-          (showSpotifySongPlayer) ? <PlaySongSpotify closePlayer={() => setShowSpotifySongPlayer(false)} id={songPlayerId} /> : ''
-        }
+      <Main>
 
-        <SearchCont >
-          <div style={{ position: 'fixed', zIndex: 60, padding: '20px', top: 58, borderBottom: `solid 1px ${vars.LIGHT_GREY}`, background: vars.DARK_GREY, left: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-            {/* <div style = {{ width:'100%',maxWidth:vars.MAX_WIDTH}}> */}
-            <form onSubmit={(e) => { SearchQuery(e); return false }}
+        <Head>
+          <title>Musicwall | Search</title>
+          <meta name="description" content="Search musicwall for your favourite music and artists" />
+          <link rel="icon" href="/favicon.ico" />
+          <meta name="color-scheme" content="light dark"></meta>
+          <meta name="theme-color" content={vars.DARK_GREY} />
+        </Head>
 
-              style={{ display: 'flex', position: 'relative', maxWidth: vars.MAX_WIDTH, background: vars.DARK_GREY, width: '100%' }}>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          transition={fade}
+          theme={'colored'}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
 
-              <SecondaryBox id='searchBox' placeholder={'Search...'} />
-              <ButtonCont>
-                <SearchButton style={{ backgroundColor: '#00000000' }} type="submit">< MagnifyingGlass style={{ fill: vars.MAIN_WHITE }} />
-                </SearchButton>
+        <SearchContOutter>
+          {
+            (showSpotifySongPlayer) ? <PlaySongSpotify closePlayer={() => setShowSpotifySongPlayer(false)} id={songPlayerId} /> : ''
+          }
 
-              </ButtonCont>
+          <SearchCont >
+            <div style={{ position: 'fixed', zIndex: 60, padding: '20px', top: 58, background: vars.DARK_GREY, left: 0, borderBottom: `solid 1px ${vars.LIGHT_GREY}`, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+              {/* <div style = {{ width:'100%',maxWidth:vars.MAX_WIDTH}}> */}
+              <form onSubmit={(e) => { SearchQuery(e); return false }}
 
-            </form>
-          </div>
-          <div style={{ height: '30px' }} />
+                style={{ display: 'flex', position: 'relative', maxWidth: vars.MAX_WIDTH, background: vars.DARK_GREY, width: '100%' }}>
 
-          <SearchChosenListLayout
-            isWorking={isWorking}
-            save={save}
-            removeArtist={() => removeArtist}
-            removeAlbum={() => removeAlbum}
-            removeSong={() => removeSong}
-            chosenSongsObj={chosenSongsObj}
-            chosenAlbumsObj={chosenAlbumsObj}
-            chosenArtistsObj={chosenArtistsObj}
-          />
+                <SecondaryBox id='searchBox' placeholder={'Search for a song,album or artist...'} />
+                <ButtonCont>
+                  <SearchButton style={{ backgroundColor: '#00000000' }} type="submit">< MagnifyingGlass style={{ fill: vars.MAIN_WHITE }} />
 
-        </SearchCont>
-      </SearchContOutter>
+                  </SearchButton>
 
-      {showMain && <SearchMainPage
-        songsContent={songsContent}
-        albumsContent={albumsContent}
-        artistsContent={artistsContent}
-      />}
+                </ButtonCont>
 
-    </Main>
+              </form>
+            </div>
+
+            <div style={{ height: '30px' }} />
+
+            <SearchChosenListLayout
+              limit={ITEMS_CHOSEN_LIMIT}
+              isWorking={isWorking}
+              save={save}
+              removeArtist={() => removeArtist}
+              removeAlbum={() => removeAlbum}
+              removeSong={() => removeSong}
+              chosenSongsObj={chosenSongsObj}
+              chosenAlbumsObj={chosenAlbumsObj}
+              chosenArtistsObj={chosenArtistsObj}
+            />
+
+          </SearchCont>
+        </SearchContOutter>
+
+        {showErr && <ErrorScreen errorMsg={errorMsg} />}
+        {showMain && !showErr && <SearchMainPage
+          songsContent={songsContent}
+          albumsContent={albumsContent}
+          artistsContent={artistsContent}
+        />}
+
+      </Main>
+    </LimitContext.Provider>
   )
 }

@@ -20,6 +20,6 @@ export default function Walls(props) {
   }
 
   return <>{data.map((wall, i) => (
-    <Wall wallOwner={props.wallOwner} loggedInName={isLogged?.username} wall={wall} i={i} ></Wall>
+    <Wall key={i} wallOwner={props.wallOwner} loggedinname={isLogged?.username} wall={wall} i={i} ></Wall>
   ))}</>
 }

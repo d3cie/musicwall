@@ -1,23 +1,4 @@
-import connectDB from '../../../../middleware/mongodb';
-import Album from '../../../../models/album';
-import Song from '../../../../models/song';
-
-const getSongSearchFromSpotify = async (searchTerm, token) => {
-    const limit = 5;
-    searchTerm = encodeURI(searchTerm);
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${searchTerm}&type=track%2Cartist%2Calbum&limit=${limit}&market=US`, {
-        method: 'GET',
-        headers: { 'Authorization': 'Bearer ' + token },
-    });
-    // result = await result.json();
-    console.log(response.status);
-
-    if (response.status == 401) {
-        return (await response.json())
-    }
-    const result = await response.json()
-    console.log(result);
-
+const sortResponse = (result) => {
     var data = { tracks: {}, albums: {}, artists: {} };
 
     data.tracks = result.tracks.items.map(({ id, name, album, artists }) => ({
@@ -57,11 +38,44 @@ const getSongSearchFromSpotify = async (searchTerm, token) => {
     return data
 }
 
+const getSongSearchFromSpotify = async (searchTerm, token) => {
+    const limit = 5;
+    searchTerm = encodeURI(searchTerm);
+
+    try {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${searchTerm}&type=track%2Cartist%2Calbum&limit=${limit}&market=US`, {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + token },
+        });
+
+        const result = await response.json()
+
+        if (response.status == 401) {
+            return ({ status: 'error', error: 'Invalid access token' })
+        }
+        if (response.status == 400) {
+            throw new Error(result)
+        }
+        if (response.status == 429) {
+            throw new Error(result)
+        }
+        console.log(result)
+        return sortResponse(result)
+
+    } catch (err) {
+        if (err?.status == 429) {
+            return ({ status: 'error', error: 'Too many requests.  Please try again later.' })
+        }
+        console.log(err);
+        return ({ status: 'error', error: 'Internal' })
+    }
+}
+
 
 
 export default function handler(req, res) {
     if (req.method == 'GET') {
-        const data = getSongSearchFromSpotify(req.query.q, req.query.token).then((response) => {
+        getSongSearchFromSpotify(req.query.q, req.query.token).then((response) => {
             res.send(response);
 
         })

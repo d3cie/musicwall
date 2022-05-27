@@ -3,7 +3,48 @@ html {
 
 }
 
-html,
+.Toastify__toast-theme--colored.Toastify__toast--info {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  font-family: var(--toastify-font-family);
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+  border: solid 1px #73aafb !important;
+  background-color: #5995ed !important;
+  font-weight: 500 !important;
+  fill: #fafafa !important;
+  color: #fafafa !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1
+  }
+
+  to {
+    opacity: 0
+  }
+}
+
+.fade_in {
+  animation: fadeIn .2s ease-in-out;
+}
+
+.fade_out {
+  animation: fadeIn .2s ease-in-out;
+}
+
+cssTransition html,
 body {
   padding: 0;
   margin: 0;
@@ -17,6 +58,29 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+@keyframes horizontal-shaking {
+  0% {
+    transform: translateX(0)
+  }
+
+  25% {
+    transform: translateX(2px)
+  }
+
+  50% {
+    transform: translateX(-2px)
+  }
+
+  75% {
+    transform: translateX(2px)
+  }
+
+  100% {
+    transform: translateX(0)
+  }
+}
+
 
 * {
   transition: 'all .2s';

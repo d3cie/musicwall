@@ -102,7 +102,7 @@ export default function SearchChosenList(props) {
     return (
         <>
 
-            <Wrapper>
+            <Wrapper hidden={props.hidden}>
                 <ButtonCont style={{ left: '-2px' }}>
                     <DirectionButton onClick={() => { ScrollLeft('chosensongs') }} >
                         <LeftArrow />

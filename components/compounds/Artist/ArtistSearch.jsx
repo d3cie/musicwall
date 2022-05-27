@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import Image from '../../primitives/Image'
 import PlayPause from '../../primitives/Toggles/PlayPause'
@@ -7,6 +7,7 @@ import DualRing from '../../primitives/Animations/DualRing'
 import SecondaryButton from '../../primitives/Buttons/SecondaryButton'
 import Plus from '../../primitives/Icons/Plus'
 import Minus from '../../primitives/Icons/Minus'
+import { LimitContext } from '../../../pages/search'
 
 const Wrapper = styled.div`
     border-radius:4px;
@@ -102,7 +103,8 @@ const ButtonCont = styled.div`
         padding:2px;
         width:40px;
         font-weight: 600;
-        
+        animation-iteration-count: 1;
+
 
         /* padding-inline:10px; */
     }
@@ -115,9 +117,21 @@ const ButtonCont = styled.div`
 
 export default function ArtistSearch(props) {
     const [isChosen, setIsChosen] = useState(props.isArtistChosen)
+    const NoOfArtistsChosen = useContext(LimitContext).artists
+    const [limitReachedAnimation, setLimitReachedAnimation] = useState(false)
+
+    const animate = () => {
+        setLimitReachedAnimation(true);
+        setTimeout(() => setLimitReachedAnimation(false), 2000);
+    }
 
     function addRemoveArtist() {
         if (!isChosen) {
+            if (NoOfArtistsChosen >= props.Limit) {
+                animate()
+                props.notify('artists')
+                return
+            }
             props.addArtist()
             setIsChosen(true)
             return
@@ -151,9 +165,11 @@ export default function ArtistSearch(props) {
 
 
 
-                    {/* <ButtonCont> */}
-                    <SecondaryButton style={{ backgroundColor: (!isChosen) ? vars.MAIN_BLUE : vars.MAIN_RED, borderColor: (!isChosen) ? vars.MAIN_BLUE : '#bb7777' }} onClick={addRemoveArtist} buttonTitle={(isChosen) ? <Minus /> : <Plus />} />
-                    {/* </ButtonCont> */}
+                    <SecondaryButton style={{
+                        animation: limitReachedAnimation ? 'horizontal-shaking .3s ease-in-out' : null,
+
+                        backgroundColor: (!isChosen) ? vars.MAIN_BLUE : vars.MAIN_RED, borderColor: (!isChosen) ? vars.MAIN_BLUE : '#bb7777'
+                    }} onClick={addRemoveArtist} buttonTitle={(isChosen) ? <Minus /> : <Plus />} />
                 </DetailsInner>
 
             </Details>

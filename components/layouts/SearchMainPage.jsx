@@ -18,15 +18,17 @@ width:100%;
 const Cont = styled.div`
 max-width: ${vars.MAX_WIDTH};
 position:relative;
-padding:20px;
 width:100%;
-margin-right:-20px;
+margin-left:-5px;
   display: flex;
   flex-direction:row;
-
+margin-top:20px;
   @media (max-width:1000px) {
-    flex-direction:column;
+    margin-left:-0px;
+    margin-top:0px;
 
+    flex-direction:column;
+    padding:20px;
   }
 
 `
@@ -35,7 +37,6 @@ const Title = styled.div`
   margin-top:5px;
   font-size:25px;
   margin-bottom:15px;
-
   font-weight: 500;
 
   `
@@ -49,7 +50,6 @@ const AlbumsCont = styled.div`
   /* padding-right:10px; */
   gap:0px;
   margin-top:-5px;
-
     /* margin-bottom:40px; */
 
   grid-template-columns: 1fr 1fr 1fr;
@@ -85,42 +85,48 @@ margin-left:-5px;
 
 
 export default function SearchMainPage({ songsContent, albumsContent, artistsContent }) {
-    return (
+  return (
 
-        <OutterCont>
-            <Cont>
-                <div style={{ minWidth: '40%', width: '100%', marginRight: 'auto' }}>
-                    <Title style={{ marginTop: '11px' }} >Songs</Title>
-                    <div style={{ marginBottom: '60px' }}>
-                        {songsContent}
-                    </div>
-                </div>
-                <div>
+    <OutterCont>
+      <Cont>
+        <div
+          hidden={(songsContent.length && albumsContent.length && artistsContent.length)}>
+          <Title>
+            Your Query didnt yield any results.  Please try again.
+          </Title>
+        </div>
+        <div hidden={!songsContent.length} style={{ minWidth: '40%', width: '100%', marginRight: '10px' }}>
+          <Title style={{ marginTop: '11px' }} >Songs</Title>
+          <div style={{ marginBottom: '60px' }}>
+            {songsContent}
+          </div>
+        </div>
+        <div>
 
-                    <div style={{ minWidth: '60%', margin: '10px', width: '100%' }} >
-                        <Title style={{ marginLeft: '5px' }} >Albums</Title>
-                        <AlbumsCont >
-                            {albumsContent}
-                        </AlbumsCont>
-                    </div>
-                </div>
-            </Cont>
+          <div hidden={!albumsContent.length} style={{ minWidth: '60%', margin: '10px', marginLeft: '0px', width: '100%' }} >
+            <Title style={{ marginLeft: '5px' }} >Albums</Title>
+            <AlbumsCont >
+              {albumsContent}
+            </AlbumsCont>
+          </div>
+        </div>
+      </Cont>
 
-            <Cont>
-                <div>
-                    <div style={{ margin: '10px', width: '100%' }} >
+      <Cont>
+        <div>
+          <div hidden={!artistsContent.length} style={{ margin: '10px', marginLeft: '0px', width: '100%' }} >
 
-                        <Title>Artists</Title>
-                        <ArtistsCont >
-                            {artistsContent}
-                        </ArtistsCont>
-                    </div>
-                </div>
+            <Title>Artists</Title>
+            <ArtistsCont >
+              {artistsContent}
+            </ArtistsCont>
+          </div>
+        </div>
 
-            </Cont>
+      </Cont>
 
-        </OutterCont>
+    </OutterCont>
 
 
-    )
+  )
 }

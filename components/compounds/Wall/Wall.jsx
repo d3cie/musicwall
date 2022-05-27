@@ -239,166 +239,166 @@ position: relative;
 `
 
 const condensedContStyle = {
-    // backgroundColor: vars.GREY,
-    // border: `1px solid ${vars.LIGHER_GREY}`,
-    width: 'fit-content',
-    marginTop: -20,
-    padding: '5px',
-    // borderRadius: '4px',
+  // backgroundColor: vars.GREY,
+  // border: `1px solid ${vars.LIGHER_GREY}`,
+  width: 'fit-content',
+  marginTop: -20,
+  padding: '5px',
+  // borderRadius: '4px',
 }
 export default function Wall(props) {
 
-    const [condenseView, setCondenseView] = useState(false)
+  const [condenseView, setCondenseView] = useState(false)
 
-    if (!props.wall.songs.length && !props.wall.albums.length && !props.wall.artists.length) {
-        return
-    }
+  if (!props.wall.songs.length && !props.wall.albums.length && !props.wall.artists.length) {
+    return
+  }
 
-    return (
-        <GridContOutter id={props.wall.since} key={props.i}>
-            <GridContInner>
-                <TimeLine />
-                <div>
-                    <TimeStampCont>
+  return (
+    <GridContOutter id={props.wall.since} key={props.i}>
+      <GridContInner>
+        <TimeLine />
+        <div>
+          <TimeStampCont>
 
-                        <TimeStamp><Point className={(props.i == 0) ? 'latest' : ''} />
-
-
-                            {/* <button id='condense' onClick={() => setCondenseView(view => !view)}> */}
-                            <div onClick={() => { setCondenseView(view => !view) }} id="condense">
+            <TimeStamp><Point className={(props.i == 0) ? 'latest' : ''} />
 
 
-                                <span>
-                                    {(condenseView) ? <ChevronDown />
-                                        : <ChevronUp />}
-                                </span>
-
-                                Added {timeStampToHumanTime(Date.now() - Date.parse(props.wall.since))} ago.
-                            </div>
-                            {/* </button> */}
-
-                            <WallActionsCont>
-                                <Like loggedInName={props.loggedInName} likes={props.wall.likes} wallid={props.wall._id} username={props.wallOwner} />
-                                <button id="share">
-                                    <ShareIcon />
-
-                                </button>
+              {/* <button id='condense' onClick={() => setCondenseView(view => !view)}> */}
+              <div onClick={() => { setCondenseView(view => !view) }} id="condense">
 
 
-                            </WallActionsCont>
-                        </TimeStamp>
-                    </TimeStampCont>
+                <span>
+                  {(condenseView) ? <ChevronDown />
+                    : <ChevronUp />}
+                </span>
 
-                    <div hidden={condenseView}>
-                        <div hidden={!props.wall?.songs.length}>
-                            <Title>SONGS ADDED</Title>
+                Added {timeStampToHumanTime(Date.now() - Date.parse(props.wall.since))} ago.
+              </div>
+              {/* </button> */}
 
-                            <GridCont>
-                                {props.wall?.songs.map((song, j) => (
+              <WallActionsCont>
+                <Like loggedinname={props.loggedinname} likes={props.wall.likes} wallid={props.wall._id} username={props.wallOwner} />
+                <button id="share">
+                  <ShareIcon />
 
-
-                                    <SongMobile
-                                        key={j}
-                                        SongName={song.songName}
-                                        AlbumName={song.albumName}
-                                        SongArtist={artistsToString(song.artist)}
-                                        AlbumCover={song.albumArt}
-                                    />
-                                ))}
+                </button>
 
 
+              </WallActionsCont>
+            </TimeStamp>
+          </TimeStampCont>
 
-                            </GridCont>
-                        </div>
+          <div hidden={condenseView}>
+            <div hidden={!props.wall?.songs.length}>
+              <Title>SONGS ADDED</Title>
 
-                        <div hidden={!props.wall?.albums.length}>
-                            <Title>ALBUMS ADDED</Title>
-                            <GridContAlbum>
-                                {props.wall?.albums.map((album, j) => (
-
-
-                                    <AlbumMobile
-                                        key={j}
-
-                                        AlbumName={album.albumName}
-                                        Artist={artistsToString(album.artist)}
-                                        AlbumCover={album.albumArt}
-                                    />
-                                ))}
-                            </GridContAlbum>
-
-                        </div>
-
-                        <div hidden={!props.wall?.artists.length}>
-                            <Title>ARTISTS ADDED</Title>
-                            {/* <AlbumMobile/> */}
-                            <GridContAlbum>
-                                {props.wall?.artists.map((artist, j) => (
+              <GridCont>
+                {props.wall?.songs.map((song, j) => (
 
 
-                                    <ArtistMobile
-                                        key={j}
+                  <SongMobile
+                    key={j}
+                    SongName={song.songName}
+                    AlbumName={song.albumName}
+                    SongArtist={artistsToString(song.artist)}
+                    AlbumCover={song.albumArt}
+                  />
+                ))}
 
-                                        Artist={artist.artistName}
-                                        ArtistImage={artist.artistImage}
-                                    />
-                                ))}
-                            </GridContAlbum>
 
-                        </div>
-                    </div>
 
-                    <div style={condensedContStyle} hidden={!condenseView}>
-                        <div style={{ display: 'flex', width: 'fit-content', marginLeft: 20 }} >
-                            <div hidden={!props.wall?.songs.length}>
-                                <CondensedViewCont>
-                                    {props.wall?.songs.map((song, j) => (
-                                        (j < 3) ? <SongCondensedView
-                                            key={j}
-                                            // style={{ transform: `scale(${(j == props?.wall.songs.length - 1) ? 1 : .9})` }}
-                                            SongName={song.songName}
-                                            AlbumCover={song.albumArt}
-                                        /> : null
-                                    ))}
-                                    <div id="numberOfItems" >+{((props.wall?.songs.length - 3) < 0) ? 0 : props.wall?.songs.length - 3}</div>
+              </GridCont>
+            </div>
 
-                                </CondensedViewCont>
-                            </div>
+            <div hidden={!props.wall?.albums.length}>
+              <Title>ALBUMS ADDED</Title>
+              <GridContAlbum>
+                {props.wall?.albums.map((album, j) => (
 
-                            <div hidden={!props.wall?.albums.length}>
-                                <CondensedViewCont>
-                                    {props.wall?.albums.map((artist, j) => (
 
-                                        (j < 3) ? <SongCondensedView
-                                            key={j}
-                                            // style={{ transform: `scale(${(j == props?.wall.artists.length - 1) ? 1 : .9})` }}
-                                            SongName={artist.albumName}
-                                            AlbumCover={artist.albumArt}
-                                        /> : null
-                                    ))}
-                                    <div id="numberOfItems" >+{(props.wall?.albums.length - 3 < 0) ? 0 : props.wall?.albums.length - 3}</div>
+                  <AlbumMobile
+                    key={j}
 
-                                </CondensedViewCont>
-                            </div>
+                    AlbumName={album.albumName}
+                    Artist={artistsToString(album.artist)}
+                    AlbumCover={album.albumArt}
+                  />
+                ))}
+              </GridContAlbum>
 
-                            <div hidden={!props.wall?.artists.length}>
-                                <CondensedViewCont>
-                                    {props.wall?.artists.map((artist, j) => (
-                                        (j < 3) ? <ArtistCondensedView
-                                            key={j}
-                                            // style={{ transform: `scale(${(j == props?.wall.artists.length - 1) ? 1 : .9})` }}
+            </div>
 
-                                            SongName={artist.artistName}
-                                            AlbumCover={artist.artistImage}
-                                        /> : null
-                                    ))}
-                                    <div id="numberOfItems">+{(props.wall?.artists.length - 3 < 0) ? 0 : props.wall?.artists.length}</div>
-                                </CondensedViewCont>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </GridContInner>
-        </GridContOutter>
-    )
+            <div hidden={!props.wall?.artists.length}>
+              <Title>ARTISTS ADDED</Title>
+              {/* <AlbumMobile/> */}
+              <GridContAlbum>
+                {props.wall?.artists.map((artist, j) => (
+
+
+                  <ArtistMobile
+                    key={j}
+
+                    Artist={artist.artistName}
+                    ArtistImage={artist.artistImage}
+                  />
+                ))}
+              </GridContAlbum>
+
+            </div>
+          </div>
+
+          <div style={condensedContStyle} hidden={!condenseView}>
+            <div style={{ display: 'flex', width: 'fit-content', marginLeft: 20 }} >
+              <div hidden={!props.wall?.songs.length}>
+                <CondensedViewCont>
+                  {props.wall?.songs.map((song, j) => (
+                    (j < 3) ? <SongCondensedView
+                      key={j}
+                      // style={{ transform: `scale(${(j == props?.wall.songs.length - 1) ? 1 : .9})` }}
+                      SongName={song.songName}
+                      AlbumCover={song.albumArt}
+                    /> : null
+                  ))}
+                  <div id="numberOfItems" >+{((props.wall?.songs.length - 3) < 0) ? 0 : props.wall?.songs.length - 3}</div>
+
+                </CondensedViewCont>
+              </div>
+
+              <div hidden={!props.wall?.albums.length}>
+                <CondensedViewCont>
+                  {props.wall?.albums.map((artist, j) => (
+
+                    (j < 3) ? <SongCondensedView
+                      key={j}
+                      // style={{ transform: `scale(${(j == props?.wall.artists.length - 1) ? 1 : .9})` }}
+                      SongName={artist.albumName}
+                      AlbumCover={artist.albumArt}
+                    /> : null
+                  ))}
+                  <div id="numberOfItems" >+{(props.wall?.albums.length - 3 < 0) ? 0 : props.wall?.albums.length - 3}</div>
+
+                </CondensedViewCont>
+              </div>
+
+              <div hidden={!props.wall?.artists.length}>
+                <CondensedViewCont>
+                  {props.wall?.artists.map((artist, j) => (
+                    (j < 3) ? <ArtistCondensedView
+                      key={j}
+                      // style={{ transform: `scale(${(j == props?.wall.artists.length - 1) ? 1 : .9})` }}
+
+                      SongName={artist.artistName}
+                      AlbumCover={artist.artistImage}
+                    /> : null
+                  ))}
+                  <div id="numberOfItems">+{(props.wall?.artists.length - 3 < 0) ? 0 : props.wall?.artists.length}</div>
+                </CondensedViewCont>
+              </div>
+            </div>
+          </div>
+        </div>
+      </GridContInner>
+    </GridContOutter>
+  )
 }
