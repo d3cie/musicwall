@@ -14,8 +14,10 @@ import Plus from '../primitives/Icons/Plus'
 import House from '../primitives/Icons/House'
 import Bell from '../primitives/Icons/Bell'
 import Notifications from './Notifications'
+import { motion } from 'framer-motion'
 
-const Wrapper = styled.div`
+
+const Wrapper = styled(motion.div)`
     width:100%; 
     background-color: ${vars.DARK_GREY};
     height:60px;
@@ -123,6 +125,17 @@ const ProfileCont = styled.div`
     }`
 
 
+const navbarVariants = {
+    enter: {
+        opacity: 1,
+        y: 0
+    },
+    exit: {
+        opacity: 0,
+
+        y: -10
+    }
+}
 
 export default function NavBar(props) {
 
@@ -132,7 +145,11 @@ export default function NavBar(props) {
 
 
     return (
-        <Wrapper>
+        <Wrapper
+            variants={navbarVariants}
+            initial={'exit'}
+            animate={'enter'}
+        >
             <Cont>
                 <LogoCont>
 

@@ -10,12 +10,14 @@ import ReactCountryFlag from "react-country-flag"
 import pinuserservice from '../../services/pinuser'
 import unpinuserservice from '../../services/unpinuser'
 import { useRouter } from 'next/router'
+import { motion } from 'framer-motion'
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
     width:100wv; 
     /* width:fit-content; */
     background-color: ${vars.GREY};
     height:fit-content;
+    min-height: 350px;
     padding:20px;
     padding-top:20px;
     border-bottom:solid 1px ${vars.LIGHER_GREY};
@@ -133,6 +135,23 @@ const ProfileCont = styled.div`
 }
     `
 
+const variants = {
+    enter: {
+        height: 'fit-content',
+    },
+    exit: {
+        height: '150vh',
+    },
+}
+const Contvariants = {
+    enter: {
+        opacity: 1
+    },
+    exit: {
+        opacity: 0
+    },
+}
+
 export default function ProfileBar(props) {
     const isLogged = useContext(LoginContext)
     const [isUserPinnedState, setIsUserPinnedState] = useState(false)
@@ -182,63 +201,79 @@ export default function ProfileBar(props) {
     }
 
     return (
-        <Wrapper {...props}>
+        <Wrapper
+            animate={props.profileBarAnimation ? "enter" : "exit"}
+            variants={variants}
+            transition={{ duration: .2, type: 'easeInOut' }}
+            // transition={'ease-in-out'}
+            initial={{ height: '150vh' }}
+            {...props}>
+
+            <motion.div
+                animate={props.profileBarAnimation ? "enter" : "exit"}
+                variants={Contvariants}
+                // transition={"easeInOut"}
+                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}
+                transition={{ delay: .1, type: 'easeInOut' }}
+                initial={{ opacity: 0 }}
+            >
 
 
-            <Cont>
+                <Cont >
 
-                <ProfileCont>
-                    <Profile
-                        profileImage={props.profile.profileinfo.profileimage} />
-                </ProfileCont>
-                <DetailsCont>
-                    <Name>{props.profile.profileinfo.displayname || props.profile.username}
+                    <ProfileCont>
+                        <Profile
+                            profileImage={props.profile.profileinfo.profileimage} />
+                    </ProfileCont>
+                    <DetailsCont>
+                        <Name>{props.profile.profileinfo.displayname || props.profile.username}
 
-                        <ReactCountryFlag
-                            countryCode={props.profile.profileinfo.countrycode}
-                            svg
-                            style={{
-                                margin: '.5rem 0 0 10px ',
-                                borderRadius: '4px',
-                                height: '100%',
-                            }}
-                            title="US"
-                        />
+                            <ReactCountryFlag
+                                countryCode={props.profile.profileinfo.countrycode}
+                                svg
+                                style={{
+                                    margin: '.5rem 0 0 10px ',
+                                    borderRadius: '4px',
+                                    height: '100%',
+                                }}
+                                title="US"
+                            />
 
 
-                    </Name>
-                    <div id='username'>@{props.profile.username}</div>
+                        </Name>
+                        <div id='username'>@{props.profile.username}</div>
 
-                    <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        {/* <PinsCont>
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                            {/* <PinsCont>
                             <Fire /> <b>{props.profile.points || 0}</b> Points
                         </PinsCont> */}
+                            <PinsCont style={{ fill: vars.MAIN_RED }}>
+                                <Thumbtack /> <b></b>Pinned by <b>{props.profile.pinnedby.length} </b>others
+                            </PinsCont>
+                        </div>
                         <PinsCont style={{ fill: vars.MAIN_RED }}>
-                            <Thumbtack /> <b></b>Pinned by <b>{props.profile.pinnedby.length} </b>others
+                            <b>{Math.round((Date.now() - Date.parse(props.profile.since)) / 604800000)}</b>Weeks Old
                         </PinsCont>
-                    </div>
-                    <PinsCont style={{ fill: vars.MAIN_RED }}>
-                        <b>{Math.round((Date.now() - Date.parse(props.profile.since)) / 604800000)}</b>Weeks Old
-                    </PinsCont>
-                </DetailsCont>
+                    </DetailsCont>
 
-            </Cont>
+                </Cont>
 
-            <Cont>
-                <Bio>
-                    {props.profile.profileinfo.bio}
-                </Bio>
+                <Cont>
+                    <Bio>
+                        {props.profile.profileinfo.bio}
+                    </Bio>
 
 
-            </Cont>
-            <Cont>
-                <ButtonCont>
-                    {((props.demo ? { username: props.profile.username } : isLogged?.username) == props.profile.username) ?
-                        <SecondaryButton style={{ marginLeft: '30px', width: 'fit-content' }} onClick={() => router.push(`/accounts/edit?next=/u/${props.profile.username}`)} buttonTitle={'Edit Profile'} />
-                        : <SecondaryButton buttonwidth={'80px'} style={{ marginLeft: '30px' }} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />}
-                    <SecondaryButton style={{ border: "none", background: vars.LIGHT_GREY, border: `1px solid ${vars.LIGHER_GREY}` }} buttonTitle={"Share"} />
-                </ButtonCont>
-            </Cont>
+                </Cont>
+                <Cont>
+                    <ButtonCont>
+                        {((props.demo ? { username: props.profile.username } : isLogged?.username) == props.profile.username) ?
+                            <SecondaryButton style={{ marginLeft: '30px', width: 'fit-content' }} onClick={() => router.push(`/accounts/edit?next=/u/${props.profile.username}`)} buttonTitle={'Edit Profile'} />
+                            : <SecondaryButton buttonwidth={'80px'} style={{ marginLeft: '30px' }} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />}
+                        <SecondaryButton style={{ border: "none", background: vars.LIGHT_GREY, border: `1px solid ${vars.LIGHER_GREY}` }} buttonTitle={"Share"} />
+                    </ButtonCont>
+                </Cont>
+            </motion.div>
         </Wrapper>
     )
 }

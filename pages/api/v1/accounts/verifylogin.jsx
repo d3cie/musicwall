@@ -18,7 +18,7 @@ const handler = async (req, res) => {
                     // console.log('resolved', (date_received - Date.now()))
                     res.status(200).send({
                         status: 'success',
-                        profile: { id: user._id, username: user.username, profileinfo: user.profileinfo, since: user.since }
+                        profile: { username: user.username, pins: user.pins, points: user.points, pinnedby: user.pinnedby, since: user.since, profileinfo: user.profileinfo, walls: user?.walls }
                     })
 
                 })

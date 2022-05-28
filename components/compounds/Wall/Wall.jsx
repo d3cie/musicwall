@@ -20,6 +20,7 @@ import ArtistCondensedView from '../Artist/ArtistCondensedView'
 const Point = styled.div`
 position:absolute;
 width:20px;
+z-index:2;
 background-color:${vars.ORANGE};
 &.latest{
   background-color:${vars.MAIN_BLUE};
@@ -75,6 +76,7 @@ left:-20px;
 height:140%;
 margin-top:20px;
 width:2px;
+z-index:1;
 background:${vars.MAIN_WHITE};
 `
 
@@ -118,6 +120,8 @@ const GridContOutter = styled.section`
   max-width:${vars.MAX_WIDTH};
     /* width:fit-content; */
 /* filter:brightness(105%); */
+background:${vars.LIGHT_GREY};
+
 transition: all 0.2s;
 opacity:1;
 @keyframes flash {
@@ -225,6 +229,7 @@ const WallActionsCont = styled.div`
 const CondensedViewCont = styled.div`
      position: relative;
   margin-left:10px;
+  z-index:3;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 

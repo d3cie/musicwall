@@ -73,9 +73,7 @@ const formVariants = {
 export const LoginContext = React.createContext()
 
 function MyApp({ Component, pageProps }) {
-  const imageUploadingToast = (item) => {
-    toast.info(`Profile image uploading.  Please be patient.`)
-  }
+
 
   const router = useRouter()
   const [showNotifications, setShowNotifications] = useState(false)

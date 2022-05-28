@@ -3,6 +3,7 @@ import Wall from "../compounds/Wall/Wall"
 import { LoginContext } from '../../pages/_app'
 import NoWall from '../compounds/Wall/NoWall'
 import Loading from './Loading'
+import * as vars from '../../vars'
 
 export default function Walls(props) {
   const [data, setData] = useState(null)
@@ -19,7 +20,9 @@ export default function Walls(props) {
     return <NoWall loggedIn={isLogged?.username == props.wallOwner} />
   }
 
-  return <>{data.map((wall, i) => (
+  return <div
+    style={{ backgroundColor: vars.LIGHT_GREY }}
+  >{data.map((wall, i) => (
     <Wall scrollto={props.scrollto} key={i} wallOwner={props.wallOwner} loggedinname={isLogged?.username} wall={wall} i={i} ></Wall>
-  ))}</>
+  ))}</div>
 }

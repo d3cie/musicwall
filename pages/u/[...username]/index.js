@@ -16,6 +16,8 @@ import Walls from '../../../components/layouts/Walls'
 
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, cssTransition } from 'react-toastify'
+import UserPageLoad from '../../../components/loadingsScreens/UserPageLoad'
+import { motion } from 'framer-motion'
 
 
 const fade = cssTransition({
@@ -29,7 +31,7 @@ const Cont = styled.main`
   display: flex;
   flex-direction: column;
   width:100%;
-  height:fit-content;`
+  min-height:100vh;`
 
 
 
@@ -40,26 +42,31 @@ function UserProfile(props) {
   const [username, setUsername] = useState(null)
   const isLoggedInData = useContext(LoginContext)
   const [populatedWalls, setPopulatedWalls] = useState(null)
-
+  const [isLoading, setIsLoading] = useState(true)
   const { from } = router.query
   const { wall } = router.query
+  const [reveal, setReveal] = useState(false)
   const [isloggedinaccount, setIsLoggedInAccount] = useState(false)
+  const [profileBarAnimation, setProfileBarAnimmation] = useState(true)
 
 
   useEffect(() => {
     setUsername(window.location.pathname.substring(3))
 
+    document.querySelector('html,body').style.background = vars.LIGHT_GREY
 
-
-    if (isLoggedInData?.username == username) {
-      setIsLoggedInAccount(true)
-    }
     async function fetchData() {
       const response = await getuser(window.location.pathname.substring(3))
       setData(response)
+      setReveal(true)
+      setTimeout(() => setIsLoading(false), 500);
+
       if (response.profile.walls.length) {
         getwalls(response.profile.walls.reverse()).then((res) => {
           setPopulatedWalls(res)
+
+
+
         }
         )
       } else {
@@ -72,7 +79,7 @@ function UserProfile(props) {
     //removed router.aspath and notifs.  Were causing an unnessesary re-render
   }, [window.location.pathname, from])
 
-  if (!data) return <Loading minHeight='100vh' />
+  if (isLoading) return <UserPageLoad loading={reveal} />
 
   if (data.status != "success") {
     return <Error statusCode={404} />
@@ -103,7 +110,7 @@ function UserProfile(props) {
       <Cont>
         {/* <PlaySongSpotify/> */}
         <ProfileBar
-
+          profileBarAnimation={profileBarAnimation}
           profile={data.profile}
         />
 

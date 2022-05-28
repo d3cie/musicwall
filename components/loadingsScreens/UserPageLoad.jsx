@@ -4,6 +4,24 @@ import * as vars from "../../vars"
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
+
+
+const ScrollingText = () => {
+    return <div className="content">
+
+        <div className="content__container">
+
+
+            <ul className="content__container__list">
+                <li className="content__container__list__item">paint the walls!</li>
+                <li className="content__container__list__item">plaster the walls.</li>
+                <li className="content__container__list__item">clean the walls.</li>
+                <li className="content__container__list__item">feed the, walls?</li>
+            </ul>
+        </div>
+    </div>
+}
+
 const Icon = (props) => (
     <svg
         id="Layer_1"
@@ -44,24 +62,20 @@ const Icon = (props) => (
 
 
 const variants2 = {
-    open: { clipPath: 'circle(50px)', duration: 2, fill: vars.MAIN_WHITE },
-    closed: { clipPath: 'circle(2000px)', fill: vars.MAIN_BLUE }
-}
-const variantsDark = {
-    open: { clipPath: 'circle(50px)', duration: 2, fill: vars.MAIN_WHITE },
-    closed: { clipPath: 'circle(50px)', duration: 2, fill: vars.MAIN_WHITE },
+    open: { clipPath: 'circle(50px)', duration: 2, y: 0, opacity: 1, fill: vars.MAIN_WHITE, background: vars.MAIN_BLUE, },
+    closed: { clipPath: 'circle(0px)', opacity: 0, y: 20, fill: vars.LIGHT_GREY, background: [vars.MAIN_BLUE, vars.GREY], }
 }
 
 const Cont = styled(motion.div)`
     height:100%;
-    background-color:${vars.MAIN_BLUE};
+    /* background-color:${vars.MAIN_E}; */
     width:100%;
     align-items: center;
     justify-content: center;
     display: flex;
     `
 
-export default function PrimaryLoading(props) {
+export default function UserPageLoad(props) {
     const [exitAnimation, setExitAnimation] = useState(false)
     const [isPageDark, setIsPageDark] = useState(false)
     const router = useRouter()
@@ -80,33 +94,36 @@ export default function PrimaryLoading(props) {
 
     return (
         <div style={{
-            background: !isPageDark ? vars.GREY : vars.MAIN_WHITE,
+            background: vars.GREY,
             width: '100%',
             height: '100%',
+            position: 'relative',
             overflow: 'hidden',
             flexDirection: 'column',
             display: 'flex',
             position: "fixed",
-            zIndex: 50,
+            zIndex: 10,
             top: 0,
             left: 0,
             justifyContent: 'center',
             alignItems: 'center'
 
         }}> <Cont
-            animate={props.loading ? "open" : "closed"}
+            animate={!props.loading ? "open" : "closed"}
 
-            style={{ background: vars.MAIN_BLUE }}
-            variants={(!isPageDark) ? variantsDark : variants2}
+            style={{ background: vars.GREY, }}
+            variants={variants2}
             transition={{ duration: props.loading ? .3 : .7 }}
-            initial={{ clipPath: 'circle(0px)', duration: .5 }}
+            initial={'open'}
 
         > <Icon
                     height={"60px"}
 
-                // color={vars.MAIN_WHITE}
+                    color={vars.MAIN_WHITE}
                 />
             </Cont>
+
+
         </div >
     )
 }
