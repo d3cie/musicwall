@@ -11,6 +11,8 @@ import Settings from '../components/layouts/Settings'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, Zoom, cssTransition } from 'react-toastify'
 import editimageservice from '../services/editimage'
+import PrimaryLoading from '../components/loadingsScreens/PrimaryLoading'
+import { motion } from 'framer-motion'
 
 const fade = cssTransition({
   enter: "fade_in",
@@ -32,7 +34,7 @@ const Cont = styled.div`
     justify-content: center;
     align-items: center;
     `
-const FormCont = styled.form`
+const FormCont = styled(motion.form)`
     width:fit-content;
     height: fit-content;
     @keyframes fadein {
@@ -57,6 +59,17 @@ const FormCont = styled.form`
     border-radius: 4px;
    `
 
+const formVariants = {
+  enter: {
+    opacity: 1,
+    y: 0
+  },
+  exit: {
+    opacity: 0,
+
+    y: 10
+  }
+}
 export const LoginContext = React.createContext()
 
 function MyApp({ Component, pageProps }) {
@@ -71,6 +84,7 @@ function MyApp({ Component, pageProps }) {
   const [loggedInData, setLoggedInData] = useState(null)
   const [profileImageFromEdit, setProfileImageFromEdit] = useState(null)
 
+  const [entryAnimation, setEntryAnimation] = useState(true)
 
 
   const setProfileImage = async (image) => {
@@ -120,7 +134,11 @@ function MyApp({ Component, pageProps }) {
               if (responsejson.status == 'success') {
                 setLoggedInData(responsejson.profile)
               }
-              setIsLoading(false)
+
+              setTimeout(() => setIsLoading(false), 2000);
+
+              setTimeout(() => setEntryAnimation(false), 2650);
+
             })
           }
         )
@@ -131,21 +149,9 @@ function MyApp({ Component, pageProps }) {
     }
     , [])
 
-  if (loading) {
-    return <div style={{
-      background: vars.GREY,
-      width: '100%',
-      height: '100vh',
-      overflow: 'hidden',
-      display: 'flex',
-      position: "fixed",
-      zIndex: 50,
-      top: 0,
-      left: 0,
-      justifyContent: 'center',
-      alignItems: 'center'
 
-    }}>  <Icon /> </div>
+  if (entryAnimation) {
+    return <PrimaryLoading to={router.pathname} loading={loading} />
   }
 
   if (router.pathname == '/') {
@@ -155,21 +161,8 @@ function MyApp({ Component, pageProps }) {
     }
     console.log(loggedInData)
 
-    return <>      {(loading) ? <div style={{
-      background: vars.GREY,
-      width: '100%',
-      height: '100vh',
-      overflow: 'hidden',
-      display: 'flex',
-      position: "fixed",
-      zIndex: 50,
-      top: 0,
-      left: 0,
-      justifyContent: 'center',
-      alignItems: 'center'
-
-    }}>  <Icon /> </div>
-      : null}<Component {...pageProps} /></>
+    return <>
+      <Component {...pageProps} /></>
 
 
   }
@@ -197,7 +190,13 @@ function MyApp({ Component, pageProps }) {
       />
 
 
-      <FormCont onSubmit={(e) => { handleForm(e); return false }} id='form'>
+      <FormCont
+        variants={formVariants}
+        initial={'exit'}
+        animate={'enter'}
+        key={router.asPath}
+        transition={{ duration: .2 }}
+        onSubmit={(e) => { handleForm(e); return false }} id='form'>
         <Component  {...pageProps} />
       </FormCont>
     </Cont>

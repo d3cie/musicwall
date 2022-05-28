@@ -14,6 +14,8 @@ margin-top: 35px;
 margin-bottom:40px;
 display: flex;
 flex-direction: column;
+position:relative;
+
 align-items: center;
 justify-content: center;
 `
@@ -35,6 +37,9 @@ const ErrorMsg = styled.h4`
   text-align: center;
   margin:0;
   color:${vars.ORANGE};
+  & b{
+      color:#00000000;
+  }
   `
 
 const RegisterText = styled.h6`
@@ -100,11 +105,13 @@ export default function Login() {
                 </LinkStyle>
             </Link>
 
-            <ErrorMsg>{errorMsg}</ErrorMsg>
+            <ErrorMsg>
+                <b>|</b>
+                {errorMsg}</ErrorMsg>
 
             <ButtonContOut>
 
-                <PrimaryButton onClick={formSubmit} isWorking={isWorking} buttonTitle={"Login"} />
+                <PrimaryButton style={{ width: '90%' }} onClick={formSubmit} isWorking={isWorking} buttonTitle={"Login"} />
 
             </ButtonContOut>
 

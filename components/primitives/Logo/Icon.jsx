@@ -6,8 +6,8 @@ const Icon = (props) => (
     data-name="Layer 1"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 286.3 286.3"
-    height= '100%'
-    style = {{maxHeight:'60px'}}
+    height='100%'
+    style={{ maxHeight: '60px' }}
     {...props}
   >
     <defs>
@@ -37,6 +37,6 @@ const Icon = (props) => (
   </svg>
 )
 Icon.defaultProps = {
-  color:'#eee'
+  color: '#eee'
 }
 export default Icon

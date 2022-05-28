@@ -8,7 +8,7 @@ import Logo from '../components/primitives/Logo/Icon'
 import Wave from '../components/compounds/Backgrounds/wave1'
 import Wave2 from '../components/compounds/Backgrounds/wave2'
 
-import useRouter from 'next/router'
+import { useRouter } from 'next/router'
 
 import Demo1 from '../components/layouts/Demos/Demo1'
 import Demo2 from '../components/layouts/Demos/Demo2'
@@ -19,8 +19,8 @@ import SecondaryButton from '../components/primitives/Buttons/SecondaryButton'
 import Demo4 from '../components/layouts/Demos/Demo4'
 import Icon from '../components/primitives/Logo/Icon'
 import ExpandedLogo from '../components/primitives/Logo'
-
-
+import { motion } from "framer-motion"
+import { useState } from 'react'
 const Wrapper = styled.div`
 background-color: ${vars.MAIN_WHITE};
   width:100%; 
@@ -44,20 +44,23 @@ width:2200px;
 }
   `
 
-const HeroCont = styled.section`
+const HeroCont = styled(motion.section)`
   background-color:${vars.MAIN_BLUE};
   width:100%;
   /* z-index: */
   display:flex;
+ 
   overflow: hidden;
   position:relative;
   align-items: center;
-  height: fit-content;
+  /* height: fit-content;
+  height:100vh; */
   justify-content:center;
+  
 
   `
 
-const Hero = styled.section`
+const Hero = styled(motion.section)`
   max-width:${vars.MAX_WIDTH};
   width:100%;
   height: fit-content;
@@ -73,9 +76,10 @@ const Hero = styled.section`
   z-index: 3;
     padding-bottom:100px;
     position: relative;
+
   `
 
-const LogoCont = styled.div`
+const LogoCont = styled(motion.div)`
   height:60px;
   top:0;
   left:0;
@@ -90,14 +94,18 @@ const Header = styled.h1`
 
     text-align: center;
     font-size: 4rem;
-    font-weight:900;
+    font-weight:700;
+   
     @media only screen and (max-width: 800px){
         text-align: left;
     }
     @media only screen and (max-width: 600px){
         font-size: 3.5rem;
     }
-  
+    
+    & b{
+      color:${vars.LIGHER_GREY};
+    }
     `
 const Para = styled.p`
     color:${vars.MAIN_WHITE};
@@ -113,6 +121,12 @@ const Para = styled.p`
     font-size: 1.5rem;
     line-height:2rem;
     font-weight:400;
+
+      /* & b{
+      color:${vars.LIGHER_GREY};
+      font-weight:800;
+
+    } */
     `
 const ParaCont = styled.div`
   width:100%;
@@ -198,8 +212,41 @@ const Descr = styled.p`
   font-size:1.5rem;
   `
 
+const variants = {
+  enter: {
+    height: 'fit-content',
+  },
+  exit: {
+    height: '150vh',
+  },
+}
+
+const logovariant = {
+  enter: {
+    opacity: 0,
+  },
+  exit: {
+    opacity: 1,
+  }
+}
+const heroMainVariant = {
+  enter: {
+    opacity: 0,
+    y: 10
+  },
+  exit: {
+    opacity: 1,
+    y: 0
+  }
+}
 export default function Welcome() {
 
+  const [heroAnimation, setHeroAnimation] = useState(true)
+  const router = useRouter()
+  const goToAuthenticateHandler = (link) => {
+    setHeroAnimation(false)
+    setTimeout(() => router.push(link), 1000)
+  }
   return (
 
     <Wrapper>
@@ -210,15 +257,36 @@ export default function Welcome() {
         <meta name="theme-color" content={vars.MAIN_BLUE} />
 
       </Head>
-      <HeroCont>
-        {/* <Wave style={{ position: 'absolute', bottom: '-10px' }} /> */}
-        <LogoCont>
+
+      <HeroCont
+        className="animatedbg"
+        animate={heroAnimation ? "enter" : "exit"}
+        variants={variants}
+        // transition={"easeInOut"}
+        transition={{ duration: .4 }}
+        initial={{ height: '150vh' }}
+      >
+
+        <LogoCont
+          variants={logovariant}
+          animate={!heroAnimation ? "enter" : "exit"}
+          initial={'enter'}
+
+        >
           <Logo />
         </LogoCont>
-        <Hero>
+
+        <Hero
+          variants={heroMainVariant}
+          transition={{ delay: .3 }}
+
+          animate={!heroAnimation ? "enter" : "exit"}
+          initial={'enter'}
+
+        >
 
 
-          <Header>Music is Everything!</Header>
+          <Header>Music is <b>Everything!</b></Header>
           <ParaCont>
             <Para>
               ...And everything is music! Thats why we are here, to help you share
@@ -229,18 +297,19 @@ export default function Welcome() {
           </ParaCont>
           <ButtonCont >
 
-            <PrimaryButton onClick={() => { location.href = '/accounts/login' }} style={{ background: vars.LIGHT_GREY, borderColor: vars.LIGHER_GREY, color: 'white' }} buttonTitle={'LOG IN'}></PrimaryButton>
+            <PrimaryButton onClick={() => { goToAuthenticateHandler('/accounts/login') }} style={{ background: vars.LIGHT_GREY, borderRadius: 4, borderColor: vars.LIGHER_GREY, color: 'white' }} buttonTitle={'LOG IN'}></PrimaryButton>
 
           </ButtonCont>
 
           <ButtonCont style={{ marginTop: '50px' }}>
-            <TertiaryButton onClick={() => { location.href = '/accounts/signup' }} style={{ background: '#ffffff11', borderRadius: 2, border: 'solid 1px #ffffff22', color: vars.MAIN_WHITE }} buttonTitle={'Dont have an account?'} />
+            <TertiaryButton onClick={() => { location.href = '/accounts/signup' }} style={{ background: '#ffffff00', border: 'none', color: vars.GREY }} buttonTitle={'Dont have an account?'} />
           </ButtonCont>
         </Hero>
       </HeroCont>
+
       <OutterCont>
 
-        <Cont>
+        <Cont  >
 
           <Demo1 />
           <DescrCont>

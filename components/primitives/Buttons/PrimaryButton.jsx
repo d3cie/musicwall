@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import * as vars from '../../../vars'
 import BouncyDots from '../../primitives/Animations/Elipsis'
 
-const ButtonStyle  = styled.button`
+const ButtonStyle = styled.button`
     font-size: 1.2rem;
     border-radius:2px;
     margin:5px;
@@ -44,18 +44,18 @@ const ButtonStyle  = styled.button`
     `
 
 export default function PrimaryButton(props) {
-    
+
   return (
-    <ButtonStyle 
-        {...props}
-        className = {props.isWorking ? 'active' : 'normal'} 
-        
-        >
-        {(props.isWorking) ? <BouncyDots
-        color = {vars.MAIN_WHITE}
-        
-        
-        /> : props.buttonTitle}
+    <ButtonStyle
+      {...props}
+      className={props.isWorking ? 'active' : 'normal'}
+
+    >
+      {(props.isWorking) ? <BouncyDots
+        color={vars.MAIN_WHITE}
+
+
+      /> : props.buttonTitle}
 
     </ButtonStyle>
   )

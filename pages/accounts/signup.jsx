@@ -23,6 +23,8 @@ justify-content: center;
     margin-top:100px;
     margin-bottom:40px;
 }
+position:relative;
+
 `
 const InputCont = styled.div`
   padding:5px;
@@ -37,7 +39,12 @@ const ErrorMsg = styled.h4`
   text-align: center;
   margin:0;
   font-weight: 500;
+  min-height:30px;
   max-width:380px;
+
+  & b{
+      color:#00000000;
+  }
   /* max-width:328px; */
   color:${vars.ORANGE};
   `
@@ -117,11 +124,13 @@ export default function Signup() {
 
 
 
-            <ErrorMsg>{errorMsg}</ErrorMsg>
+            <ErrorMsg>
+                <b>|</b>
+                {errorMsg}</ErrorMsg>
 
             <ButtonContOut>
 
-                <PrimaryButton isWorking={isWorking} onClick={formSubmit} buttonTitle={"Continue"} />
+                <PrimaryButton style={{ width: '90%' }} isWorking={isWorking} onClick={formSubmit} buttonTitle={"Continue"} />
 
             </ButtonContOut>
             <RegisterText>Already have an account? <Link href={'/accounts/login'}><a style={{ color: vars.MAIN_BLUE }}>Log In</a></Link></RegisterText>
