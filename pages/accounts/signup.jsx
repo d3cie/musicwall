@@ -82,8 +82,8 @@ export default function Signup() {
                 }
 
                 if (result.status == 'success') {
-                    router.push(`/u/${username}`)
-
+                    // router.reload
+                    location.href = `/u/${username}`
 
                 }
             } else {

@@ -17,19 +17,19 @@ const Wrapper = styled(motion.div)`
     /* width:fit-content; */
     background-color: ${vars.GREY};
     height:fit-content;
-    min-height: 350px;
-    padding:20px;
-    padding-top:20px;
+    /* min-height: 350px; */
+    padding-inline:20px;
+    /* padding-top:20px; */
+
     border-bottom:solid 1px ${vars.LIGHER_GREY};
 
     display:flex;
     @media (max-width: 500px) {
         padding-inline:10px;
-        padding-bottom:40px;
+        /* padding-bottom:30px; */
 
 }
     flex-direction:column;
-    /* border-bottom:solid 1px ${vars.DARK_GREY}; */
     align-items:center;
     justify-content:center;
     `
@@ -68,6 +68,7 @@ const Bio = styled.div`
     white-space: pre-line;
     padding-right: 20px;
     margin-left: 10px;
+    margin-top:-20px;
     `
 const PinsCont = styled.div`
     font-weight: 400;
@@ -116,6 +117,7 @@ const ButtonCont = styled.div`
 width: 100%;
 display: flex;
 margin-left:-20px;
+margin-bottom:20px;
     `
 const ProfileCont = styled.div`
     max-width:130px;
@@ -204,7 +206,7 @@ export default function ProfileBar(props) {
         <Wrapper
             animate={props.profileBarAnimation ? "enter" : "exit"}
             variants={variants}
-            transition={{ duration: .2, type: 'easeInOut' }}
+            transition={{ duration: .3, type: 'easeInOut' }}
             // transition={'ease-in-out'}
             initial={{ height: '150vh' }}
             {...props}>
@@ -213,7 +215,7 @@ export default function ProfileBar(props) {
                 animate={props.profileBarAnimation ? "enter" : "exit"}
                 variants={Contvariants}
                 // transition={"easeInOut"}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}
+                style={{ width: '100%', marginTop: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}
                 transition={{ delay: .1, type: 'easeInOut' }}
                 initial={{ opacity: 0 }}
             >

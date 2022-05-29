@@ -15,6 +15,7 @@ import House from '../primitives/Icons/House'
 import Bell from '../primitives/Icons/Bell'
 import Notifications from './Notifications'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 
 const Wrapper = styled(motion.div)`
@@ -151,12 +152,11 @@ export default function NavBar(props) {
             animate={'enter'}
         >
             <Cont>
-                <LogoCont>
-
-
-                    <Logo />
-
-                </LogoCont>
+                <Link href={'/'}>
+                    <LogoCont>
+                        <Logo />
+                    </LogoCont>
+                </Link>
                 {(isLogged != null) ?
                     <Navigation>
                         <NavBut onClick={() => { router.push('/explore') }}>

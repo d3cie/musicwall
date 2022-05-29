@@ -302,7 +302,7 @@ export default function Welcome() {
           </ButtonCont>
 
           <ButtonCont style={{ marginTop: '50px' }}>
-            <TertiaryButton onClick={() => { location.href = '/accounts/signup' }} style={{ background: '#ffffff00', border: 'none', color: vars.GREY }} buttonTitle={'Dont have an account?'} />
+            <TertiaryButton onClick={() => { goToAuthenticateHandler('/accounts/signup') }} style={{ background: '#ffffff00', border: 'none', color: vars.GREY }} buttonTitle={'Dont have an account?'} />
           </ButtonCont>
         </Hero>
       </HeroCont>

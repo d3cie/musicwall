@@ -99,7 +99,7 @@ const DetailsInner = styled.div`
 
 export default function SongSearch(props) {
     const [isChosen, setIsChosen] = useState(props.isSongChosen)
-    const NoOfSongsChosen = useContext(LimitContext).songs
+    const NoOfSongsChosen = props.showAdd ? null : useContext(LimitContext).songs
     const [limitReachedAnimation, setLimitReachedAnimation] = useState(false)
 
     const animate = () => {
@@ -108,8 +108,6 @@ export default function SongSearch(props) {
     }
 
     function addRemoveSong() {
-
-
         if (!isChosen) {
             if (NoOfSongsChosen >= props.Limit) {
                 animate()
@@ -151,7 +149,7 @@ export default function SongSearch(props) {
 
                 <ButtonCont>
                     <SecondaryButton onClick={() => props.onPlay()} style={{ backgroundColor: vars.ORANGE, borderColor: vars.ACCENT_COLOR }} buttonTitle={<PlayPause isPlay={true} color={vars.MAIN_WHITE} />} />
-                    <SecondaryButton
+                    {!props.showAdd && <SecondaryButton
 
 
                         style={{
@@ -163,7 +161,7 @@ export default function SongSearch(props) {
 
 
                         onClick={addRemoveSong}
-                        buttonTitle={(isChosen) ? <Minus /> : <Plus />} />
+                        buttonTitle={(isChosen) ? <Minus /> : <Plus />} />}
                 </ButtonCont>
             </Wrapper>
         </>

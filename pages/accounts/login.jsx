@@ -82,7 +82,7 @@ export default function Login() {
                     window.location.href = next
                     return
                 }
-                window.location.href = `/u/${username}`
+                location.href = `/u/${username}`
             }
             return
         }

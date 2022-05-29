@@ -168,10 +168,27 @@ const Settings = (props) => {
                     <User />
                     My Page
                 </Setting>
+
+                <Setting  >
+                    <Pencil style={{ fill: "#00000000" }} />
+                    {'Stickers & Awards W/P'}
+                </Setting>
+
                 <Setting onClick={() => settingsHandler()}>
                     <Pencil />
                     Edit Profile
                 </Setting>
+                <Setting >
+                    <Pencil style={{ fill: "#00000000" }} />
+                    Change Password W/P
+                </Setting>
+
+                <Setting style={{ marginTop: 1, borderTop: `1px solid ${vars.LIGHER_GREY}` }} >
+                    <Pencil style={{ fill: "#00000000" }} />
+                    Upgrade W/P
+                </Setting>
+
+
                 <Setting style={{ marginTop: 1, borderTop: `1px solid ${vars.LIGHER_GREY}` }} onClick={() => logOutHandler()}>
                     <ArrowBracket />
                     Log Out
@@ -181,7 +198,9 @@ const Settings = (props) => {
                     </div>
 
                 </Setting>
-
+                <div
+                    style={{ color: "#bbb", borderTop: `1px solid ${vars.LIGHER_GREY}`, textAlign: "center" }}
+                >2022 Musicwall</div>
 
             </DisplayBox>
             {/* </OutsideClickHandler> */}

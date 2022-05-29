@@ -54,10 +54,12 @@ const Demo2 = () => {
             <DisplayBox>
                 <ProfileBar
                     demo={true}
+                    profileBarAnimation={true}
                     profile={
                         {
                             since: '2021-11-26T12:02:10.767Z',
                             username: 'decefemz',
+
                             profileinfo: {
                                 displayname: 'HeyItsFemzy',
                                 bio: `Hi friends 👋🏽\nWelcome to my wall.  Get ready to feast your ears on the best music planet earth 🌍 has to offer.🤪  `

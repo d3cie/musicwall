@@ -14,9 +14,9 @@ const Type = styled.div`
     margin-top:5px;
     height:20px;
     width:60px;
-  
+    margin-top: 10px;
     /* font-weight: 400; */
-    border-radius: 2px;
+    border-radius: 4px;
     background-color:${vars.MAIN_BLUE};`
 
 const TopResultTitle = styled.div`
@@ -31,7 +31,9 @@ const TopResultTitle = styled.div`
     `
 
 const TopResultCont = styled.div`
-    max-width: 400px;
+             max-width: 380px;
+
+
     width:100%;
         margin:10px;
     overflow:hidden;
@@ -42,10 +44,7 @@ const TopResultCont = styled.div`
     display:flex;
     flex-direction:row;
 
-    @media (max-width: 650px) {
-      min-width: 240px;
-        width:fit-content;
-    }
+ 
     padding:5px;
     background-color:${vars.LIGHT_GREY};`
 
@@ -56,7 +55,9 @@ export default function TopResultDummy(props) {
       </div>
       <div >
         <TopResultTitle >{props.name}</TopResultTitle>
-        <Type >{props.type}</Type>
+        <TopResultTitle style={{ height: 40, width: 100 }} >{props.name}</TopResultTitle>
+
+        <Type  >{props.type}</Type>
       </div>
     </TopResultCont>
   )

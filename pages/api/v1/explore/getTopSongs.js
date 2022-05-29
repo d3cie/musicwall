@@ -1,71 +1,45 @@
+import authorization from '../../../../middleware/islogged';
+import islogged from '../../../../middleware/islogged'
+import connectDB from '../../../../middleware/mongodb';
+import TopSongs from '../../../../models/topsongs'
 
+const REFRESH_AFTER_MS = 86400000
 
+const getToken = async function () {
+    const CLIENT_ID = process.env.CLIENT_ID
+    const CLIENT_SECRET = process.env.CLIENT_SECRET
 
+    const result = await fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + new Buffer(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64')
+        },
+        body: 'grant_type=client_credentials'
+    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    const data = await result.json();
+    return data.access_token;
+}
 
 const sortResponse = (result) => {
-    var data = { tracks: {}, albums: {}, artists: {} };
 
-    data.tracks = result.tracks.items.map(({ id, name, album, artists }) => ({
-        spotifySongID: id,
-        spotifyAlbumID: album.id,
-        songName: name,
-        albumName: album.name,
-        artist: artists.map(({ name, id }) => ({ artistsName: name, artistsID: id })),
-        albumArt: album.images[0].url,
+    return result.items.map(({ track }) => ({
+        spotifySongID: track.id,
+        spotifyAlbumID: track.album.id,
+        songName: track.name,
+        albumName: track.album.name,
+        artist: track.artists.map(({ name, id }) => ({ artistsName: name, artistsID: id })),
+        albumArt: track.album.images[0].url,
     }))
 
 
-    data.albums = result.albums.items.map(({ id, images, name, total_tracks, release_date, artists }) => (
-
-        {
-            spotifyAlbumID: id,
-            albumName: name,
-            artist: artists.map(({ name, id }) => ({ artistsName: name, artistsID: id })),
-            albumArt: images[0].url,
-        }
-
-    ))
-
-    data.artists = result.artists.items.map(({ followers, images, id, name }) => (
-        (followers.total > 1000) ?
-            ({
-                spotifyArtistId: id,
-                artistName: name,
-                artistImage: images[0]?.url,
-            })
-            : null
-    ))
-    data.artists = data.artists.filter(function (el) {
-        return el != null;
-    });
-
-    return data
 }
 
-const getSongSearchFromSpotify = async (searchTerm, token) => {
+const getTopSongsFromSpotify = async (token) => {
     const limit = 5;
-    searchTerm = encodeURI(searchTerm);
-
     try {
-        const response = await fetch(`https://api.spotify.com/v1/search?q=${searchTerm}&type=track%2Cartist%2Calbum&limit=${limit}&market=US`, {
+        const response = await fetch(`https://api.spotify.com/v1/playlists/37i9dQZF1DXcBWIGoYBM5M/tracks?market=es&limit=${limit}`, {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + token },
         });
@@ -81,7 +55,6 @@ const getSongSearchFromSpotify = async (searchTerm, token) => {
         if (response.status == 429) {
             throw new Error(result)
         }
-        console.log(result)
         return sortResponse(result)
 
     } catch (err) {
@@ -91,15 +64,40 @@ const getSongSearchFromSpotify = async (searchTerm, token) => {
         console.log(err);
         return ({ status: 'error', error: 'Internal' })
     }
+
+}
+
+const getTopSongs = async () => {
+    const result = await TopSongs.find().sort({ since: -1 }).limit(1)
+    if (result) {
+        if ((Date.now() - Date.parse(result[0]?.since)) < REFRESH_AFTER_MS) {
+            return { songs: result[0].songs }
+        }
+    }
+
+    const TOKEN = await getToken()
+    const resultFromSpotify = await getTopSongsFromSpotify(TOKEN)
+    TopSongs.create({ songs: resultFromSpotify }).catch((error) => {
+        if (error.code === 11000) {
+            console.log('Duplicate Record err')
+        }
+        else {
+            console.log(error)
+        }
+    })
+    return { songs: resultFromSpotify }
 }
 
 
 
-export default function handler(req, res) {
+async function handler(req, res) {
     if (req.method == 'GET') {
-        getSongSearchFromSpotify(req.query.q, req.query.token).then((response) => {
-            res.send(response);
-
-        })
+        const Result = await getTopSongs()
+        res.send(Result)
+    } else {
+        res.status(422).send('req_method_not_supported');
     }
 }
+
+
+export default connectDB(authorization(handler))
