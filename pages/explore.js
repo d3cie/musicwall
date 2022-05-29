@@ -78,10 +78,10 @@ const TopSongs = styled.div`
     `
 
 const topSongsDummies = [
-    <TopSongs><label>2. </label><SongSearchDummy showAdd={true} /></TopSongs>,
-    <TopSongs><label>3. </label><SongSearchDummy showAdd={true} /></TopSongs>,
-    <TopSongs><label>4. </label><SongSearchDummy showAdd={true} /></TopSongs>,
-    <TopSongs><label>5. </label><SongSearchDummy showAdd={true} /></TopSongs>
+    <TopSongs key={1}><label>2. </label><SongSearchDummy showAdd={true} /></TopSongs>,
+    <TopSongs key={2}><label>3. </label><SongSearchDummy showAdd={true} /></TopSongs>,
+    <TopSongs key={3}><label>4. </label><SongSearchDummy showAdd={true} /></TopSongs>,
+    <TopSongs key={4}><label>5. </label><SongSearchDummy showAdd={true} /></TopSongs>
 ]
 
 const Explore = () => {
