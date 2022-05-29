@@ -63,7 +63,7 @@ const Cont = styled(motion.div)`
 
 export default function PrimaryLoading(props) {
     const [exitAnimation, setExitAnimation] = useState(false)
-    const [isPageDark, setIsPageDark] = useState(false)
+    const [isPageDark, setIsPageDark] = useState(true)
     const router = useRouter()
     useEffect(() => {
         if (router.pathname == '/accounts/login' ||
@@ -80,7 +80,9 @@ export default function PrimaryLoading(props) {
 
     return (
         <div style={{
-            background: !isPageDark ? vars.GREY : vars.MAIN_WHITE,
+            // background: isPageDark ? vars.GREY : vars.MAIN_WHITE,
+            background: vars.GREY,
+
             width: '100%',
             height: '100%',
             overflow: 'hidden',
@@ -96,8 +98,8 @@ export default function PrimaryLoading(props) {
         }}> <Cont
             animate={props.loading ? "open" : "closed"}
 
-            style={{ background: vars.MAIN_BLUE }}
-            variants={(!isPageDark) ? variantsDark : variants2}
+            style={{ background: isPageDark ? vars.LIGHT_GREY : vars.MAIN_BLUE }}
+            variants={(isPageDark) ? variantsDark : variants2}
             transition={{ duration: props.loading ? .3 : .7 }}
             initial={{ clipPath: 'circle(0px)', duration: .5 }}
 

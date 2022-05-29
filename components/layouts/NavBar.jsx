@@ -159,7 +159,9 @@ export default function NavBar(props) {
                 </LogoCont>
                 {(isLogged != null) ?
                     <Navigation>
-
+                        <NavBut onClick={() => { router.push('/explore') }}>
+                            <Compass />
+                        </NavBut>
                         <NavBut
                             onClick={() => props.showHideNotifs(showHideNotifsPrev => !showHideNotifsPrev)}
                             style={{ padding: '7px', background: vars.MAIN_WHITE }}>

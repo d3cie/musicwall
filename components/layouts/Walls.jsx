@@ -6,7 +6,7 @@ import Loading from './Loading'
 import * as vars from '../../vars'
 
 export default function Walls(props) {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState([])
   const isLogged = useContext(LoginContext)
   const [loading, setLoading] = useState(true)
   useEffect(() => {

@@ -189,6 +189,8 @@ export default function Edit(props) {
       return
 
     }
+    setErrorMsg("Oops.  You cannot leave these fields empty.")
+    return
     // setErrorMsg('Please fill the required fields.')
 
 
@@ -287,7 +289,7 @@ export default function Edit(props) {
         </InputCont>
         <MultiText defaultValue={isLogged.profileinfo.bio} id='bio' placeholderText='BIO' />
         {/* <ToggleSwitch ></ToggleSwitch> */}
-        <ErrorMsg>{errorMsg}</ErrorMsg>
+        <ErrorMsg><b style={{ color: '#00000000' }}>|</b>{errorMsg}</ErrorMsg>
 
         <ButtonContOut>
           <SecondaryButton style={{ background: vars.LIGHT_GREY, borderColor: vars.LIGHER_GREY }} onClick={() => { router.push(`/u/${isLogged?.username}`) }} buttonTitle={"Cancel"} />

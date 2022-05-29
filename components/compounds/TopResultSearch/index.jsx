@@ -36,7 +36,9 @@ const TopResultTitle = styled.div`
     }`
 
 const TopResultCont = styled.div`
-    min-width: 400px;
+        max-width: 400px;
+        border:solid 1px ${vars.LIGHER_GREY};
+
     width:100%;
         margin:10px;
 
@@ -55,15 +57,15 @@ const TopResultCont = styled.div`
 export default function TopResult(props) {
   return (
     <TopResultCont>
-          <div style = {{borderRadius:'2px', overflow: 'hidden', width:'fit-content', height:'fit-content'}}>
-            <Image imagesrc = {props.albumArt} width = '120px' height = '120px'/>
-          </div>
-          <div >
-          <TopResultTitle>{props.name}</TopResultTitle>
-          {/* <Artist>Kanye</Artist> */}
-          <Type>{props.type}</Type>
-          </div>
-          
-        </TopResultCont>
+      <div style={{ borderRadius: '4px', overflow: 'hidden', width: 'fit-content', height: 'fit-content' }}>
+        <Image imagesrc={props.albumArt} width='120px' height='120px' />
+      </div>
+      <div >
+        <TopResultTitle>{props.name}</TopResultTitle>
+        {/* <Artist>Kanye</Artist> */}
+        <Type>{props.type}</Type>
+      </div>
+
+    </TopResultCont>
   )
 }

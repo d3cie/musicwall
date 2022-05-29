@@ -62,8 +62,12 @@ const Icon = (props) => (
 
 
 const variants2 = {
-    open: { clipPath: 'circle(50px)', duration: 2, y: 0, opacity: 1, fill: vars.MAIN_WHITE, background: vars.MAIN_BLUE, },
+    open: { clipPath: 'circle(50px)', duration: 2, y: 0, opacity: 1, fill: vars.MAIN_WHITE, background: [vars.LIGHT_GREY, vars.MAIN_BLUE], },
     closed: { clipPath: 'circle(0px)', opacity: 0, y: 20, fill: vars.LIGHT_GREY, background: [vars.MAIN_BLUE, vars.GREY], }
+}
+const textVariant = {
+    open: { y: 0, opacity: 1 },
+    closed: { y: 10, opacity: 0 }
 }
 
 const Cont = styled(motion.div)`
@@ -117,11 +121,29 @@ export default function UserPageLoad(props) {
             initial={'open'}
 
         > <Icon
-                    height={"60px"}
 
                     color={vars.MAIN_WHITE}
                 />
             </Cont>
+
+            <motion.div
+                style={{
+                    flexDirection: 'column',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+
+                }}
+                height={"60px"}
+                animate={!props.loading ? "open" : "closed"}
+                variants={textVariant}
+                initial={'open'}
+            >
+                <p style={{ color: vars.MAIN_WHITE, fontWeight: '500', position: 'absolute', top: '60%' }}>
+                    PLEASE WAIT WHILE WE
+                </p>
+                <ScrollingText />
+            </motion.div>
 
 
         </div >

@@ -82,7 +82,7 @@ export default function Signup() {
                 }
 
                 if (result.status == 'success') {
-                    location.href = `/u/${username}`
+                    router.push(`/u/${username}`)
 
 
                 }

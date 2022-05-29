@@ -14,7 +14,7 @@ const Type = styled.div`
     margin-top:5px;
     height:20px;
     width:60px;
-
+  
     /* font-weight: 400; */
     border-radius: 2px;
     background-color:${vars.MAIN_BLUE};`
@@ -25,14 +25,17 @@ const TopResultTitle = styled.div`
     background-color:${vars.LIGHER_GREY};
     height:20px;
     width:150px;
+    border-radius: 4px;
     margin-left:10px;
     margin-right: 20px;
     `
 
 const TopResultCont = styled.div`
-    min-width: 400px;
+    max-width: 400px;
     width:100%;
         margin:10px;
+    overflow:hidden;
+    border:solid 1px ${vars.LIGHER_GREY};
 
     margin-inline:0px;
     border-radius: 4px;
@@ -46,15 +49,15 @@ const TopResultCont = styled.div`
     padding:5px;
     background-color:${vars.LIGHT_GREY};`
 
-export default function TopResult(props) {
+export default function TopResultDummy(props) {
   return (
     <TopResultCont>
-          <div  style = {{borderRadius:'2px',background:vars.LIGHER_GREY,width:'120px',height:'120px', overflow: 'hidden'}}>
-          </div>
-          <div >
-          <TopResultTitle >{props.name}</TopResultTitle>
-          <Type >{props.type}</Type>
-          </div>
-          </TopResultCont>
+      <div style={{ borderRadius: '4px', background: vars.LIGHER_GREY, width: '120px', height: '120px', overflow: 'hidden' }}>
+      </div>
+      <div >
+        <TopResultTitle >{props.name}</TopResultTitle>
+        <Type >{props.type}</Type>
+      </div>
+    </TopResultCont>
   )
 }

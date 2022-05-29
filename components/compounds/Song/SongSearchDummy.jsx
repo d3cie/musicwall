@@ -56,7 +56,7 @@ const ButtonCont = styled.div`
     justify-content:center;`
 
 
-export default function SongSearchDummy() {
+export default function SongSearchDummy(props) {
 
     return (
         <Wrapper>
@@ -69,7 +69,7 @@ export default function SongSearchDummy() {
             <ButtonCont>
                 <SecondaryButton style={{ backgroundColor: vars.ORANGE, borderColor: vars.ACCENT_COLOR }} />
 
-                <SecondaryButton />
+                {(!props.showAdd) ? <SecondaryButton /> : null}
 
             </ButtonCont>
         </Wrapper>

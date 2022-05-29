@@ -41,7 +41,7 @@ function UserProfile(props) {
   const [data, setData] = useState(null)
   const [username, setUsername] = useState(null)
   const isLoggedInData = useContext(LoginContext)
-  const [populatedWalls, setPopulatedWalls] = useState(null)
+  const [populatedWalls, setPopulatedWalls] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const { from } = router.query
   const { wall } = router.query
