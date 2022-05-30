@@ -8,7 +8,6 @@ import PlayPause from '../../primitives/Toggles/PlayPause'
 import Plus from '../../primitives/Icons/Plus'
 import Minus from '../../primitives/Icons/Minus'
 import PlaySongSpotify from './PlaySongSpotify'
-import { LimitContext } from '../../../pages/search'
 
 const Wrapper = styled.div`
     border-radius:4px;
@@ -97,31 +96,9 @@ const DetailsInner = styled.div`
     }
     `
 
-export default function SongSearch(props) {
-    const [isChosen, setIsChosen] = useState(props.isSongChosen)
-    const NoOfSongsChosen = useContext(LimitContext)
-    const [limitReachedAnimation, setLimitReachedAnimation] = useState(false)
+export default function SongExplore(props) {
 
-    const animate = () => {
-        setLimitReachedAnimation(true);
-        setTimeout(() => setLimitReachedAnimation(false), 2000);
-    }
 
-    function addRemoveSong() {
-        if (!isChosen) {
-            if (NoOfSongsChosen >= props.Limit) {
-                animate()
-                props.notify('songs')
-                return
-            }
-            props.addSong()
-
-            setIsChosen(true)
-            return
-        }
-        setIsChosen(false)
-        props.removeSong()
-    }
 
     return (
         <>
@@ -149,19 +126,6 @@ export default function SongSearch(props) {
 
                 <ButtonCont>
                     <SecondaryButton onClick={() => props.onPlay()} style={{ backgroundColor: vars.ORANGE, borderColor: vars.ACCENT_COLOR }} buttonTitle={<PlayPause isPlay={true} color={vars.MAIN_WHITE} />} />
-                    <SecondaryButton
-
-
-                        style={{
-                            backgroundColor: (!isChosen) ? vars.MAIN_BLUE : vars.MAIN_RED,
-                            borderColor: (!isChosen) ? vars.MAIN_BLUE : vars.SECONDARY_RED,
-                            animation: limitReachedAnimation ? 'horizontal-shaking .3s ease-in-out' : null,
-
-                        }}
-
-
-                        onClick={addRemoveSong}
-                        buttonTitle={(isChosen) ? <Minus /> : <Plus />} />
                 </ButtonCont>
             </Wrapper>
         </>

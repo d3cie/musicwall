@@ -7,6 +7,8 @@ import getTopSongs from '../services/getTopSongs';
 import SongSearch from '../components/compounds/Song/SongSearch';
 import artistsToString from '../utils/artistsToString';
 import TopResult from '../components/compounds/TopResultSearch';
+import SongExplore from '../components/compounds/Song/SongExplore';
+import PlaySongSpotify from '../components/compounds/Song/PlaySongSpotify';
 
 const Wrapper = styled.main`
     display: flex;
@@ -99,13 +101,20 @@ const topSongsDummies = [
 
 const Explore = () => {
 
+    const [songPlayerId, setSongPlayerId] = useState(null)
     const [topSongs, setTopSongs] = useState(topSongsDummies)
     const [topSong, setTopSong] = useState(<TopResultDummy />)
+    const [showSpotifySongPlayer, setShowSpotifySongPlayer] = useState(false)
 
+    function ShowSongPlayer(id) {
+        setSongPlayerId(id)
+        setShowSpotifySongPlayer(true)
+    }
 
     useEffect(() => {
         document.querySelector('html,body').style.background = vars.GREY
         getTopSongs().then((res) => {
+            console.log(res)
             setTopSongs(res.songs.map((song, i) => {
                 if (i == 0) {
                     setTopSong(
@@ -120,9 +129,10 @@ const Explore = () => {
                     return
                 }
                 return <TopSongs key={i}><label>{i + 1}. </label>
-                    <SongSearch
+                    <SongExplore
                         AlbumName={song.albumName}
                         AlbumCover={song.albumArt}
+                        onPlay={() => ShowSongPlayer(song.spotifySongID)}
                         SongName={song.songName}
                         SongArtist={artistsToString(song.artist)}
                         showAdd={true} />
@@ -134,11 +144,15 @@ const Explore = () => {
         })
     }, [])
 
-    return <Wrapper>
-        <Title style={{ textAlign: 'center' }}>Ooops.  This page, like the rest of this site, is still under construction.  Please come back later. </Title>
-    </Wrapper>
+    // return <Wrapper>
+    //     <Title style={{ textAlign: 'center' }}>Ooops.  This page, like the rest of this site, is still under construction.  Please come back later. </Title>
+    // </Wrapper>
     return (
+
         <Wrapper>
+            {
+                (showSpotifySongPlayer) ? <PlaySongSpotify closePlayer={() => setShowSpotifySongPlayer(false)} id={songPlayerId} /> : ''
+            }
             <Cont>
                 <Column style={{ flex: 2 }}>
                     <TopSongsCont>
