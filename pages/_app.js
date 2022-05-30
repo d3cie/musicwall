@@ -81,7 +81,7 @@ function MyApp({ Component, pageProps }) {
   const [loading, setIsLoading] = useState(true)
   const [loggedInData, setLoggedInData] = useState(null)
   const [profileImageFromEdit, setProfileImageFromEdit] = useState(null)
-
+  const [notificationProfileImages, setNotificationProfileImages] = useState(null)
   const [entryAnimation, setEntryAnimation] = useState(true)
 
 
@@ -119,6 +119,29 @@ function MyApp({ Component, pageProps }) {
 
   if (profileImageFromEdit != null) {
     setProfileImage(profileImageFromEdit)
+  }
+
+
+  const getProfileImages = async () => {
+    let images;
+    if (notificationProfileImages == null) {
+      return fetch('/api/v1/users/getImage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          usernames:
+            loggedInData?.notifications.map(({ from }) => from)
+        }
+        )
+      }
+      ).then((res) => res.json().then((jsonresult) => {
+        setNotificationProfileImages(jsonresult.body)
+        images = jsonresult.body
+        return jsonresult.body
+
+      }))
+    }
+    return notificationProfileImages
   }
 
   useEffect(
@@ -222,7 +245,7 @@ function MyApp({ Component, pageProps }) {
     <NavBar showHideSettings={((state) => { console.log(state); setShowNotifications(false); setShowHideSettings(state) })} showHideNotifs={((state) => { setShowHideSettings(false); setShowNotifications(state) })} />
     <div style={{ height: '50px' }} />
     <NextNProgress options={{ showSpinner: false }} height={2} color={vars.MAIN_BLUE} />
-    <Notifications hidden={!showNotifications} />
+    {showNotifications && <Notifications notificationProfileImages={notificationProfileImages} getProfileImages={() => getProfileImages()} />}
 
     <Settings close={() => setShowHideSettings(false)} since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
 

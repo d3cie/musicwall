@@ -13,6 +13,24 @@ var pin = new Schema({
   },
 
 })
+
+var notification = new Schema({
+  from: {
+    type: String,
+    required: true
+  },
+  action: {
+    type: String
+  },
+  message: {
+    type: String
+  },
+  since: {
+    type: Date,
+    default: Date.now
+  }
+})
+
 var profileinfo = new Schema({
   displayname: { type: String },
   birthday: { type: Date },
@@ -29,6 +47,9 @@ var user = new Schema({
   },
   pins: [pin],
   pinnedby: [pin],
+
+  notifications: [notification],
+
   email: {
     type: String,
     required: true

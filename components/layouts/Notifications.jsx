@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components'
 import * as vars from '../../vars'
-
+import { LoginContext } from '../../pages/_app';
+import Profile from '../compounds/Profile';
+import timeStampToHumanTime from '../../services/timestamptotime';
+import Link from 'next/link'
 const Wrapper = styled.div`
     width:100%;
         /* padding-right:40px; */
@@ -18,13 +21,11 @@ const Wrapper = styled.div`
 const DisplayBox = styled.div`
     width:400px;
     position: relative;
-    padding:20px;
     margin:10px;
-    padding-left:40px;
     height:fit-content;
     position: absolute;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
+padding-bottom:10px;
         z-index: 30;
         right:0;
     border-radius:4px;
@@ -41,15 +42,130 @@ const DisplayBox = styled.div`
   }
   
     `
+const Details = styled.div`
+    margin-left:15px;
 
 
+    color:${vars.MAIN_WHITE};
+    & a{
+        transition: all 0.2s;
+        cursor:pointer;
+        font-weight: 500;
+        :hover{
+            color:${vars.ORANGE};}
+    }
+    & #walldate{
+        transition: all 0.2s;
+        display: inline;
+        cursor:pointer;
+        font-weight: 500;
+        :hover{
+            color:${vars.ORANGE};}
+    }
 
+    & span{
+        display: inline-block;
+        opacity: .8;
+    } 
+    `
+
+const Notification = styled.div`
+    height:65px;
+    /* padding:5px; */
+    line-height:20px;
+    padding-inline:20px;
+  display: flex;
+  align-items: center;
+    width:100%;
+    border-bottom:1px solid ${vars.LIGHER_GREY};
+    `
+
+
+const NotificationTemplatePrimary = (props) => {
+
+
+    if (props.username != null) return <Notification>
+        <Profile profileImage={props.image} padding={2} height={'40px'} width={'40px'} />
+        <Details>
+            <Link href={`/u/${props.username}`}>
+                <a>
+                    @{props.username}
+                </a>
+            </Link>
+
+            {props.details}<br />
+            <div id="walldate" >{props?.date?.substring(0, 10)}
+
+            </div>
+            <span >
+                &nbsp;
+                {`- ${props.time} ago.`}
+
+            </span>
+
+        </Details>
+    </Notification>
+}
 
 const Notifications = (props) => {
+
+    const LoggedInUser = useContext(LoginContext)
+    const [profileImages, setProfileImages] = useState([])
+
+
+
+    useEffect(() => {
+        props.getProfileImages().then(
+            setProfileImages(props.notificationProfileImages)
+
+        )
+    }, [props.notificationProfileImages])
+
+    const getWallIDAndReturnSince = (id) => {
+        let returnSince;
+        LoggedInUser.walls.map(({ _id, since }) => {
+            if (_id == id) {
+                returnSince = since
+            }
+        })
+        return returnSince
+    }
+    const mapUserImageToUser = (from) => {
+        let image;
+        if (profileImages != null) {
+            for (let i = 0; i < profileImages.length; i++) {
+                if (profileImages[i].username == from) {
+
+                    image = profileImages[i].image
+                    break
+                }
+            }
+            return image
+        }
+    }
     return (
         <Wrapper {...props}>
             <DisplayBox>
-                ddd
+                {
+
+                    (LoggedInUser?.notifications.length) ?
+                        LoggedInUser?.notifications.map((notification) => {
+                            if (notification.action == 'like') {
+                                return <NotificationTemplatePrimary
+                                    username={notification.from}
+                                    image={mapUserImageToUser(notification.from)}
+                                    time={timeStampToHumanTime(Date.now() - Date.parse(notification.since))}
+                                    details={' liked a wall you posted on the '}
+                                    date={getWallIDAndReturnSince(notification.message)}
+                                />
+
+                            }
+                            return null
+                        })
+                        : null
+                }
+
+                <NotificationTemplatePrimary />
             </DisplayBox>
         </Wrapper>
     );

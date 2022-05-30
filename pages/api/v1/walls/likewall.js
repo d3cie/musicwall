@@ -1,5 +1,6 @@
 import authorization from '../../../../middleware/authorization'
 import connectDB from '../../../../middleware/mongodb'
+import sendnotifications from '../../../../middleware/sendnotifications'
 import User from '../../../../models/user'
 
 const handler = async (req, res) => {
@@ -10,6 +11,7 @@ const handler = async (req, res) => {
         const myUsername = req.username
 
         // const filter = { username: username, walls: { "_id": wallId } }
+
 
         // const updateUser = { $push: { pins: { username: req.query.pinneduser } } }
 
@@ -22,6 +24,7 @@ const handler = async (req, res) => {
                     res.status(200).send({ status: 'error', message: 'Not Liked.' })
                     return
                 }
+                sendnotifications({ to: myUsername, action: 'like', message: wallId, from: username })
                 res.status(200).send({ status: 'success', message: 'Liked.' })
             })
                 .catch((err) => { console.log(err); res.status(500).send({ status: 'error' }) })
