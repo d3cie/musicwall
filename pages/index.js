@@ -141,6 +141,10 @@ const ParaCont = styled.div`
 
 const OutterCont = styled.section`
   width:100%;
+  opacity: 0;
+  animation:fadeInFromBottom .5s ease-in-out forwards;
+animation-delay: 1s;
+
 display:flex;
 position:relative;
 flex-direction: column;
@@ -308,15 +312,13 @@ export default function Welcome() {
 
             </Para>
           </ParaCont>
-          <ButtonCont >
+          <ButtonCont style={{ marginTop: 30 }}>
 
             <PrimaryButton onClick={() => { goToAuthenticateHandler('/accounts/login') }} style={{ background: vars.LIGHT_GREY, borderRadius: 4, borderColor: vars.LIGHER_GREY, color: 'white' }} buttonTitle={'LOG IN'}></PrimaryButton>
-
-          </ButtonCont>
-
-          <ButtonCont style={{ marginTop: '50px' }}>
             <TertiaryButton onClick={() => { goToAuthenticateHandler('/accounts/signup') }} style={{ background: '#ffffff00', border: 'none', color: vars.GREY }} buttonTitle={'Dont have an account?'} />
+
           </ButtonCont>
+
         </Hero>
       </HeroCont>
 
@@ -337,7 +339,7 @@ export default function Welcome() {
       </OutterCont>
 
 
-      <OutterCont style={{ background: '#eee' }}>
+      <OutterCont style={{ background: '#eee', marginTop: -2 }}>
 
         <Cont id='second'>
           <DescrCont id='descrcont' style={{ paddingLeft: '0', minWidth: '55%' }}>
@@ -379,35 +381,22 @@ export default function Welcome() {
 
       </OutterCont>
 
-      <OutterCont>
-
-        <Cont style={{ flexDirection: 'column' }}>
-          <Demo3 />
-
-          <DescrCont id='descrcont' style={{ paddingLeft: '0', textAlign: 'center' }} >
-            <DescrTitle >Share your walls to your favourite social platforms for everyone else to see!</DescrTitle>
-            {/* <Descr>Send and post your pages and walls to the platforms below and more.</Descr> */}
-          </DescrCont>
+      <OutterCont style={{ background: vars.GREY }}>
 
 
-        </Cont>
-        <div style={{ display: 'flex', marginTop: -20, marginBottom: 80, alignItems: 'center', justifyContent: 'center' }}>
-          <PrimaryButton onClick={() => { location.href = '/accounts/signup' }} style={{ fontSize: '1rem', width: '350px', marginLeft: 20, marginTop: 0, padding: '20px 20px' }} buttonTitle={'CONVINCED? GET STARTED NOW'} />
+        <div style={{ display: 'flex', flexDirection: 'column', marginTop: 60, marginBottom: 80, alignItems: 'center', justifyContent: 'center' }}>
+          <DescrTitle style={{ textAlign: 'center', color: '#f1f1f1' }}>Convinced? <br /> Get started now!</DescrTitle>
 
+          <Link href="/accounts/signup">
+            <SecondaryButton style={{ fontSize: '1rem', borderRadius: 4, width: '250px', marginLeft: 20, marginTop: 0, padding: '20px 20px' }} buttonTitle={'YAAAS! 😍'} />
+          </Link>
 
         </div>
+        <div style={{ color: "#fafafa", fontSize: '20px', marginBottom: 5 }}> 2022 Musicwall | Music is Everything</div>
+        <div style={{ color: "#ccc", fontSize: '15px', marginBottom: 20 }}> <a href={'/termsandconditions'}>{`Terms & Conditions`}</a></div>
+
       </OutterCont>
-      <footer style={{ height: 80, paddingBottom: 15, width: '100%', padding: 10, background: vars.GREY }}>
-        <section style={{ height: '100%', opacity: .9, alignItems: 'center', display: 'flex', width: '100%' }}>
-          <ExpandedLogo style={{ height: 40 }} />
 
-          <div style={{ height: '100%', textAlign: 'right', padding: 15, width: '100%', textJustify: 'center', alignSelf: 'center', color: vars.MAIN_WHITE }}>
-
-            2022-2022 Musicwall.
-          </div>
-        </section>
-
-      </footer>
     </Wrapper >
 
 

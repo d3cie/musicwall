@@ -30,7 +30,7 @@ const ButtonStyle = styled.button`
 
     color:${vars.MAIN_WHITE};
     padding: 6px 20px;
-    position:absolute;
+    /* position:absolute; */
 
     &:hover{
         filter:brightness(105%);

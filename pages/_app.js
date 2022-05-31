@@ -175,7 +175,9 @@ function MyApp({ Component, pageProps }) {
   if (entryAnimation) {
     return <>
       <Head>
+
         <meta name="google-site-verification" content="jpuBKEsMBEa6nVthIvoHTD-6gZt-m2oq-n2N0o3ylYc" />
+        <meta name="facebook-domain-verification" content="khekl965c2wmnqhvxk2c835wf40e7n" />
         <title>Musicwall | Music is Everything</title>
         <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
 
@@ -190,7 +192,7 @@ function MyApp({ Component, pageProps }) {
         <meta property="twitter:url" content="https://www.musicwall.cc/" />
         <meta name="twitter:title" content="Musicwall | Music is Everything" />
         <meta name="twitter:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
-        <meta name="twitter:image" content="/opengraphimage.png" />
+        <meta name="twitter:image" content="https://www.musicwall.cc/opengraphimage.png" />
 
         <link rel="icon" href="/logo.png" />
         <meta name="theme-color" content={vars.GREY} />
