@@ -176,6 +176,7 @@ function MyApp({ Component, pageProps }) {
   if (entryAnimation) {
     return <>
       <Head>
+        <meta name="google-site-verification" content="jpuBKEsMBEa6nVthIvoHTD-6gZt-m2oq-n2N0o3ylYc" />
         <title>Musicwall | Music is Everything</title>
         <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
 
