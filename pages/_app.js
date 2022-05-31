@@ -76,7 +76,6 @@ export const LoginContext = React.createContext()
 
 function MyApp({ Component, pageProps }) {
 
-
   const router = useRouter()
   const [showNotifications, setShowNotifications] = useState(false)
   const [showHideSettings, setShowHideSettings] = useState(false)

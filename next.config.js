@@ -1,3 +1,5 @@
+const { withSentryConfig } = require('@sentry/nextjs');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -5,7 +7,11 @@ const nextConfig = {
 
 }
 
-module.exports = {
+const sentryWebpackPluginOptions = {
+  silent: true,
+};
+
+const moduleExports = {
   webpack(config, options) {
     config.module.rules.push({
       test: /\.mp3$/,
@@ -23,3 +29,5 @@ module.exports = {
     mongodburl: "mongodb+srv://decefemz:precious1979@cluster0.s5iun.mongodb.net/Musicwall?retryWrites=true&w=majority",
   },
 }
+
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
