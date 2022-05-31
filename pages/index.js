@@ -251,8 +251,24 @@ export default function Welcome() {
 
     <Wrapper>
       <Head>
-        <title>MusicWall</title>
-        <meta name="description" content="Capture your favourite music at a point in time to share with your friends." />
+        <title>Musicwall | Music is Everything</title>
+
+        <title>Musicwall | Music is Everything</title>
+        <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+
+        <meta property="og:url" content="https://www.musicwall.cc/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Musicwall | Music is Everything" />
+        <meta property="og:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+        <meta property="og:image" content="/opengraphimage.png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="musicwall.cc" />
+        <meta property="twitter:url" content="https://www.musicwall.cc/" />
+        <meta name="twitter:title" content="Musicwall | Music is Everything" />
+        <meta name="twitter:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+        <meta name="twitter:image" content="/opengraphimage.png" />
+
         <link rel="icon" href="/icon.png" />
         <meta name="theme-color" content={vars.MAIN_BLUE} />
 

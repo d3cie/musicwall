@@ -99,7 +99,7 @@ const DetailsInner = styled.div`
 
 export default function SongSearch(props) {
     const [isChosen, setIsChosen] = useState(props.isSongChosen)
-    const NoOfSongsChosen = useContext(LimitContext)
+    const NoOfSongsChosen = useContext(LimitContext)?.songs
     const [limitReachedAnimation, setLimitReachedAnimation] = useState(false)
 
     const animate = () => {

@@ -1,5 +1,6 @@
 import NavBar from '../components/layouts/NavBar'
 import '../styles/globals.css'
+import Head from 'next/head'
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
@@ -70,6 +71,7 @@ const formVariants = {
     y: 10
   }
 }
+
 export const LoginContext = React.createContext()
 
 function MyApp({ Component, pageProps }) {
@@ -172,7 +174,15 @@ function MyApp({ Component, pageProps }) {
 
 
   if (entryAnimation) {
-    return <PrimaryLoading to={router.pathname} loading={loading} />
+    return <>
+      <Head>
+        <title>Musicwall | Music is Everything</title>
+        <meta name="Musicwall is a site for you to share your favourite music with your friends." />
+        <link rel="icon" href="/icon.png" />
+        <meta name="theme-color" content={vars.GREY} />
+      </Head>
+      <PrimaryLoading to={router.pathname} loading={loading} />
+    </>
   }
 
   if (router.pathname == '/') {
@@ -194,33 +204,36 @@ function MyApp({ Component, pageProps }) {
     router.pathname == '/accounts/resetpassword' ||
     router.pathname == '/accounts/signup') {
 
-    return <LoginContext.Provider value={loggedInData}><Cont>
-
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        transition={fade}
-        theme={'colored'}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+    return <LoginContext.Provider value={loggedInData}>
 
 
-      <FormCont
-        variants={formVariants}
-        initial={'exit'}
-        animate={'enter'}
-        key={router.asPath}
-        transition={{ duration: .2 }}
-        onSubmit={(e) => { handleForm(e); return false }} id='form'>
-        <Component  {...pageProps} />
-      </FormCont>
-    </Cont>
+      <Cont>
+
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          transition={fade}
+          theme={'colored'}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+
+
+        <FormCont
+          variants={formVariants}
+          initial={'exit'}
+          animate={'enter'}
+          key={router.asPath}
+          transition={{ duration: .2 }}
+          onSubmit={(e) => { handleForm(e); return false }} id='form'>
+          <Component  {...pageProps} />
+        </FormCont>
+      </Cont>
     </LoginContext.Provider>
 
 
