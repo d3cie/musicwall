@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 const Point = styled.div`
       /* position:absolute; */
       width:20px;
-      background-color:${vars.ORANGE};
+      background-color:${vars.MAIN_BLUE};
       /* left:-29px; */
       border-radius: 50%;
       border: solid 4px ${vars.MAIN_WHITE} ;
@@ -106,11 +106,11 @@ const Demo4 = () => {
             <DisplayBox>
                 <TimeStampCont>
                     <TimeLine />
-                    <TimeStamp><Point />Added These on - 03.06.22</TimeStamp>
+                    <TimeStamp><Point style={{ backgroundColor: vars.ORANGE }} />Added 2 minutes ago.</TimeStamp>
 
-                    <TimeStamp><Point />Added These on - 01.04.22</TimeStamp>
-                    <TimeStamp><Point />Added These on - 01.01.22</TimeStamp>
-                    <TimeStamp><Point />Added These on - 03.12.21</TimeStamp>
+                    <TimeStamp><Point />Added 1 week ago.</TimeStamp>
+                    <TimeStamp><Point />Added 3 months ago.</TimeStamp>
+                    <TimeStamp><Point />Added 4 months ago.</TimeStamp>
 
                 </TimeStampCont>
 

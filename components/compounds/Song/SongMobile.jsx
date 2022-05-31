@@ -104,7 +104,11 @@ const DetailsInner = styled.div`
 export default function Song(props) {
     const [isPlaying, setIsPlaying] = useState(false)
 
-
+    function playSong() {
+        if (!props.demo) {
+            console.log("needstobeadded")
+        }
+    }
     return (
         <Wrapper>
             <Image

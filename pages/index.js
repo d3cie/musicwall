@@ -252,8 +252,6 @@ export default function Welcome() {
     <Wrapper>
       <Head>
         <title>Musicwall | Music is Everything</title>
-
-        <title>Musicwall | Music is Everything</title>
         <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
 
         <meta property="og:url" content="https://www.musicwall.cc/" />
@@ -269,9 +267,8 @@ export default function Welcome() {
         <meta name="twitter:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
         <meta name="twitter:image" content="/opengraphimage.png" />
 
-        <link rel="icon" href="/icon.png" />
+        <link rel="icon" href="/logo.png" />
         <meta name="theme-color" content={vars.MAIN_BLUE} />
-
       </Head>
 
       <HeroCont
@@ -329,11 +326,11 @@ export default function Welcome() {
 
           <Demo1 />
           <DescrCont>
-            <DescrTitle style={{ textAlign: 'right' }} >Show off your fave music to friends!</DescrTitle>
+            <DescrTitle style={{ textAlign: 'right' }} >Show off your fave music at a point in time to friends!</DescrTitle>
             <Descr style={{ textAlign: 'right' }}>
-              Select artists, songs and albums from the extensive list provided
+              Select artists, songs and/or albums from the extensive list provided
               by Spotify <Spotify style={{ transform: 'translateY(5px)' }} width="25px" /> to put up on
-              your own personal Musicwall.
+              your wall.
             </Descr>
           </DescrCont>
         </Cont>
@@ -346,8 +343,8 @@ export default function Welcome() {
           <DescrCont id='descrcont' style={{ paddingLeft: '0', minWidth: '55%' }}>
             <DescrTitle>Keep a history of music you love.</DescrTitle>
             <Descr>
-              Music you have selected previously is kept in an archive
-              for you and your friends to revisit later on your page.  You can add a new wall anytime.
+              Music you have selected previously is kept on your page
+              for you and your friends to revisit later and take a trip down memory lane!
             </Descr>
           </DescrCont>
           <div style={{ marginTop: 0 }}>

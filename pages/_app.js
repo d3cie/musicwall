@@ -177,8 +177,22 @@ function MyApp({ Component, pageProps }) {
     return <>
       <Head>
         <title>Musicwall | Music is Everything</title>
-        <meta name="Musicwall is a site for you to share your favourite music with your friends." />
-        <link rel="icon" href="/icon.png" />
+        <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+
+        <meta property="og:url" content="https://www.musicwall.cc/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Musicwall | Music is Everything" />
+        <meta property="og:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+        <meta property="og:image" content="/opengraphimage.png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="musicwall.cc" />
+        <meta property="twitter:url" content="https://www.musicwall.cc/" />
+        <meta name="twitter:title" content="Musicwall | Music is Everything" />
+        <meta name="twitter:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+        <meta name="twitter:image" content="/opengraphimage.png" />
+
+        <link rel="icon" href="/logo.png" />
         <meta name="theme-color" content={vars.GREY} />
       </Head>
       <PrimaryLoading to={router.pathname} loading={loading} />

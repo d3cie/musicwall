@@ -107,12 +107,13 @@ const Demo1 = () => {
             <DisplayBox>
                 <TimeStampCont>
                     <TimeLine />
-                    <TimeStamp><Point />Added These on - 03.12.12</TimeStamp>
+                    <TimeStamp><Point />Added 24 hours ago.</TimeStamp>
                 </TimeStampCont>
                 <ItemsCont>
                     <Title>ADDED SONGS</Title>
                     <ItemCont>
                         <Song
+                            demo={true}
                             SongName="Ultralight Beam"
                             AlbumName="The Life Of Pablo"
                             SongArtist="Kanye West"
@@ -122,6 +123,7 @@ const Demo1 = () => {
 
                     <ItemCont>
                         <Song
+                            demo={true}
                             SongName="RUNNING OUT OF TIME"
                             AlbumName="IGOR"
                             SongArtist="Tyler, The Creator"
