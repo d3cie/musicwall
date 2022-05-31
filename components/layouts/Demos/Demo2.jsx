@@ -58,11 +58,12 @@ const Demo2 = () => {
                     profile={
                         {
                             since: '2021-11-26T12:02:10.767Z',
-                            username: 'decefemz',
+                            username: 'heyitsfemzy',
 
                             profileinfo: {
-                                displayname: 'HeyItsFemzy',
-                                bio: `Hi friends 👋🏽\nWelcome to my wall.  Get ready to feast your ears on the best music planet earth 🌍 has to offer.🤪  `
+                                countrycode: 'ZW',
+                                displayname: 'Deciee🙄',
+                                bio: `Hi friends! 👋🏽\nWelcome to my wall.  Get ready to feast your ears on the best music planet earth 🌍 has to offer.🤪  `
                             },
                             pins: [],
                             pinnedby: [...fakePins()]
