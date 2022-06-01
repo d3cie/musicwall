@@ -6,7 +6,7 @@ import PrimaryBox from '../../components/primitives/Inputs/PrimaryBox'
 import PrimaryButton from '../../components/primitives/Buttons/PrimaryButton'
 import { useRouter } from 'next/router'
 import resetpasswordservice from '../../services/resetpassword'
-
+import Head from 'next/head'
 
 const ButtonContOut = styled.div`
 width: 100%;

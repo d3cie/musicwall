@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import * as vars from '../../../vars'
 import BouncyDots from '../../primitives/Animations/Elipsis'
+import DualRing from '../Animations/DualRing'
 
 const ButtonStyle = styled.button`
     font-size: 1.2rem;
@@ -64,6 +65,7 @@ export default function SecondaryButton(props) {
             className={props.state}
 
         >
+            <Elipsis />
             {(props.isWorking) ? <BouncyDots
                 color={(props.state == 'active') ? vars.MAIN_BLUE : vars.MAIN_WHITE}
 

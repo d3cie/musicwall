@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import * as vars from '../../../vars'
 import BouncyDots from '../../primitives/Animations/Elipsis'
+import DualRing from '../Animations/DualRing'
 
 const ButtonStyle = styled.button`
     font-size: 1.2rem;
