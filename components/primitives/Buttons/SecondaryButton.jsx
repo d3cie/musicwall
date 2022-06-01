@@ -65,7 +65,7 @@ export default function SecondaryButton(props) {
             className={props.state}
 
         >
-            <Elipsis />
+
             {(props.isWorking) ? <BouncyDots
                 color={(props.state == 'active') ? vars.MAIN_BLUE : vars.MAIN_WHITE}
 
