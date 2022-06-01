@@ -24,7 +24,7 @@ const handler = async (req, res) => {
                     res.status(200).send({ status: 'error', message: 'Not Liked.' })
                     return
                 }
-                sendnotifications({ to: myUsername, action: 'like', message: wallId, from: username })
+                sendnotifications({ to: myUsername, action: 'like', fromid: req.id, message: wallId, from: username })
                 res.status(200).send({ status: 'success', message: 'Liked.' })
             })
                 .catch((err) => { console.log(err); res.status(500).send({ status: 'error' }) })

@@ -19,6 +19,9 @@ var notification = new Schema({
     type: String,
     required: true
   },
+  fromid: {
+    type: String,
+  },
   action: {
     type: String
   },
@@ -60,6 +63,9 @@ var user = new Schema({
   passwordhash: {
     type: String,
     required: true
+  },
+  recoverpasswordhash: {
+    type: String,
   },
   profileinfo: profileinfo,
   walls: [wall],

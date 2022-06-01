@@ -250,7 +250,7 @@ export default function ProfileBar(props) {
                             <Fire /> <b>{props.profile.points || 0}</b> Points
                         </PinsCont> */}
                             <PinsCont style={{ fill: vars.MAIN_RED }}>
-                                <Thumbtack /> <b></b>Pinned by <b>{props.profile.pinnedby.length} </b>others
+                                <Thumbtack /> <b></b>Pinned by<b>{props.profile.pinnedby.length}</b>others
                             </PinsCont>
                         </div>
                         <PinsCont style={{ fill: vars.MAIN_RED }}>
@@ -270,7 +270,7 @@ export default function ProfileBar(props) {
                 <Cont>
                     <ButtonCont>
                         {((props.demo ? { username: props.profile.username } : isLogged?.username) == props.profile.username) ?
-                            <SecondaryButton style={{ marginLeft: '30px', width: 'fit-content' }} onClick={() => router.push(`/accounts/edit?next=/u/${props.profile.username}`)} buttonTitle={'Edit Profile'} />
+                            <SecondaryButton style={{ marginLeft: '30px', width: 'fit-content' }} onClick={() => router.push(`/accounts/edit`)} buttonTitle={'Edit Profile'} />
                             : <SecondaryButton buttonwidth={'80px'} style={{ marginLeft: '30px' }} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />}
                         <SecondaryButton style={{ border: "none", background: vars.LIGHT_GREY, border: `1px solid ${vars.LIGHER_GREY}` }} buttonTitle={"Share"} />
                     </ButtonCont>

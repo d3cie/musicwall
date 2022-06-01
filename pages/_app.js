@@ -172,13 +172,14 @@ function MyApp({ Component, pageProps }) {
     , [])
 
 
+
   if (entryAnimation) {
     return <>
       <Head>
 
         <meta name="google-site-verification" content="jpuBKEsMBEa6nVthIvoHTD-6gZt-m2oq-n2N0o3ylYc" />
         <meta name="facebook-domain-verification" content="khekl965c2wmnqhvxk2c835wf40e7n" />
-        <title>Musicwall | Music is Everything</title>
+        {/* <title>Musicwall | Music is Everything</title>
         <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
 
         <meta property="og:url" content="https://www.musicwall.cc/" />
@@ -192,7 +193,7 @@ function MyApp({ Component, pageProps }) {
         <meta property="twitter:url" content="https://www.musicwall.cc/" />
         <meta name="twitter:title" content="Musicwall | Music is Everything" />
         <meta name="twitter:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
-        <meta name="twitter:image" content="https://www.musicwall.cc/opengraphimage.png" />
+        <meta name="twitter:image" content="https://www.musicwall.cc/opengraphimage.png" /> */}
 
         <link rel="icon" href="/logo.png" />
         <meta name="theme-color" content={vars.GREY} />
@@ -206,13 +207,27 @@ function MyApp({ Component, pageProps }) {
       router.push(`/u/${loggedInData.username}`)
       return
     }
-    console.log(loggedInData)
 
     return <>
       <Component {...pageProps} /></>
-
-
   }
+
+
+  if (loggedInData == null) {
+    if (router.pathname == '/accounts/edit') {
+      router.push('/accounts/login?next=/accounts/edit')
+      return
+    }
+    if (router.pathname == '/search') {
+      router.push('/accounts/login?next=/search')
+      return
+    }
+    if (router.pathname == '/explore') {
+      router.push('/accounts/login?next=/explore')
+      return
+    }
+  }
+
   function handleForm(event) { event.preventDefault(); }
 
 

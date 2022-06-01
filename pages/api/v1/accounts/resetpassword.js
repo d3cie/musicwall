@@ -1,6 +1,9 @@
 import connectDB from '../../../../middleware/mongodb';
 import bcrypt from 'bcryptjs'
 import User from '../../../../models/user';
+import jwt from 'jsonwebtoken'
+import sendConfirmationCodeToEmail from '../../../../middleware/sendconfirmationemail';
+const JWT_SECRET = process.env.TOKEN_SECRET
 
 
 const passwordValidator = (password) => {
@@ -10,7 +13,6 @@ const passwordValidator = (password) => {
     }
     return false
 }
-
 const getAndValidateUser = async (username, email) => {
     try {
         const user = await User.findOne({ username: username })
@@ -29,19 +31,42 @@ const getAndValidateUser = async (username, email) => {
         return { status: 'error', code: 500, message: "Internal Error" }
     }
 }
-
 const checkIfPasswordReuse = async (oldPasswordHash, newPassword) => {
     return await bcrypt.compare(newPassword, oldPasswordHash)
+}
+
+const storeConfirmationHashInDB = async (confirmationCode) => {
+
+    const PASSWORD_RECOVERY_TOKEN = jwt.sign({
+        code: confirmationCode,
+    },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+    )
+
+    try {
+        await User.findOneAndUpdate({ username: username }, { recoverpasswordhash: PASSWORD_RECOVERY_TOKEN })
+        return ({ status: 'success' })
+
+    }
+    catch (e) {
+        console.log(e)
+        return ({ status: 'error', error: 'Internal Error' })
+    }
 }
 
 const createConfirmationCode = () => {
     return Math.floor(100000 + Math.random() * 900000);
 }
+
 const handler = async (req, res) => {
     if (req.method === 'POST') {
         const username = req.body.username
         const email = req.body.email
         const password = req.body.password
+
+        // sendConfirmationCodeToEmail("deciee@musicwall.cc", "122543")
+
 
         const result = await getAndValidateUser(username, email)
         if (result.status == 'error') {
@@ -72,9 +97,12 @@ const handler = async (req, res) => {
             return
         }
 
+
+
         res.json({
             status: 'success',
         })
+
         // createConfirmationCode()
         // sendEmail()
         // saveTempToDB()

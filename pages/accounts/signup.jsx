@@ -12,16 +12,16 @@ import { useRouter } from 'next/router';
 
 const ButtonContOut = styled.div`
 width: 100%;
-margin-top: 35px;
-margin-bottom:40px;
+margin-top: 10px;
+margin-bottom:10px;
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
 
 @media (max-width:600px) {
-    margin-top:100px;
-    margin-bottom:40px;
+    margin-top:60px;
+    margin-bottom:10px;
 }
 position:relative;
 

@@ -79,7 +79,7 @@ export default function Login() {
 
             if (result.status == 'success') {
                 if (next) {
-                    window.location.href = next
+                    location.href = next
                     return
                 }
                 location.href = `/u/${username}`
@@ -99,11 +99,11 @@ export default function Login() {
             </InputCont>
 
 
-            <Link passHref href='/accounts/resetpassword'>
+            {/* <Link passHref href='/accounts/resetpassword'>
                 <LinkStyle>
                     forgot password?
                 </LinkStyle>
-            </Link>
+            </Link> */}
 
             <ErrorMsg>
                 <b>|</b>

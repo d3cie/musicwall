@@ -15,7 +15,8 @@ const OutCont = styled.div`
        height: 100%;
     overflow:hidden;
     background-color:#000000aa;
-    position:absolute;
+    /* position:absolute; */
+    position: fixed;
     left:0;
 
     top:0;
@@ -24,6 +25,7 @@ const OutCont = styled.div`
  
     
     display:flex;
+    flex-direction:column;
     justify-content: center;
     align-items: center;
     @media (max-width: 600px) {
@@ -31,8 +33,8 @@ const OutCont = styled.div`
           height: 120vh;
 
       background-color: ${vars.GREY};
-      justify-content: left;
-    align-items: left;
+      /* justify-content: left;
+    align-items: left; */
     }
     `
 
@@ -51,10 +53,12 @@ const Cont = styled.div`
       width:fit-content;
           border:solid 1px ${vars.LIGHT_GREY};
     height: fit-content;
-    position: absolute;
+    align-self:center;
+
+    /* position: absolute; */
       @media (max-width: 600px) {
         /* height: 100%; */
-        top:0;
+        margin-bottom:40%;
 
         border:none;
     
@@ -106,7 +110,9 @@ const Next = styled.div`
         font-size: .9rem;
     
         & button{
-          height:25px;
+          height:24px;
+          width:60px;
+          font-size: 16px;
         }
    
 

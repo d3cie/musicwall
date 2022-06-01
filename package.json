@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^7.0.0",
+    "aws-sdk": "^2.1146.0",
     "babel-plugin-styled-components": "^2.0.7",
     "bcryptjs": "^2.4.3",
     "cookies": "^0.8.0",
@@ -18,7 +19,6 @@
     "mongoose": "^6.3.1",
     "next": "12.1.5",
     "nextjs-progressbar": "^0.0.14",
-    "nodemailer": "^6.7.5",
     "react": "18.0.0",
     "react-avatar-editor": "^12.0.0",
     "react-country-flag": "^3.0.2",

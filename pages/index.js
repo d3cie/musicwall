@@ -388,7 +388,7 @@ export default function Welcome() {
           <DescrTitle style={{ textAlign: 'center', color: '#f1f1f1' }}>Convinced? <br /> Get started now!</DescrTitle>
 
           <Link href="/accounts/signup">
-            <SecondaryButton style={{ fontSize: '1rem', borderRadius: 4, width: '250px', marginLeft: 20, marginTop: 0, padding: '20px 20px' }} buttonTitle={'YAAAS! 😍'} />
+            <SecondaryButton style={{ fontSize: '1rem', borderRadius: 4, width: '250px', marginLeft: 20, marginTop: 0, padding: '20px' }} buttonTitle={'YAAAS! 😍'} />
           </Link>
 
         </div>

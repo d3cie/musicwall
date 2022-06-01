@@ -2,12 +2,13 @@ import User from "../models/user"
 import connectDB from "./mongodb"
 
 
-const sendnotifications = ({ to, action, message, from }) => {
+const sendnotifications = ({ to, action, message, from, fromid }) => {
 
     const notificationsUpdate = {
         $push: {
             notifications: {
                 from: to,
+                fromid: fromid,
                 action: action,
                 message: message
             }

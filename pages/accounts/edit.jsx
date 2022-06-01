@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import * as vars from '../../vars'
@@ -50,14 +50,14 @@ const ChangeProfile = styled.label`
   margin-bottom:30px;
     color:${vars.MAIN_BLUE};
   /* opacity:.5; */
-  background:${vars.LIGHT_GREY};
+  /* background:${vars.LIGHT_GREY}; */
   padding:2px;
   padding-inline:5px;
-  border:1px solid ${vars.LIGHER_GREY};
-  border-radius:2px;
+  /* border:1px solid ${vars.LIGHER_GREY}; */
+  border-radius:4px;
   font-weight: 500;
   margin-top:10px;
-  border:none;
+  /* border:none; */
   font-weight: 500;
   transition: all .2s;
   :hover{
@@ -77,25 +77,28 @@ color:${vars.ORANGE};
 
 const Cont = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 100%;
     padding-top:40px;
     background-color: ${vars.GREY};
-
-    overflow:hidden;
+  border:solid 1px ${vars.GREY};
+    /* overflow:hidden; */
       @media (max-width: 450px) {
       background-color: ${vars.GREY};
-      height: 120vh;
+      /* height: 120vh; */
 
     }
     display:flex;
     justify-content: center;
     align-items: flex-start;
+    
     @media (min-width: 600px) {
-      padding-top:0px;
-      margin-top: -20px;
+      padding-top:40px;
+      /* margin-top: -20px; */
       align-items: center;
 
     }
+
+
     `
 const FormCont = styled.div`
     max-width:${vars.MAX_WIDTH};
@@ -115,21 +118,15 @@ const FormCont = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    border:none;
     justify-content: center;
-    /* border:solid 1px ${vars.LIGHT_GREY}; */
-    @media (max-width: 600px) {
-      border:none;
-
-      transform:scale(1);
-      padding:0px;
-    }
+   
  
    `
 
 export default function Edit(props) {
   const router = useRouter();
   const isLogged = useContext(LoginContext)
-  const { next } = router.query;
   const [changeProfileImage, setChangeProfileImage] = useState(isLogged?.profileinfo.profileimage || null)
   const [showEditImage, setShowEditImage] = useState(false)
   const [uncroppedImage, setUncroppedImage] = useState()
@@ -137,6 +134,11 @@ export default function Edit(props) {
   const [isWorking, setIsWorking] = useState(false)
   const [errorMsg, setErrorMsg] = useState()
 
+
+  useEffect(() => {
+    document.querySelector('html,body').style.background = vars.GREY
+
+  }, [])
 
   async function save() {
     setErrorMsg()
@@ -231,29 +233,24 @@ export default function Edit(props) {
     reader.readAsDataURL(e.target.files[0]);
     // reader.abort()
   }
-
   return (
-
-
-
-
     <Cont>
       <Head>
         <meta name="theme-color" content={vars.GREY} />
-        <title>Musicwall</title>
+        <title>Musicwall | Edit profile</title>
         <link rel="icon" href="/icon.png" />
 
-        <meta name="description" content="Edit your music wall." />
+        <meta name="description" content="Edit your musicwall profile." />
       </Head>
+      {(showEditImage) ? <EditImage exitButton={() => setShowEditImage(false)} closeEditImage={nextEditImage} uncroppedPhoto={uncroppedImage} /> : ''}
 
       <FormCont>
-        {(showEditImage) ? <EditImage exitButton={() => setShowEditImage(false)} closeEditImage={nextEditImage} uncroppedPhoto={uncroppedImage} /> : ''}
 
         <ProfileCont>
           <ProfileIcon profileImage={changeProfileImage} width="100px" height="100px"
           ></ProfileIcon>
           <ChangeProfile for='upload-photo'
-          >Change profile photo</ChangeProfile>
+          >Change profile photo.</ChangeProfile>
           <input onChange={showImage} style={{ display: 'none' }} type="file" accept="image/png, image/jpg, image/gif, image/jpeg" name="photo" id="upload-photo" />
 
         </ProfileCont>
