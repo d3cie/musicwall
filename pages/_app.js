@@ -72,6 +72,55 @@ const formVariants = {
   }
 }
 
+const indexHeader = (
+  <React.Fragment>
+    <title>Musicwall | Music is Everything</title>
+    <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+
+    <meta property="og:url" content="https://www.musicwall.cc/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Musicwall | Music is Everything" />
+    <meta property="og:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+
+    <meta property="twitter:domain" content="musicwall.cc" />
+    <meta property="twitter:url" content="https://www.musicwall.cc/" />
+    <meta name="twitter:title" content="Musicwall | Music is Everything" />
+    <meta name="twitter:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+  </React.Fragment>
+)
+
+const loginHeader = (
+  <React.Fragment>
+    <title>Musicwall | Login</title>
+    <meta name="description" content="Log into your musicwall account to start sharing your fave music!" />
+
+
+    <meta property="og:title" content="Musicwall | Login" />
+    <meta property="og:description" content="Log into your musicwall account to start sharing your fave music!" />
+
+    <meta property="twitter:domain" content="musicwall.cc" />
+    <meta property="twitter:url" content="https://www.musicwall.cc/accounts/login" />
+    <meta name="twitter:title" content="Musicwall | Login" />
+    <meta name="twitter:description" content="Log into your musicwall account to start sharing your fave music!" />
+  </React.Fragment>
+)
+
+const signupheader = (
+  <React.Fragment>
+    <title>Musicwall | Signup</title>
+    <meta name="description" content="Sign up for a musicwall account to start sharing your fave music!" />
+
+
+    <meta property="og:title" content="Musicwall | Login" />
+    <meta property="og:description" content="Sign up for a musicwall account to start sharing your fave music!" />
+
+    <meta property="twitter:domain" content="musicwall.cc" />
+    <meta property="twitter:url" content="https://www.musicwall.cc/accounts/signup" />
+    <meta name="twitter:title" content="Musicwall | Login" />
+    <meta name="twitter:description" content="Sign up for a musicwall account to start sharing your fave music!" />
+  </React.Fragment>
+)
+
 export const LoginContext = React.createContext()
 
 function MyApp({ Component, pageProps }) {
@@ -179,22 +228,20 @@ function MyApp({ Component, pageProps }) {
 
         <meta name="google-site-verification" content="jpuBKEsMBEa6nVthIvoHTD-6gZt-m2oq-n2N0o3ylYc" />
         <meta name="facebook-domain-verification" content="khekl965c2wmnqhvxk2c835wf40e7n" />
-        {/* <title>Musicwall | Music is Everything</title>
-        <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
 
         <meta property="og:url" content="https://www.musicwall.cc/" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Musicwall | Music is Everything" />
-        <meta property="og:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
+
+        <meta name="twitter:image" content="https://www.musicwall.cc/opengraphimage.png" />
         <meta property="og:image" content="/opengraphimage.png" />
-
         <meta name="twitter:card" content="summary_large_image" />
-        <meta property="twitter:domain" content="musicwall.cc" />
-        <meta property="twitter:url" content="https://www.musicwall.cc/" />
-        <meta name="twitter:title" content="Musicwall | Music is Everything" />
-        <meta name="twitter:description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
-        <meta name="twitter:image" content="https://www.musicwall.cc/opengraphimage.png" /> */}
 
+        {(router.pathname == "/") ? indexHeader : null}
+        {(router.pathname == "/accounts/login") ? loginHeader : null}
+        {(router.pathname == "/accounts/signup") ? signupheader : null}
+
+
+        {(router.pathname != "/") || (router.pathname != "/accounts/login" || router.pathname != "/accounts/signup") ? indexHeader : null}
         <link rel="icon" href="/logo.png" />
         <meta name="theme-color" content={vars.GREY} />
       </Head>

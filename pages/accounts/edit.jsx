@@ -238,7 +238,7 @@ export default function Edit(props) {
       <Head>
         <meta name="theme-color" content={vars.GREY} />
         <title>Musicwall | Edit profile</title>
-        <link rel="icon" href="/icon.png" />
+        <link rel="icon" href="/logo.png" />
 
         <meta name="description" content="Edit your musicwall profile." />
       </Head>
