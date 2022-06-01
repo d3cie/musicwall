@@ -8,6 +8,7 @@ import PrimaryButton from '../../components/primitives/Buttons/PrimaryButton'
 import signupservice from '../../services/signup'
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { signupheader } from '../_app'
 
 
 const ButtonContOut = styled.div`
@@ -105,10 +106,9 @@ export default function Signup() {
         <React.Fragment>
             <Head>
                 <meta name="theme-color" content={vars.GREY} />
-                <title>Musicwall</title>
-                <link rel="icon" href="/icon.png" />
+                {signupheader}
+                <link rel="icon" href="/logo.png" />
 
-                <meta name="description" content="Login to your Musicwall account." />
             </Head>
             <InputCont>
                 <PrimaryBox id='username' type='username' placeholderText='Username' />

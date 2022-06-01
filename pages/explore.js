@@ -9,6 +9,7 @@ import artistsToString from '../utils/artistsToString';
 import TopResult from '../components/compounds/TopResultSearch';
 import SongExplore from '../components/compounds/Song/SongExplore';
 import PlaySongSpotify from '../components/compounds/Song/PlaySongSpotify';
+import Head from 'next/head'
 
 const Wrapper = styled.main`
     display: flex;
@@ -150,6 +151,14 @@ const Explore = () => {
     return (
 
         <Wrapper>
+            <Head>
+                <title>Musicwall | Explore</title>
+                <meta name="description" content="Get recomendations for music you might like, see what friends are upto and check top songs." />
+                <link rel="icon" href="/logo.png" />
+                <meta name="color-scheme" content="light dark"></meta>
+                <meta name="theme-color" content={vars.DARK_GREY} />
+            </Head>
+
             {
                 (showSpotifySongPlayer) ? <PlaySongSpotify closePlayer={() => setShowSpotifySongPlayer(false)} id={songPlayerId} /> : ''
             }

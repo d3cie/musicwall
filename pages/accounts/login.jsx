@@ -6,6 +6,8 @@ import PrimaryBox from '../../components/primitives/Inputs/PrimaryBox'
 import PrimaryButton from '../../components/primitives/Buttons/PrimaryButton'
 import { useRouter } from 'next/router'
 import loginservice from '../../services/login'
+import { loginHeader } from '../_app'
+import Head from 'next/head'
 
 
 const ButtonContOut = styled.div`
@@ -91,6 +93,12 @@ export default function Login() {
 
     return (
         <React.Fragment>
+            <Head>
+                <meta name="theme-color" content={vars.GREY} />
+                <link rel="icon" href="/logo.png" />
+
+                {loginHeader}
+            </Head>
             <InputCont>
                 <PrimaryBox id='username' type='username' placeholderText='Username' />
             </InputCont>

@@ -99,7 +99,13 @@ export default function ResetPassword() {
 
     return (
         <React.Fragment>
+            <Head>
+                <meta name="theme-color" content={vars.GREY} />
+                <title>Musicwall | Reset Password</title>
+                <link rel="icon" href="/logo.png" />
 
+                <meta name="description" content="Reset musicwall password." />
+            </Head>
             {(!showConfirm) ? <>
                 <InputCont>
                     <PrimaryBox id='username' type='username' placeholderText='confirm your Username' />

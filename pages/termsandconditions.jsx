@@ -1,8 +1,17 @@
 import React from 'react';
 import * as vars from '../vars'
+import Head from 'next/head'
 
 const Termsandconditions = () => {
-    return (
+    return (<>
+        <Head>
+            <title>{`Musicwall | Terms & Conditions`}</title>
+            <meta name="description" content="Terms and conditions for musicwall." />
+            <link rel="icon" href="/favicon.ico" />
+            <meta name="color-scheme" content="light dark"></meta>
+            <meta name="theme-color" content={vars.DARK_GREY} />
+        </Head>
+
         <div style={{ padding: '20px', paddingTop: '40px', background: vars.DARK_GREY, color: '#eee', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
             <div style={{ maxWidth: vars.MAX_WIDTH }}>
@@ -91,7 +100,8 @@ const Termsandconditions = () => {
                 <p>24. <b>Contact Us</b></p>
                 <p>Please send your feedback, comments, requests for technical support by email: <b>decefemz@gmail.com</b>.</p>
             </div>
-        </div>
+        </div>    </>
+
     );
 }
 

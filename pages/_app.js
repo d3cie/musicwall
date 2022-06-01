@@ -72,7 +72,7 @@ const formVariants = {
   }
 }
 
-const indexHeader = (
+export const indexHeader = (
   <React.Fragment>
     <title>Musicwall | Music is Everything</title>
     <meta name="description" content="Musicwall is a site that helps you capture your favorite music at a point in time to look back on later and share with friends!" />
@@ -89,7 +89,7 @@ const indexHeader = (
   </React.Fragment>
 )
 
-const loginHeader = (
+export const loginHeader = (
   <React.Fragment>
     <title>Musicwall | Login</title>
     <meta name="description" content="Log into your musicwall account to start sharing your fave music!" />
@@ -105,7 +105,7 @@ const loginHeader = (
   </React.Fragment>
 )
 
-const signupheader = (
+export const signupheader = (
   <React.Fragment>
     <title>Musicwall | Signup</title>
     <meta name="description" content="Sign up for a musicwall account to start sharing your fave music!" />
