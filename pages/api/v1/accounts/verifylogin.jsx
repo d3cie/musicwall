@@ -14,6 +14,8 @@ const handler = async (req, res) => {
                     }
 
 
+                    user.pins = user.pins.filter((v, i, a) => a.findIndex(v2 => (v2.username === v.username)) === i)
+                    user.pinnedby = user.pinnedby.filter((v, i, a) => a.findIndex(v2 => (v2.username === v.username)) === i)
 
                     // console.log('resolved', (date_received - Date.now()))
                     res.status(200).send({

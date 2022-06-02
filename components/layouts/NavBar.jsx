@@ -48,7 +48,8 @@ const LogoCont = styled.div`
 const Navigation = styled.nav`
     height:60px;
     padding:12px 20px;
-    flex:3;
+    /* flex:3; */
+    width:100%;
     display: flex;
         color:#00000000;
     font-size:.0rem;
@@ -62,12 +63,16 @@ const NavBut = styled.button`
     border-radius:50%;
     display: flex;
     width:34px;
-    
+    margin-inline:5px!important;
     align-items: center;
     justify-content: center;
     border:none;
     padding:0;
-    /* overflow: hidden; */
+    transition: all 0.2s;
+    :hover{
+        filter:brightness(105%);
+    }
+    
     cursor: pointer;
 
 
@@ -147,6 +152,7 @@ export default function NavBar(props) {
 
     return (
         <Wrapper
+            id="navbar"
             variants={navbarVariants}
             initial={'exit'}
             animate={'enter'}
@@ -159,7 +165,9 @@ export default function NavBar(props) {
                 </Link>
                 {(isLogged != null) ?
                     <Navigation>
-                        <NavBut onClick={() => { router.push('/explore') }}>
+                        <NavBut
+
+                            onClick={() => { router.push('/explore') }}>
                             <Compass />
                         </NavBut>
                         <NavBut
@@ -175,6 +183,7 @@ export default function NavBar(props) {
                         </NavBut>
 
                         <ProfileCont
+                            id="profileimage"
                             onClick={() => props.showHideSettings(showHideSettings => !showHideSettings)}
                             style={{ cursor: 'pointer' }}
                         >

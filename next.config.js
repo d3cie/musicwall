@@ -23,6 +23,7 @@ module.exports = {
     CLIENT_ID: '5066212596b94820b5a11df6f2b0fcd6',
     CLIENT_SECRET: '28f7a18d618c46d1b97526c3688268e7',
     TOKEN_SECRET: 'F2D6C91BBB4349A87D444283C4EC1',
+    GOOGLE_ANALYTICS_ID: 'G-JPKCH0LK8C',
     mongodburl: "mongodb+srv://decefemz:precious1979@cluster0.s5iun.mongodb.net/Musicwall?retryWrites=true&w=majority",
   },
 }

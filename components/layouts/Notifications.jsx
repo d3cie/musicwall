@@ -85,7 +85,7 @@ const NotificationTemplatePrimary = (props) => {
 
 
     if (props.username != null) return <Notification>
-        <Profile profileImage={props.image} padding={2} height={'40px'} width={'40px'} />
+        <Profile padding={2} height={'40px'} width={'40px'} />
         <Details>
             <Link href={`/u/${props.username}`}>
                 <a>
@@ -110,16 +110,6 @@ const NotificationTemplatePrimary = (props) => {
 const Notifications = (props) => {
 
     const LoggedInUser = useContext(LoginContext)
-    const [profileImages, setProfileImages] = useState([])
-
-
-
-    useEffect(() => {
-        props.getProfileImages().then(
-            setProfileImages(props.notificationProfileImages)
-
-        )
-    }, [props.notificationProfileImages])
 
     const getWallIDAndReturnSince = (id) => {
         let returnSince;
@@ -130,19 +120,7 @@ const Notifications = (props) => {
         })
         return returnSince
     }
-    const mapUserImageToUser = (from) => {
-        let image;
-        if (profileImages != null) {
-            for (let i = 0; i < profileImages.length; i++) {
-                if (profileImages[i].username == from) {
 
-                    image = profileImages[i].image
-                    break
-                }
-            }
-            return image
-        }
-    }
     return (
         <Wrapper {...props}>
             <DisplayBox>
@@ -153,7 +131,6 @@ const Notifications = (props) => {
                             if (notification.action == 'like') {
                                 return <NotificationTemplatePrimary
                                     username={notification.from}
-                                    image={mapUserImageToUser(notification.from)}
                                     time={timeStampToHumanTime(Date.now() - Date.parse(notification.since))}
                                     details={' liked a wall you posted on the '}
                                     date={getWallIDAndReturnSince(notification.message)}

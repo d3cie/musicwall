@@ -9,13 +9,17 @@ const handler = async (req, res) => {
 
         const usernames = req.body.usernames
 
-        const result = await User.find({ username: { $in: usernames } }, { 'profileinfo.profileimage': 1, username: 1 })
+        const result = await User.find({ username: { $in: usernames } }, { 'profileinfo.profileimage': 1, username: 1, pins: 1, pinnedby: 1, 'profileinfo.displayname': 1 })
             .catch((err) => { console.log(err); res.status(500).send({ status: 'error', message: 'Internal' }) })
 
         const response = result.map((user) => (
             {
                 username: user.username,
-                image: user.profileinfo?.profileimage || null
+                image: user.profileinfo?.profileimage || null,
+                id: user._id,
+                displayname: user.profileinfo?.displayname || user.username,
+                pinnedby: user.pinnedby,
+                pins: user.pins
             }
         ))
         res.status(200).send({

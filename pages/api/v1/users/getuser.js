@@ -12,6 +12,9 @@ const handler = async (req, res) => {
                     res.status(404).send({ status: 'error', message: 'User Not Found' })
                     return
                 }
+                user.pins = user.pins.filter((v, i, a) => a.findIndex(v2 => (v2.username === v.username)) === i)
+                user.pinnedby = user.pinnedby.filter((v, i, a) => a.findIndex(v2 => (v2.username === v.username)) === i)
+
                 res.status(200).send({
                     status: 'success',
                     profile: { username: user.username, pins: user.pins, points: user.points, pinnedby: user.pinnedby, since: user.since, profileinfo: user.profileinfo, walls: user?.walls }

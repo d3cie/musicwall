@@ -21,6 +21,7 @@ import ErrorScreen from '../components/layouts/ErrorScreen'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, Zoom, cssTransition } from 'react-toastify'
 import { LoginContext } from "./_app"
+import * as ga from '../utils/ga'
 
 const fade = cssTransition({
   enter: "fade_in",
@@ -159,6 +160,15 @@ export default function Search() {
     e.preventDefault();
 
     const query = document.getElementById('searchBox').value
+
+    ga.event({
+      action: "search",
+      params: {
+        search_term: query
+      }
+    })
+
+
     if (query == previousQuery) { return }
     setPreviousQuery(query)
 
@@ -330,7 +340,7 @@ export default function Search() {
           }
 
           <SearchCont >
-            <div style={{ position: 'fixed', zIndex: 60, padding: '20px', top: 58, background: vars.DARK_GREY, left: 0, borderBottom: `solid 1px ${vars.LIGHT_GREY}`, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <div style={{ position: 'fixed', zIndex: 20, padding: '20px', top: 58, background: vars.DARK_GREY, left: 0, borderBottom: `solid 1px ${vars.LIGHT_GREY}`, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
               {/* <div style = {{ width:'100%',maxWidth:vars.MAX_WIDTH}}> */}
               <form onSubmit={(e) => { SearchQuery(e); return false }}
 

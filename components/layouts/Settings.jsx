@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components'
 import * as vars from '../../vars'
 import { useRouter } from 'next/router'
@@ -8,6 +8,7 @@ import ArrowBracket from '../primitives/Icons/ArrowBracket';
 import logoutservice from '../../services/logout'
 import User from '../primitives/Icons/User';
 import Gear from '../primitives/Icons/Gear';
+import Thumbtack from '../primitives/Icons/Thumbtack'
 import Pencil from '../primitives/Icons/Pencil';
 
 
@@ -121,10 +122,36 @@ const Settings = (props) => {
 
     const [loggingout, setLoggingOut] = useState(false)
     const router = useRouter()
+    const ref = useRef()
+
+    useEffect(() => {
+        props.close()
+
+        window.addEventListener('mousedown', (e) => {
+
+
+            if (!ref.current.contains(e.target)
+                &&
+                !document.querySelector('#navbar').contains(e.target)
+            ) {
+                props.close()
+
+            }
+
+        })
+        // if (concernedElement.contains(event.target)) {
+        //     console.log("Clicked Inside");
+        //   } else {
+        //     console.log("Clicked Outside / Elsewhere");
+        //   }
+
+    }, [router.pathname])
+
 
     const myPageHandler = () => {
         if (router.asPath == `/u/${props.username}`) {
             props.close()
+            props.pinsHandler(false)
             return
         }
         router.push(`/u/${props.username}`)
@@ -136,6 +163,10 @@ const Settings = (props) => {
         router.push('/accounts/edit')
         props.close()
 
+    }
+    const pinsHandler = () => {
+        props.pinsHandler(true)
+        props.close()
     }
     const logOutHandler = () => {
         setLoggingOut(true)
@@ -151,7 +182,7 @@ const Settings = (props) => {
         )
     }
     return (
-        <Wrapper id="settings" {...props}>
+        <Wrapper ref={ref} id="settings" {...props}>
             {/* <OutsideClickHandler onOutsideClick={() => props.close()}> */}
             <DisplayBox>
                 <ProfileCont>
@@ -160,6 +191,7 @@ const Settings = (props) => {
                         Account Actions
                         <Username>@{props.username}</Username>
                         <Username>{Math.round((Date.now() - Date.parse(props.since)) / 604800000)} Weeks Old</Username>
+                        {/* <Username>Pins <b>{props.pins.length}</b> pages and is pinned by <b>{props.pinned.length || 0}</b> others</Username> */}
                     </DetailsCont>
 
                 </ProfileCont>
@@ -169,24 +201,25 @@ const Settings = (props) => {
                     My Page
                 </Setting>
 
-                <Setting  >
+                {/* <Setting  >
                     <Pencil style={{ fill: "#00000000" }} />
                     {'Stickers & Awards W/P'}
+                </Setting> */}
+
+                <Setting onClick={() => pinsHandler()}  >
+                    <Thumbtack />
+                    {'Pins'}
                 </Setting>
 
                 <Setting onClick={() => settingsHandler()}>
                     <Pencil />
                     Edit Profile
                 </Setting>
-                <Setting >
-                    <Pencil style={{ fill: "#00000000" }} />
-                    Change Password W/P
-                </Setting>
-
+                {/* 
                 <Setting style={{ marginTop: 1, borderTop: `1px solid ${vars.LIGHER_GREY}` }} >
                     <Pencil style={{ fill: "#00000000" }} />
-                    Upgrade W/P
-                </Setting>
+                    Upgrade Account
+                </Setting> */}
 
 
                 <Setting style={{ marginTop: 1, borderTop: `1px solid ${vars.LIGHER_GREY}` }} onClick={() => logOutHandler()}>
@@ -200,7 +233,7 @@ const Settings = (props) => {
                 </Setting>
                 <div
                     style={{ color: "#bbb", borderTop: `1px solid ${vars.LIGHER_GREY}`, textAlign: "center" }}
-                >2022 Musicwall</div>
+                ></div>
 
             </DisplayBox>
             {/* </OutsideClickHandler> */}

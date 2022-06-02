@@ -14,11 +14,14 @@ import { ToastContainer, toast, Zoom, cssTransition } from 'react-toastify'
 import editimageservice from '../services/editimage'
 import PrimaryLoading from '../components/loadingsScreens/PrimaryLoading'
 import { motion } from 'framer-motion'
+import Pins from '../components/layouts/Pins'
+import * as ga from '../utils/ga/'
 
 const fade = cssTransition({
   enter: "fade_in",
   exit: "fade_out"
 });
+
 
 
 const Cont = styled.div`
@@ -133,7 +136,7 @@ function MyApp({ Component, pageProps }) {
   const [profileImageFromEdit, setProfileImageFromEdit] = useState(null)
   const [notificationProfileImages, setNotificationProfileImages] = useState(null)
   const [entryAnimation, setEntryAnimation] = useState(true)
-
+  const [showPins, setShowPins] = useState(false)
 
   const setProfileImage = async (image) => {
 
@@ -171,29 +174,6 @@ function MyApp({ Component, pageProps }) {
     setProfileImage(profileImageFromEdit)
   }
 
-
-  const getProfileImages = async () => {
-    let images;
-    if (notificationProfileImages == null) {
-      return fetch('/api/v1/users/getImage', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          usernames:
-            loggedInData?.notifications.map(({ from }) => from)
-        }
-        )
-      }
-      ).then((res) => res.json().then((jsonresult) => {
-        setNotificationProfileImages(jsonresult.body)
-        images = jsonresult.body
-        return jsonresult.body
-
-      }))
-    }
-    return notificationProfileImages
-  }
-
   useEffect(
     () => {
       function getData() {
@@ -215,10 +195,24 @@ function MyApp({ Component, pageProps }) {
         )
       }
 
-
       getData()
+
+
+      const handleRouteChange = (url) => {
+        ga.pageview(url)
+      }
+      //When the component is mounted, subscribe to router changes
+      //and log those page views
+      router.events.on('routeChangeComplete', handleRouteChange)
+
+      // If the component is unmounted, unsubscribe
+      // from the event with the `off` method
+      return () => {
+        router.events.off('routeChangeComplete', handleRouteChange)
+      }
+
     }
-    , [])
+    , [router.events])
 
 
 
@@ -275,7 +269,19 @@ function MyApp({ Component, pageProps }) {
     }
   }
 
+
+
+  const pinsHandler = (state) => {
+
+    document.querySelector('html,body').style.overflowY = state ? "hidden" : "scroll"
+    setShowPins(state)
+
+    return
+  }
+
+
   function handleForm(event) { event.preventDefault(); }
+
 
 
   if (router.pathname == '/accounts/login' ||
@@ -333,13 +339,18 @@ function MyApp({ Component, pageProps }) {
       pauseOnHover
     />
 
-    <NavBar showHideSettings={((state) => { console.log(state); setShowNotifications(false); setShowHideSettings(state) })} showHideNotifs={((state) => { setShowHideSettings(false); setShowNotifications(state) })} />
+    <NavBar showHideSettings={((state) => { setShowNotifications(false); setShowHideSettings(state) })} showHideNotifs={((state) => { setShowHideSettings(false); setShowNotifications(state) })} />
     <div style={{ height: '50px' }} />
     <NextNProgress options={{ showSpinner: false }} height={2} color={vars.MAIN_BLUE} />
-    {showNotifications && <Notifications notificationProfileImages={notificationProfileImages} getProfileImages={() => getProfileImages()} />}
-
-    <Settings close={() => setShowHideSettings(false)} since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
-
+    {loggedInData && <>
+      {showNotifications && <Notifications notificationProfileImages={notificationProfileImages} getProfileImages={() => getProfileImages()} />}
+      <div hidden={!showPins}> <Pins
+        onerror={(err) => toast.error(err)}
+        pins={loggedInData?.pins}
+        infotoast={(info) => { toast.info(info) }}
+        pinnedby={loggedInData?.pinnedby} isclosed={showPins} close={() => pinsHandler(false)} username={loggedInData?.username} /></div>
+      <Settings pinsHandler={pinsHandler} close={() => setShowHideSettings(false)} pins={loggedInData?.pins} pinned={loggedInData?.pinnedby} since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
+    </>}
     <Component setProfileImage={setProfileImageFromEdit}  {...pageProps} />
   </LoginContext.Provider>
 }
