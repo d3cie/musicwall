@@ -139,10 +139,10 @@ export default function UserPageLoad(props) {
                 variants={textVariant}
                 initial={'open'}
             >
-                <p style={{ color: vars.MAIN_WHITE, fontWeight: '500', position: 'absolute', top: '60%' }}>
+                {/* <p style={{ color: vars.MAIN_WHITE, fontWeight: '500', position: 'absolute', top: '60%' }}>
                     PLEASE WAIT WHILE WE
                 </p>
-                <ScrollingText />
+                <ScrollingText /> */}
             </motion.div>
 
 

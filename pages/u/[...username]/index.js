@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast, cssTransition } from 'react-toastify'
 import UserPageLoad from '../../../components/loadingsScreens/UserPageLoad'
 import { motion } from 'framer-motion'
+import PlaySongSpotify from '../../../components/compounds/Song/PlaySongSpotify'
 
 const fade = cssTransition({
   enter: "fade_in",
@@ -47,11 +48,11 @@ function UserProfile(props) {
   const [reveal, setReveal] = useState(false)
   const [isloggedinaccount, setIsLoggedInAccount] = useState(false)
   const [profileBarAnimation, setProfileBarAnimmation] = useState(true)
-
-
+  const [showSpotifySongPlayer, setShowSpotifySongPlayer] = useState(false)
+  const [songPlayerId, setSongPlayerId] = useState()
   useEffect(() => {
     setUsername(window.location.pathname.substring(3))
-
+    setIsLoading(true)
     document.querySelector('html,body').style.background = vars.LIGHT_GREY
 
     async function fetchData() {
@@ -76,7 +77,7 @@ function UserProfile(props) {
 
     fetchData()
     //removed router.aspath and notifs.  Were causing an unnessesary re-render
-  }, [window.location.pathname, from])
+  }, [pathname, from])
 
   if (isLoading) return <UserPageLoad loading={reveal} />
 
@@ -84,6 +85,14 @@ function UserProfile(props) {
     return <Error statusCode={404} />
   }
 
+  function ShowSongPlayer(id) {
+    setSongPlayerId(id)
+    setShowSpotifySongPlayer(true)
+  }
+
+  function spotifySongHandler(id) {
+    ShowSongPlayer(id)
+  }
   return (
     <>
       <Head>
@@ -108,6 +117,10 @@ function UserProfile(props) {
         pauseOnHover
       />
       <Cont>
+
+        {
+          (showSpotifySongPlayer) ? <PlaySongSpotify closePlayer={() => setShowSpotifySongPlayer(false)} id={songPlayerId} /> : ''
+        }
         {/* <PlaySongSpotify/> */}
         <ProfileBar
           profileBarAnimation={profileBarAnimation}
@@ -115,7 +128,7 @@ function UserProfile(props) {
         />
 
         <Cont style={{ alignItems: 'center' }}>
-          <Walls scrollto={wall} wallOwner={username} walls={populatedWalls} />
+          <Walls spotifySongHandler={(id) => spotifySongHandler(id)} scrollto={wall} wallOwner={username} walls={populatedWalls} />
         </Cont>
 
       </Cont>

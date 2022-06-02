@@ -93,17 +93,17 @@ const TimeStampCont = styled.div`
 
 const GridContInner = styled.div`
   width:fit-content;
-  width:100%;
+  /* width:100%; */
   min-width:380px;
   @media (max-width:650px) {
     margin-left: 30px;
     width:fit-content;
 
   }
-  @media (min-width:650px) {
+  /* @media (min-width:650px) {
     margin-left: 100px;
 
-  }
+  } */
   @media (min-width:${vars.MAX_WIDTH}) {
     width:100%;
         margin-left: 0px;
@@ -315,7 +315,7 @@ export default function Wall(props) {
               </div>
               {/* </button> */}
 
-              <WallActionsCont>
+              {/* <WallActionsCont>
                 <Like loggedinname={props.loggedinname} likes={props.wall.likes} wallid={props.wall._id} username={props.wallOwner} />
                 <button id="share">
                   <ShareIcon />
@@ -323,7 +323,7 @@ export default function Wall(props) {
                 </button>
 
 
-              </WallActionsCont>
+              </WallActionsCont> */}
             </TimeStamp>
           </TimeStampCont>
 
@@ -337,6 +337,8 @@ export default function Wall(props) {
 
                   <SongMobile
                     key={j}
+                    spotifyID={song.spotifySongID}
+                    spotifySongHandler={(id) => props.spotifySongHandler(id)}
                     SongName={song.songName}
                     AlbumName={song.albumName}
                     SongArtist={artistsToString(song.artist)}

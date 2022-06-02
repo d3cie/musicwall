@@ -105,9 +105,8 @@ export default function Song(props) {
     const [isPlaying, setIsPlaying] = useState(false)
 
     function playSong() {
-        if (!props.demo) {
-            console.log("needstobeadded")
-        }
+        props.spotifySongHandler(props.spotifyID)
+
     }
     return (
         <Wrapper>

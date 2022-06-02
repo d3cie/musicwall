@@ -206,10 +206,10 @@ const Settings = (props) => {
                     {'Stickers & Awards W/P'}
                 </Setting> */}
 
-                <Setting onClick={() => pinsHandler()}  >
+                {/* <Setting onClick={() => pinsHandler()}  >
                     <Thumbtack />
                     {'Pins'}
-                </Setting>
+                </Setting> */}
 
                 <Setting onClick={() => settingsHandler()}>
                     <Pencil />

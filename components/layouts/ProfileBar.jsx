@@ -116,7 +116,7 @@ const DetailsCont = styled.section`
 const ButtonCont = styled.div`
 width: 100%;
 display: flex;
-margin-left:-20px;
+margin-left:10px;
 margin-bottom:20px;
     `
 const ProfileCont = styled.div`
@@ -202,6 +202,20 @@ export default function ProfileBar(props) {
         }
     }
 
+    const handleShare = () => {
+
+        if (navigator.share) {
+            navigator.share({
+                title: `Hey!  Look at this page on Musicwall (@${props.profile.username}) to see their favorite music!`,
+                url: `https://www.musicwall.cc/u/${props.profile.username}`
+            })
+        } else {
+            writeText(`https://www.musicwall.cc/u/${props.profile.username}`)
+            props.infotoast("Link copied to clipboard")
+
+        }
+    }
+
     return (
         <Wrapper
             animate={props.profileBarAnimation ? "enter" : "exit"}
@@ -249,9 +263,9 @@ export default function ProfileBar(props) {
                             {/* <PinsCont>
                             <Fire /> <b>{props.profile.points || 0}</b> Points
                         </PinsCont> */}
-                            <PinsCont style={{ fill: vars.MAIN_RED }}>
+                            {/* <PinsCont style={{ fill: vars.MAIN_RED }}>
                                 <Thumbtack /> <b></b>Pinned by<b>{props.profile.pinnedby.length}</b>others
-                            </PinsCont>
+                            </PinsCont> */}
                         </div>
                         <PinsCont style={{ fill: vars.MAIN_RED }}>
                             <b>{Math.round((Date.now() - Date.parse(props.profile.since)) / 604800000)}</b>Weeks Old
@@ -270,9 +284,10 @@ export default function ProfileBar(props) {
                 <Cont>
                     <ButtonCont>
                         {((props.demo ? { username: props.profile.username } : isLogged?.username) == props.profile.username) ?
-                            <SecondaryButton style={{ marginLeft: '30px', width: 'fit-content' }} onClick={() => router.push(`/accounts/edit`)} buttonTitle={'Edit Profile'} />
-                            : <SecondaryButton buttonwidth={'80px'} style={{ marginLeft: '30px' }} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />}
-                        <SecondaryButton style={{ border: "none", background: vars.LIGHT_GREY, border: `1px solid ${vars.LIGHER_GREY}` }} buttonTitle={"Share"} />
+                            <SecondaryButton style={{ width: 'fit-content' }} onClick={() => router.push(`/accounts/edit`)} buttonTitle={'Edit Profile'} />
+                            : null}
+                        {/* : <SecondaryButton buttonwidth={'80px'} style={{ marginLeft: '30px' }} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />} */}
+                        <SecondaryButton onClick={() => { handleShare() }} style={{ border: "none", background: vars.LIGHT_GREY, border: `1px solid ${vars.LIGHER_GREY}` }} buttonTitle={"Share"} />
                     </ButtonCont>
                 </Cont>
             </motion.div>

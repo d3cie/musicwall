@@ -26,7 +26,7 @@ const handler = async (req, res) => {
             // const file = fs.writeFile("out.png", fileBlob, 'base64', function (err) {
             //     console.log(err);
             // });
-
+            const filename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
             const s3 = new AWS.S3({
                 accessKeyId: process.env.S3_ACCESS_KEY,
@@ -34,7 +34,7 @@ const handler = async (req, res) => {
             })
             const params = {
                 Bucket: process.env.S3_IMAGE_BUCKET_NAME,
-                Key: req.id,
+                Key: filename,
                 Body: buf,
                 ContentEncoding: 'base64',
                 ContentType: 'image/jpeg'

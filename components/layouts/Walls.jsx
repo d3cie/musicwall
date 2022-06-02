@@ -15,15 +15,16 @@ export default function Walls(props) {
   }, [props.walls]
   )
 
-  if (loading) return <Loading minHeight='50vh' />
 
-  if (!data.length) {
+  if (!data.length && !loading) {
     return <NoWall loggedIn={isLogged?.username == props.wallOwner} />
   }
+  if (loading) return <Loading minHeight='50vh' />
+
 
   return <div
     style={{ backgroundColor: vars.LIGHT_GREY }}
   >{data.map((wall, i) => (
-    <Wall scrollto={props.scrollto} key={i} wallOwner={props.wallOwner} loggedinname={isLogged?.username} wall={wall} i={i} ></Wall>
+    <Wall spotifySongHandler={(id) => props.spotifySongHandler(id)} scrollto={props.scrollto} key={i} wallOwner={props.wallOwner} loggedinname={isLogged?.username} wall={wall} i={i} ></Wall>
   ))}</div>
 }
