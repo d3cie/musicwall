@@ -137,7 +137,11 @@ function MyApp({ Component, pageProps }) {
   const [notificationProfileImages, setNotificationProfileImages] = useState(null)
   const [entryAnimation, setEntryAnimation] = useState(true)
   const [showPins, setShowPins] = useState(false)
+  const { token } = router.query
 
+  if (token) {
+    window.localStorage.setItem('SPOTIFY_ACCESS_TOKEN', token)
+  }
   const setProfileImage = async (image) => {
 
     toast.loading('Uploading profile image.  Please wait.')
@@ -226,6 +230,10 @@ function MyApp({ Component, pageProps }) {
         <meta property="og:url" content="https://www.musicwall.cc/" />
         <meta property="og:type" content="website" />
 
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
+
         <meta name="twitter:image" content="https://www.musicwall.cc/opengraphimage.png" />
         <meta property="og:image" content="/opengraphimage.png" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -245,7 +253,7 @@ function MyApp({ Component, pageProps }) {
 
   if (router.pathname == '/') {
     if (loggedInData != null) {
-      router.push(`/u/${loggedInData.username}`)
+      router.push(`/feed`)
       return
     }
 
@@ -265,6 +273,10 @@ function MyApp({ Component, pageProps }) {
     }
     if (router.pathname == '/explore') {
       router.push('/accounts/login?next=/explore')
+      return
+    }
+    if (router.pathname == '/feed') {
+      router.push('/accounts/login?next=/feed')
       return
     }
   }

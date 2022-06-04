@@ -127,18 +127,18 @@ const Settings = (props) => {
     useEffect(() => {
         props.close()
 
-        window.addEventListener('mousedown', (e) => {
+        // window.addEventListener('mousedown', (e) => {
 
 
-            if (!ref.current.contains(e.target)
-                &&
-                !document.querySelector('#navbar').contains(e.target)
-            ) {
-                props.close()
+        //     if (!ref.current.contains(e.target)
+        //         &&
+        //         !document.querySelector('#navbar').contains(e.target)
+        //     ) {
+        //         props.close()
 
-            }
+        //     }
 
-        })
+        // })
         // if (concernedElement.contains(event.target)) {
         //     console.log("Clicked Inside");
         //   } else {

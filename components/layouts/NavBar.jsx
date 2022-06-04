@@ -175,7 +175,13 @@ export default function NavBar(props) {
                             style={{ padding: '7px', background: vars.MAIN_WHITE }}>
                             <Bell style={{ fill: vars.DARK_GREY }} />
                         </NavBut> */}
+                        <NavBut
+                            style={{ padding: '6px', background: vars.MAIN_WHITE }}
+                            onClick={() => router.push('/feed')}
 
+                        >
+                            <House />
+                        </NavBut>
                         <NavBut
                             onClick={() => router.push('/search')}
                             style={{ padding: '5px', background: vars.MAIN_WHITE }}>

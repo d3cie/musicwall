@@ -4,8 +4,15 @@ const nextConfig = {
   styledComponents: true,
 
 }
+const withPWA = require("next-pwa");
 
-module.exports = {
+module.exports = withPWA({
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+  },
+
   webpack(config, options) {
     config.module.rules.push({
       test: /\.mp3$/,
@@ -26,4 +33,4 @@ module.exports = {
     GOOGLE_ANALYTICS_ID: 'G-JPKCH0LK8C',
     mongodburl: "mongodb+srv://decefemz:precious1979@cluster0.s5iun.mongodb.net/Musicwall?retryWrites=true&w=majority",
   },
-}
+})
