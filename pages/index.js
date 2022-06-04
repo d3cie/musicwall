@@ -257,6 +257,9 @@ export default function Welcome() {
     <Wrapper>
       <Head>
         {indexHeader}
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
         <link rel="icon" href="/logo.png" />
         <meta name="theme-color" content={vars.MAIN_BLUE} />
       </Head>

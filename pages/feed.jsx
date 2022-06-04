@@ -215,7 +215,9 @@ const Feed = () => {
     return (
         <Wrapper>
             <Head>
-
+                <link rel="manifest" href="/manifest.json" />
+                <link rel="shortcut icon" href="/favicon.ico" />
+                <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
                 <title>Musicwall | Home</title>
                 <meta name="description" content={`See what songs other users are listening to!`} />
                 <link rel="icon" href="/logo.png" />
