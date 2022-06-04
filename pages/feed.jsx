@@ -9,8 +9,6 @@ import DualRing from '../components/primitives/Animations/DualRing'
 import { LoginContext } from './_app'
 import SecondaryButton from '../components/primitives/Buttons/SecondaryButton';
 import PlaySongSpotify from '../components/compounds/Song/PlaySongSpotify';
-import SpotifyPlayer from "react-spotify-web-playback";
-import loginspotify from '../services/Loginspotify';
 import Head from 'next/head';
 
 
