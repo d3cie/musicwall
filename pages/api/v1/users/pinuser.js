@@ -26,7 +26,6 @@ const handler = async (req, res) => {
                     })
                 })
                 .then((ret) => {
-                    console.log(ret)
                     res.status(200).send({
                         status: 'success',
                     })

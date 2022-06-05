@@ -165,6 +165,9 @@ export default function NavBar(props) {
                 </Link>
                 {(isLogged != null) ?
                     <Navigation>
+
+                        <img onClick={() => window.open('https://www.buymeacoffee.com/deciee', '_blank').focus()} style={{ marginRight: 10 }} height="35px" src="/yellow-button.png"></img>
+
                         {/* <NavBut
 
                             onClick={() => { router.push('/explore') }}>
@@ -209,7 +212,7 @@ export default function NavBar(props) {
                     </Navigation>}
 
             </Cont>
-        </Wrapper>
+        </Wrapper >
 
     )
 }

@@ -10,6 +10,7 @@ import User from '../primitives/Icons/User';
 import Gear from '../primitives/Icons/Gear';
 import Thumbtack from '../primitives/Icons/Thumbtack'
 import Pencil from '../primitives/Icons/Pencil';
+import Download from '../primitives/Icons/Download';
 
 
 const Wrapper = styled.div`
@@ -123,6 +124,32 @@ const Settings = (props) => {
     const [loggingout, setLoggingOut] = useState(false)
     const router = useRouter()
     const ref = useRef()
+    const [showInstall, setShowInstall] = useState(true)
+
+    const handleInstallClick = (e) => {
+        // Hide the app provided install promotion
+        // Show the install prompt
+        props.deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        props.deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+
+                Notification.requestPermission().then((result) => {
+                    if (result === 'granted') {
+                        randomNotification();
+                    }
+                });
+
+                setShowInstall(false)
+                ga.event({
+                    action: "add_pwa",
+                    params: {
+                        page: '/'
+                    }
+                })
+            }
+        });
+    };
 
     useEffect(() => {
         props.close()
@@ -206,10 +233,10 @@ const Settings = (props) => {
                     {'Stickers & Awards W/P'}
                 </Setting> */}
 
-                {/* <Setting onClick={() => pinsHandler()}  >
+                <Setting onClick={() => pinsHandler()}  >
                     <Thumbtack />
                     {'Pins'}
-                </Setting> */}
+                </Setting>
 
                 <Setting onClick={() => settingsHandler()}>
                     <Pencil />
@@ -231,6 +258,10 @@ const Settings = (props) => {
                     </div>
 
                 </Setting>
+                {showInstall && <Setting onClick={() => handleInstallClick()} style={{ marginTop: 1, borderTop: `1px solid ${vars.LIGHER_GREY}` }} >
+                    <Download />
+                    Install App
+                </Setting>}
                 <div
                     style={{ color: "#bbb", borderTop: `1px solid ${vars.LIGHER_GREY}`, textAlign: "center" }}
                 ></div>

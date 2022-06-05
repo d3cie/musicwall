@@ -124,6 +124,7 @@ export const signupheader = (
   </React.Fragment>
 )
 
+let deferredPrompt;
 export const LoginContext = React.createContext()
 
 function MyApp({ Component, pageProps }) {
@@ -138,6 +139,8 @@ function MyApp({ Component, pageProps }) {
   const [entryAnimation, setEntryAnimation] = useState(true)
   const [showPins, setShowPins] = useState(false)
   const { token } = router.query
+  const [installable, setInstallable] = useState(false);
+
 
   if (token) {
     window.localStorage.setItem('SPOTIFY_ACCESS_TOKEN', token)
@@ -177,6 +180,18 @@ function MyApp({ Component, pageProps }) {
   if (profileImageFromEdit != null) {
     setProfileImage(profileImageFromEdit)
   }
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setInstallable(true);
+    });
+
+    window.addEventListener('appinstalled', () => {
+      // Log install to analytics
+      console.log('INSTALL: Success');
+    });
+  }, []);
 
   useEffect(
     () => {
@@ -204,6 +219,7 @@ function MyApp({ Component, pageProps }) {
 
       const handleRouteChange = (url) => {
         ga.pageview(url)
+
       }
       //When the component is mounted, subscribe to router changes
       //and log those page views
@@ -258,7 +274,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     return <>
-      <Component {...pageProps} /></>
+      <Component installable={installable} deferredPrompt={deferredPrompt} {...pageProps} /></>
   }
 
 
@@ -361,7 +377,7 @@ function MyApp({ Component, pageProps }) {
         pins={loggedInData?.pins}
         infotoast={(info) => { toast.info(info) }}
         pinnedby={loggedInData?.pinnedby} isclosed={showPins} close={() => pinsHandler(false)} username={loggedInData?.username} /></div>
-      <Settings pinsHandler={pinsHandler} close={() => setShowHideSettings(false)} pins={loggedInData?.pins} pinned={loggedInData?.pinnedby} since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
+      <Settings installable={installable} deferredPrompt={deferredPrompt} pinsHandler={pinsHandler} close={() => setShowHideSettings(false)} pins={loggedInData?.pins} pinned={loggedInData?.pinnedby} since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
     </>}
     <Component setProfileImage={setProfileImageFromEdit}  {...pageProps} />
   </LoginContext.Provider>

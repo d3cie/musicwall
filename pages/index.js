@@ -7,7 +7,7 @@ import TertiaryButton from '../components/primitives/Buttons/TertiaryButton'
 import Logo from '../components/primitives/Logo/Icon'
 import Wave from '../components/compounds/Backgrounds/wave1'
 import Wave2 from '../components/compounds/Backgrounds/wave2'
-
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import Demo1 from '../components/layouts/Demos/Demo1'
@@ -22,6 +22,8 @@ import ExpandedLogo from '../components/primitives/Logo'
 import { motion } from "framer-motion"
 import { useState } from 'react'
 import { indexHeader } from './_app'
+import * as ga from '../utils/ga'
+
 const Wrapper = styled.div`
 background-color: ${vars.MAIN_WHITE};
   width:100%; 
@@ -244,14 +246,66 @@ const heroMainVariant = {
     y: 0
   }
 }
-export default function Welcome() {
+
+
+
+
+
+
+
+
+export default function Welcome(props) {
 
   const [heroAnimation, setHeroAnimation] = useState(true)
   const router = useRouter()
+  const [showInstall, setShowInstall] = useState(true)
+
+  function randomNotification() {
+    const randomItem = Math.floor(Math.random() * games.length);
+    const notifTitle = games[randomItem].name;
+    const notifBody = `Created by ${games[randomItem].author}.`;
+    const notifImg = `data/img/${games[randomItem].slug}.jpg`;
+    const options = {
+      body: notifBody,
+      icon: notifImg,
+    };
+    new Notification(notifTitle, options);
+    setTimeout(randomNotification, 30000);
+  }
+
+  const handleInstallClick = (e) => {
+    // Hide the app provided install promotion
+    // Show the install prompt
+    props.deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    props.deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+
+        Notification.requestPermission().then((result) => {
+          if (result === 'granted') {
+            randomNotification();
+          }
+        });
+
+        setShowInstall(false)
+        ga.event({
+          action: "add_pwa",
+          params: {
+            page: '/'
+          }
+        })
+      }
+    });
+  };
+
+
   const goToAuthenticateHandler = (link) => {
     setHeroAnimation(false)
     setTimeout(() => router.push(link), 1000)
   }
+
+
+
   return (
 
     <Wrapper>
@@ -303,8 +357,16 @@ export default function Welcome() {
           </ParaCont>
           <ButtonCont style={{ marginTop: 30 }}>
 
-            <PrimaryButton onClick={() => { goToAuthenticateHandler('/accounts/login') }} style={{ background: vars.LIGHT_GREY, borderRadius: 4, borderColor: vars.LIGHER_GREY, color: 'white' }} buttonTitle={'LOG IN'}></PrimaryButton>
-            <TertiaryButton onClick={() => { goToAuthenticateHandler('/accounts/signup') }} style={{ background: '#ffffff00', border: 'none', color: vars.GREY }} buttonTitle={'Dont have an account?'} />
+
+            <div style={{ display: 'flex' }}>
+              <PrimaryButton onClick={() => { goToAuthenticateHandler('/accounts/login') }} style={{ fontWeight: '500', background: vars.LIGHT_GREY, borderRadius: 4, borderColor: vars.LIGHER_GREY, color: 'white' }} buttonTitle={'LOGIN'}></PrimaryButton>
+              {props.installable && showInstall && <PrimaryButton onClick={() => { handleInstallClick() }}
+                style={{
+                  fontWeight: '500', background: vars.MAIN_WHITE, borderRadius: 4, borderColor: "#eee", color: vars.LIGHT_GREY
+                }} buttonTitle={'INSTALL APP'}></PrimaryButton>}
+            </div>
+
+            <TertiaryButton onClick={() => { goToAuthenticateHandler('/accounts/signup') }} style={{ fontWeight: '500', background: '#ffffff00', border: 'none', color: vars.LIGHT_GREY }} buttonTitle={'Dont have an account?'} />
 
           </ButtonCont>
 

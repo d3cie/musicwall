@@ -16,10 +16,11 @@ const Cont = styled.div`
     position:fixed;
     left:0;
     top:0;
+    /* border-top:solid 1px${vars.LIGHER_GREY}; */
     padding:20px;
     padding-inline:0;
-    padding-top:60px;
-    z-index:25;
+    margin-top:59px;
+    /* padding-top:60px; */
     height: 100%;
     overflow:hidden;
     background: #000000aa;
@@ -27,12 +28,16 @@ const Cont = styled.div`
       @media (max-width: 600px) {
       background-color: ${vars.GREY};
       height: 160vh;
+        padding-top:0;
+        border-top:none;
 
     }
     display:flex;
     flex-direction: 'column';
     justify-content: center;
     align-items: center;
+    z-index: 90;
+
     `
 const FormCont = styled.div`
     width:fit-content;
@@ -57,15 +62,17 @@ const FormCont = styled.div`
         width:100%;
         height:100%;
       padding:0px;
+
     }
     border-radius: 4px;
+position:relative;
 
    `
 const TopBar = styled.div`
 display:flex;
 position:relative;
     background-color: ${vars.DARK_GREY};
-
+   
 /* height:35px; */
 align-items:center;
 fill:${vars.MAIN_WHITE};
@@ -74,6 +81,7 @@ padding:10px;
 /* padding-right:20px; */
 border-bottom: 1px solid ${vars.LIGHT_GREY};
 position:relative;
+
 & button{
     background-color: #00000000;
     padding:0;
@@ -89,6 +97,7 @@ position:relative;
     :hover{
         fill:${vars.MAIN_BLUE};
     }
+    
 }
 `
 
@@ -97,6 +106,7 @@ margin:0px;
 font-size: 1.1rem;
 font-weight: 400;
 color:${vars.MAIN_WHITE};
+
 `
 
 const Switch = styled.div`
@@ -157,6 +167,11 @@ const User = styled.div`
     width:100%;
     /* border-top:1px solid ${vars.LIGHER_GREY}; */
     border-bottom:1px solid ${vars.LIGHT_GREY};
+    transition: all .2s;
+    :hover{
+        cursor:pointer;
+        background-color: ${vars.LIGHT_GREY};
+    }
     `
 const ContInner = styled.div`
     margin-top:10px;
@@ -166,7 +181,7 @@ const ContInner = styled.div`
 
     @media (max-width: 600px) {
       max-height: 45%;
-        height:45%;
+        height:100%;
         border-bottom: 1px solid ${vars.LIGHT_GREY};
         margin-bottom:20px;
     }
@@ -176,7 +191,7 @@ const LoadingCont = styled.div`
     height:100%;
     @media (max-width: 600px) {
       max-height: 100%;
-      height:80vh;
+      /* height:80vh; */
 
         
     }
@@ -198,10 +213,10 @@ export default function Pins(props) {
         if (navigator.share) {
             navigator.share({
                 title: `Hey!  Pin me on Musicwall (@${props.username}) to see my favorite music!`,
-                url: `https://www.musicwall.cc/u/${username}`
+                url: `https://www.musicwall.cc/u/${props.username}`
             })
         } else {
-            writeText(`https://www.musicwall.cc/u/${username}`)
+            writeText(`https://www.musicwall.cc/u/${props.username}`)
             props.infotoast("Link copied to clipboard")
 
         }
@@ -210,7 +225,12 @@ export default function Pins(props) {
     const onRouteToPage = () => {
         props.close()
     }
+    const handleRouteChange = () => {
+        props.close()
+    }
     useEffect(() => {
+        props.close()
+
 
         let userstoget = [];
         userstoget.push(
@@ -229,17 +249,17 @@ export default function Pins(props) {
                             props.pins.map(({ username }, key) => {
                                 for (let i = 0; i < res.body.length; i++) {
                                     if (res.body[i].username == username) {
-                                        return <User key={key}>
+                                        return <Link href={`/u/${username}`}><User key={key}>
                                             <Profile profileImage={res.body[i].image} padding={2} height={'40px'} width={'40px'} />
                                             <Details>
                                                 {res.body[i].displayname}
-                                                <Link href={`/u/${username}`}><div
+                                                <div
                                                     onClick={() => onRouteToPage()}
 
 
-                                                >@{res.body[i].username}</div></Link>
+                                                >@{res.body[i].username}</div>
                                             </Details>
-                                        </User>
+                                        </User></Link>
                                     }
 
                                 }
@@ -279,12 +299,12 @@ export default function Pins(props) {
             setLoading(false)
         }
 
-        // props.close()
-        // document.querySelector('html,body').overflowY = 'hidden'
+        router.events.on('routeChangeComplete', handleRouteChange)
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange)
+        };
 
-
-
-    }, [router.pathname])
+    }, [router.path])
 
     return <Cont {...props}>
         <FormCont ref={ref}>

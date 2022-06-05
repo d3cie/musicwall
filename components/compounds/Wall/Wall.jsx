@@ -315,15 +315,15 @@ export default function Wall(props) {
               </div>
               {/* </button> */}
 
-              {/* <WallActionsCont>
-                <Like loggedinname={props.loggedinname} likes={props.wall.likes} wallid={props.wall._id} username={props.wallOwner} />
-                <button id="share">
+              <WallActionsCont>
+                {(props.loggedinname != null) && <Like loggedinname={props.loggedinname} likes={props.wall.likes} wallid={props.wall._id} username={props.wallOwner} />
+                }                {/* <button id="share">
                   <ShareIcon />
 
-                </button>
+                </button> */}
 
 
-              </WallActionsCont> */}
+              </WallActionsCont>
             </TimeStamp>
           </TimeStampCont>
 

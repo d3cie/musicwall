@@ -68,7 +68,7 @@ export default function PrimaryLoading(props) {
     useEffect(() => {
         if (router.pathname == '/accounts/login' ||
             router.pathname == '/accounts/resetpassword' ||
-            router.pathname == '/' ||
+            (router.pathname == '/') ||
             router.pathname == '/accounts/signup') {
             setIsPageDark(false)
         }

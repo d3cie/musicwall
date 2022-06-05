@@ -11,6 +11,7 @@ import pinuserservice from '../../services/pinuser'
 import unpinuserservice from '../../services/unpinuser'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
+import timeStampToHumanTime from '../../services/timestamptotime'
 
 const Wrapper = styled(motion.div)`
     width:100wv; 
@@ -268,7 +269,7 @@ export default function ProfileBar(props) {
                             </PinsCont> */}
                         </div>
                         <PinsCont style={{ fill: vars.MAIN_RED }}>
-                            <b>{Math.round((Date.now() - Date.parse(props.profile.since)) / 604800000)}</b>Weeks Old
+                            <b>{timeStampToHumanTime(Date.now() - Date.parse(props.profile.since))}</b> old
                         </PinsCont>
                     </DetailsCont>
 
@@ -285,8 +286,7 @@ export default function ProfileBar(props) {
                     <ButtonCont>
                         {((props.demo ? { username: props.profile.username } : isLogged?.username) == props.profile.username) ?
                             <SecondaryButton style={{ width: 'fit-content' }} onClick={() => router.push(`/accounts/edit`)} buttonTitle={'Edit Profile'} />
-                            : null}
-                        {/* : <SecondaryButton buttonwidth={'80px'} style={{ marginLeft: '30px' }} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />} */}
+                            : <>{(isLogged != null) && <SecondaryButton buttonwidth={'80px'} onClick={() => { (!isUserPinnedState) ? pinUser(props.profile.username) : unpinUser(props.profile.username) }} isWorking={isWorkingOnPin} state={(isUserPinnedState) ? 'active' : 'a'} buttonTitle={(isUserPinnedState) ? 'Pined' : 'Pin'} />}</>}
                         <SecondaryButton onClick={() => { handleShare() }} style={{ border: "none", background: vars.LIGHT_GREY, border: `1px solid ${vars.LIGHER_GREY}` }} buttonTitle={"Share"} />
                     </ButtonCont>
                 </Cont>

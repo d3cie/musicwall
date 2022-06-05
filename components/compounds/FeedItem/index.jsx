@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Image from '../../primitives/Image'
 import * as vars from '../../../vars'
 import PlayPause from '../../primitives/Toggles/PlayPause'
+import { getColorFromURL } from 'color-thief-node'
 
 const Wrapper = styled.div`
     border-radius:4px;
@@ -97,6 +98,28 @@ const Details = styled.div`
 
 
 export default function FeedItem(props) {
+
+
+
+
+    useEffect(() => {
+        fetch(props.AlbumCover)
+            .then(res => {
+                // let objectURL = URL.createObjectURL(res.blob());
+                // console.log(objectURL);
+                getColorFromURL(res.blob().then((z) => { return z })).then((domColor) => {
+                    console.log(domColor)
+                });
+
+            }
+
+
+            )
+
+    })
+
+
+
 
     return (
         <Wrapper>

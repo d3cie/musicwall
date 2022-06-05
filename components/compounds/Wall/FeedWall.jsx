@@ -122,7 +122,7 @@ const OverlayLeft = styled.div`
 const ProfileCont = styled.div` 
     border: 5px solid ${vars.GREY};
     border-left:none;
-
+    cursor:pointer;
     border-right: none;
     border-radius: 50%;
     `
@@ -215,11 +215,16 @@ export default function FeedWall(props) {
     return (
         <Wrapper>
             <TopSection>
-                <ProfileCont>
-                    <Profile padding={'2px'} width={"50px"} profileImage={props.image} height={"50px"} />
-                </ProfileCont>
+                <Link href={`/u/${props.username}`} >
+                    <ProfileCont>
+                        <Profile padding={'2px'} width={"50px"} profileImage={props.image} height={"50px"} />
+                    </ProfileCont>
+                </Link>
                 <Title>
-                    <div className="name">{props.displayname || props.username} </div>
+                    <Link href={`/u/${props.username}`} >
+                        <div style={{ cursor: 'pointer' }} className="name">{props.displayname || props.username} </div>
+
+                    </Link>
                     {(props.countrycode) ? "from" : ''}
 
                     <ReactCountryFlag
