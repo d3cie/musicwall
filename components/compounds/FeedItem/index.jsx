@@ -100,27 +100,6 @@ const Details = styled.div`
 export default function FeedItem(props) {
 
 
-
-
-    useEffect(() => {
-        fetch(props.AlbumCover)
-            .then(res => {
-                // let objectURL = URL.createObjectURL(res.blob());
-                // console.log(objectURL);
-                getColorFromURL(res.blob().then((z) => { return z })).then((domColor) => {
-                    console.log(domColor)
-                });
-
-            }
-
-
-            )
-
-    })
-
-
-
-
     return (
         <Wrapper>
             <div style={{ overflow: "hidden", borderRadius: (props.Type == "ARTISTS") ? "50%" : "2px" }}

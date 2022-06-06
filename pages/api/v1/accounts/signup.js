@@ -23,16 +23,16 @@ const userNameValidator = (userName) => {
 
 const passwordValidator = (passWord) => {
 
-    var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
-    if (regex.test(passWord) === false) {
+
+    if (passWord.length < 8) {
         return ({
             status: 'error',
-            error: 'Password should be at least 8 characters and contain one or more letter and number.'
+            error: 'Password should be at least 8 characters.'
         })
     }
 
-    if (regex.test(passWord) === true && passWord !== " ") {
+    if (passWord.length > 8) {
         return ({
             status: 'ok'
         })
