@@ -32,7 +32,7 @@ const passwordValidator = (passWord) => {
         })
     }
 
-    if (passWord.length > 8) {
+    if (passWord.length >= 8) {
         return ({
             status: 'ok'
         })
