@@ -125,7 +125,8 @@ const Feed = () => {
     const getFeed = async () => {
         let objectsToGet = { songs: [], albums: [], artists: [] }
         let pageFeedWalls = [];
-        const data = await getfeedservice(page)
+        const data = await getfeedservice(page, filter)
+
         setButtonLoading(true)
         if (data.status == 'success') {
 
@@ -208,9 +209,10 @@ const Feed = () => {
 
     useEffect(() => {
         document.querySelector('html,body').style.background = vars.GREY
+        setFeedWalls([])
         getFeed()
 
-    }, [])
+    }, [filter])
 
     if (loading) { return <div style={{ display: 'flex', background: vars.GREY, alignItems: 'center', height: '90vh', justifyContent: 'center' }}><DualRing /></div> }
     return (
@@ -240,16 +242,16 @@ const Feed = () => {
                     </SortButton>
 
                     <SortButton
-                        onClick={() => { setFilter('topwalls') }}
+                        onClick={() => { setPage(0); setFilter('topwalls') }}
                         className={(filter == "topwalls") ? 'active' : 'notactive'}>
                         TOP WALLS
                     </SortButton>
-                    {/* 
+
                     <SortButton
-                        onClick={() => { setFilter('newlyadded') }}
+                        onClick={() => { setPage(0); setFilter('newlyadded') }}
                         className={(filter == "newlyadded") ? 'active' : 'notactive'}>
                         NEWLY ADDED
-                    </SortButton> */}
+                    </SortButton>
 
                     {/* <SortButton
                         onClick={() => { setFilter("pinnedwalls") }}
