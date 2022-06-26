@@ -101,7 +101,7 @@ async function getFullItems(data) {
 
 const Feed = () => {
     const router = useRouter()
-    const [filter, setFilter] = useState('newlyadded')
+    const [filter, setFilter] = useState('topwalls')
     const [page, setPage] = useState(0)
     const [feedWalls, setFeedWalls] = useState([])
     const [loading, setLoading] = useState(true)
@@ -185,6 +185,7 @@ const Feed = () => {
                         key={Math.random()}
                         username={user.username}
                         since={wall.since}
+                        caption={wall.caption}
                         playSong={(id) => spotifySongHandler(id)}
                         loggedinname={loggedindata.username}
                         likes={wall.likes}
@@ -238,17 +239,17 @@ const Feed = () => {
                         <Plus style={{ alignSelf: 'center' }} />
                     </SortButton>
 
-                    {/* <SortButton
+                    <SortButton
                         onClick={() => { setFilter('topwalls') }}
                         className={(filter == "topwalls") ? 'active' : 'notactive'}>
                         TOP WALLS
-                    </SortButton> */}
-
+                    </SortButton>
+                    {/* 
                     <SortButton
                         onClick={() => { setFilter('newlyadded') }}
                         className={(filter == "newlyadded") ? 'active' : 'notactive'}>
                         NEWLY ADDED
-                    </SortButton>
+                    </SortButton> */}
 
                     {/* <SortButton
                         onClick={() => { setFilter("pinnedwalls") }}

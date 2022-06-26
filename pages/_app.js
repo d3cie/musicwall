@@ -16,6 +16,7 @@ import PrimaryLoading from '../components/loadingsScreens/PrimaryLoading'
 import { motion } from 'framer-motion'
 import Pins from '../components/layouts/Pins'
 import * as ga from '../utils/ga/'
+import CommentSection from '../components/layouts/CommentSection'
 
 const fade = cssTransition({
   enter: "fade_in",
@@ -140,7 +141,7 @@ function MyApp({ Component, pageProps }) {
   const [showPins, setShowPins] = useState(false)
   const { token } = router.query
   const [installable, setInstallable] = useState(false);
-
+  const [showCommentsSection, setShowCommentsSection] = useState(true)
 
   if (token) {
     window.localStorage.setItem('SPOTIFY_ACCESS_TOKEN', token)
@@ -379,6 +380,7 @@ function MyApp({ Component, pageProps }) {
         pinnedby={loggedInData?.pinnedby} isclosed={showPins} close={() => pinsHandler(false)} username={loggedInData?.username} /></div>
       <Settings installable={installable} deferredPrompt={deferredPrompt} pinsHandler={pinsHandler} close={() => setShowHideSettings(false)} pins={loggedInData?.pins} pinned={loggedInData?.pinnedby} since={loggedInData?.since} profileImage={loggedInData?.profileinfo.profileimage} username={loggedInData?.username} hidden={!showHideSettings} />
     </>}
+    {/* {showCommentsSection && <CommentSection close={() => { setShowCommentsSection(false) }} />} */}
     <Component setProfileImage={setProfileImageFromEdit}  {...pageProps} />
   </LoginContext.Provider>
 }

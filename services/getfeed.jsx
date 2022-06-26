@@ -1,6 +1,6 @@
-export default function getfeedservice(page) {
+export default function getfeedservice(page, sort) {
     // console.log(username)
-    return fetch(`/api/v1/feed/all?page=${page}`,
+    return fetch(`/api/v1/feed/all?page=${page}&sort=${sort}`,
         {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },

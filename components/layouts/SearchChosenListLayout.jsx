@@ -8,6 +8,8 @@ import SecondaryButton from '../primitives/Buttons/SecondaryButton'
 import * as vars from '../../vars'
 import ChevronDown from '../primitives/Icons/Chevrondown'
 import ChevronUp from '../primitives/Icons/ChevronUp'
+import PrimaryBox from '../primitives/Inputs/PrimaryBox'
+import MultiText from '../primitives/Inputs/MultiText'
 
 const ChosenTitle = styled.div`
   color:${vars.MAIN_WHITE};
@@ -71,7 +73,7 @@ export default function SearchChosenListLayout({ limit, save, isWorking, chosenS
     const [songsColapsed, setSongsColapsed] = useState(!true)
     const [albumsColapsed, setAlbumsColapsed] = useState(!true)
     const [artistsColapsed, setArtistsColapsed] = useState(!true)
-
+    const [caption, setCaption] = useState(null)
     return (<div >
 
         {(chosenArtistsObj.length || chosenAlbumsObj.length || chosenSongsObj.length)
@@ -138,13 +140,14 @@ export default function SearchChosenListLayout({ limit, save, isWorking, chosenS
                 {songsColapsed && chosenSongsObj.map((current, index) => <SongSearchChosen key={index} AlbumCover={current.image} />)}
             </SearchChosenList>
 
-                <div style={{ marginTop: '30px', marginBottom: '10px', display: 'flex' }}>
+                <div style={{ marginTop: '30px', marginBottom: '10px', display: 'flex', flexDirection: 'column' }}>
+                    <MultiText onChange={(e) => setCaption(e.target.value)} id="caption" placeholder={"Add a caption"} />
 
-                    <SecondaryButton isWorking={isWorking} onClick={() => save()} buttonTitle={'Save'} />
+                    <SecondaryButton isWorking={isWorking} onClick={() => save(caption)} buttonTitle={'Save'} />
                 </div>
             </>}
 
-    </div>
+    </div >
     )
 }
 

@@ -10,6 +10,10 @@ import timeStampToHumanTime from '../../../services/timestamptotime'
 import Link from 'next/link'
 import Like from '../Like'
 import ShareIcon from '../../primitives/Icons/Share'
+import Comments from '../../primitives/Icons/Comments'
+import CommentMinified from '../Comment/minified'
+import PrimaryBox from '../../primitives/Inputs/PrimaryBox'
+import CommentBox from '../../primitives/Inputs/CommentBox'
 
 const Wrapper = styled.div` 
     width:100%;
@@ -148,10 +152,12 @@ padding-top:3px;
   }
 
 }
-& #share{
+& #comments{
     height:27px;
+    fill:${vars.MAIN_WHITE};
     margin-left:10px;
-    padding:0;
+    cursor:pointer;
+    padding:1.5px;
   }
 & #hearts{
       height:27px;
@@ -174,6 +180,20 @@ const OverlayRight = styled.div`
 `
 const ItemsCont = styled.div`   
     position:relative;`
+
+const CommentSection = styled.div`
+margin-top:40px;
+margin-right:80px;
+& #seeall{
+        color:${vars.MAIN_BLUE};
+        font-weight: 500;
+    margin-top:10px;
+    margin-bottom:10px;
+    }
+
+`
+const CommentBoxCont = styled.div`
+    width:100%;`
 
 const ItemCont = (props) => {
     const ref = useRef();
@@ -244,16 +264,14 @@ export default function FeedWall(props) {
                     <Link href={`/u/${props.username}`}><a passHref> - @{props.username}</a></Link>
 
                     <WallActionsCont>
+
                         <Like loggedinname={props.loggedinname} likes={props.likes} wallid={props.id} username={props.username} />
-                        {/* <button id="share">
-                            <ShareIcon />
-                        </button> */}
 
 
                     </WallActionsCont>
                 </Title>
-
             </TopSection>
+
             <FeedItemsContOutter>
 
 
@@ -263,9 +281,22 @@ export default function FeedWall(props) {
 
                 {/* <ItemCont itemTitle={"ALBUMS"} /> */}
 
+                <CommentSection>
+                    {props.caption != null
+                        && <CommentMinified countrycode={props.countrycode} username={props.username} comment={props.caption} />
+                    }
+                    {/* <div id="seeall" >See all 2 comments</div> */}
+
+                    {/* <CommentBoxCont>
+
+                        <CommentBox placeholder="Add A Comment" />
+                    </CommentBoxCont> */}
+
+
+                </CommentSection>
+
 
             </FeedItemsContOutter>
-
         </Wrapper>
     )
 }

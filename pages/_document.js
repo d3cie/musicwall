@@ -23,6 +23,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <script src="//www.ezojs.com/ezoic/sa.min.js"></script>
           {/* <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1182288742115330"
             crossOrigin="anonymous"></script> */}
           <script

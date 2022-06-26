@@ -7,7 +7,18 @@ const handler = async (req, res) => {
 
     const limit = 10
     const page = parseInt(req.query.page)
+    const sortby = req.query.sort
 
+    const sortbysince = {
+        '$sort': {
+            'walls.since': -1
+        }
+    }
+    const sortbylikes = {
+        '$sort': {
+            'likecount': -1
+        }
+    }
     if (req.method === 'GET') {
 
         const projection = { "username": -1, "profileinfo.displayname": 1, "profileinfo.profileimage": 1, "since": 1, "walls": 1, "profileinfo.countrycode": 1 }
@@ -18,17 +29,23 @@ const handler = async (req, res) => {
                 '$unwind': {
                     'path': '$walls'
                 }
-            }, {
-                '$sort': {
-                    'walls.since': -1
+            },
+            {
+                '$addFields': {
+                    "likecount": { $size: "$walls.likes" }
+
                 }
-            }, {
+            },
+
+            (sortby == "newlyadded") ? sortbysince : sortbylikes
+            , {
                 '$project': {
                     'username': -1,
                     'profileinfo.displayname': 1,
                     'profileinfo.profileimage': 1,
                     'since': 1,
                     'walls': 1,
+                    'likecount': 1,
                     'profileinfo.countrycode': 1
                 }
             }

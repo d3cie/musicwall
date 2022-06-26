@@ -16,6 +16,7 @@ var like = new Schema({
 
 var wall = new Schema({
   likes: [like],
+  caption:{ type: String },
   songs: [{ type: String }],
   albums: [{ type: String }],
   artists: [{ type: String }],

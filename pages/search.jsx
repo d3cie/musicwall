@@ -285,12 +285,14 @@ export default function Search() {
     })
   }
 
-  async function save() {
+  async function save(caption) {
     setIsWorking(true)
     setShowErr(false)
     const response = await addwallservice(chosenSongsObj.map(({ id }) => { return id }),
       chosenAlbumsObj.map(({ id }) => { return id }),
-      chosenArtistsObj.map(({ id }) => { return id }))
+      chosenArtistsObj.map(({ id }) => { return id }),
+      caption
+    )
     setIsWorking(false)
     if (response.error) {
       setErrorMsg(response.error)
