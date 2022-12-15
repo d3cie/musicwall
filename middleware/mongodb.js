@@ -5,7 +5,7 @@ const connectDB = handler => async (req, res) => {
     if (mongoose.connections[0].readyState) {
       return handler(req, res);
     }
-    // Use new db connection
+        // Use new db connection
     await mongoose.connect(process.env.mongodburl, {
       useUnifiedTopology: true,
       useNewUrlParser: true

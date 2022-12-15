@@ -166,7 +166,7 @@ export default function NavBar(props) {
                 {(isLogged != null) ?
                     <Navigation>
 
-                        <img onClick={() => window.open('https://www.buymeacoffee.com/deciee', '_blank').focus()} style={{ marginRight: 10 }} height="35px" src="/yellow-button.png"></img>
+                        {/* <img onClick={() => window.open('https://www.buymeacoffee.com/deciee', '_blank').focus()} style={{ marginRight: 10 }} height="35px" src="/yellow-button.png"></img> */}
 
                         {/* <NavBut
 
