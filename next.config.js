@@ -31,8 +31,7 @@ module.exports = withPWA({
     CLIENT_SECRET: '28f7a18d618c46d1b97526c3688268e7',
     TOKEN_SECRET: 'F2D6C91BBB4349A87D444283C4EC1',
     GOOGLE_ANALYTICS_ID: 'G-JPKCH0LK8C',
-    // mongodburl: 'mongodb://decefemz:precious1979@cluster0-shard-00-00.s5iun.mongodb.net:27017,cluster0-shard-00-01.s5iun.mongodb.net:27017,cluster0-shard-00-02.s5iun.mongodb.net:27017/?ssl=true&replicaSet=atlas-s6rhyh-shard-0&authSource=admin&retryWrites=true&w=majority'
-    // mongodburl: "mongodb+srv://decefemz:precious1979@cluster0.s5iun.mongodb.net/Musicwall?retryWrites=true&w=majority",
     mongodburl:'mongodb+srv://decefemz:precious1979@cluster0.s5iun.mongodb.net/Musicwall?w=majority'
   },
 })
+
